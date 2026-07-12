@@ -3,10 +3,11 @@
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
-include "db.php";
+include "../db.php";
 
 $sql = "SELECT user_id, username, password, account_type, picture
-FROM UserTable";
+FROM UserTable
+ORDER BY user_id DESC";
 $result = $conn->query($sql);
 
 $user = [];
