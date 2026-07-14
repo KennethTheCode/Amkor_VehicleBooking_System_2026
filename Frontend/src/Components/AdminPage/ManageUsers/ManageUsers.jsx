@@ -13,7 +13,7 @@ function ManageUsers({ users = null }) {
         (typeof import.meta !== "undefined" &&
             import.meta.env &&
             import.meta.env.VITE_BACKEND_URL) ||
-        "http://localhost/Amkor_VehicleBooking_System_2026/Backend/ManageUsers/LoadUsers.php";
+        "http://localhost/Amkor_VehicleBooking_System_2026/Backend/ManageVehicles/LoadVehicles.php";
 
     const loadUsers = () => {
         setIsSearching(true);

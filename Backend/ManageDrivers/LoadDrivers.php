@@ -5,7 +5,7 @@ header("Content-Type: application/json; charset=UTF-8");
 
 include "../db.php";
 
-$sql = "SELECT username, password, license_no, picture, expiration_date, availability
+$sql = "SELECT id, username, password, license_no, picture, expiration_date, availability
 FROM DriverTable
 ORDER BY id DESC";
 $result = $conn->query($sql);
