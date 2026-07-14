@@ -61,8 +61,12 @@ function ManageUsers({ users = null }) {
 
                         <div className="bg-white w-full h-full rounded p-3 overflow-y-auto">
 
-                            <SearchUsers />
-
+                            <SearchUsers
+                                onSearch={(results) => {
+                                    setData(Array.isArray(results) ? results : []);
+                                    setIsSearching(false);
+                                }}
+                            />
                             {isSearching ? (
                                 <p className="text-center mt-5 font-bold">
                                     Loading...
