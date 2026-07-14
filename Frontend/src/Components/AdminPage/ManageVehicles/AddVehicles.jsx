@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function AddVehicles() {
+function AddVehicles( {onVehicleAdded} ) {
     const [vehicle, setVehicle] = useState({
         vehicle_model: "",
         color: "",
@@ -70,6 +70,9 @@ function AddVehicles() {
                     seater: "",
                     availability: 1,
                 });
+                if (onVehicleAdded) {
+                    onVehicleAdded();
+                }   
             }
         } catch (error) {
             console.error(error);
