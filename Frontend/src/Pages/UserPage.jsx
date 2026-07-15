@@ -8,7 +8,7 @@ function UserPage() {
     <div>
         <Navbar/>
         <div className='flex'>
-        <RequestRide/>
+        <RequestRide user={loggedInUser}/>
         <Map/>
 
         </div>

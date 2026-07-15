@@ -40,6 +40,13 @@ function LandingPage() {
             const data = await response.json();
 
             if (data.success) {
+
+                // Save logged in user
+                localStorage.setItem(
+                    "user",
+                    JSON.stringify(data.user)
+                );
+
                 alert(data.message);
 
                 if (data.user.account_type.toLowerCase() === "admin") {
@@ -49,9 +56,11 @@ function LandingPage() {
                 } else {
                     alert("Unknown account type.");
                 }
+
             } else {
                 alert(data.message);
             }
+
         } catch (error) {
             console.error(error);
             alert("Unable to connect to the server.");
@@ -61,6 +70,7 @@ function LandingPage() {
     return (
         <div className="bg-gray-100 h-screen flex items-center justify-center">
             <div className="bg-white p-4 shadow-xl w-[50vh] h-[45vh] rounded">
+
                 <div className="flex gap-2 flex-col justify-center items-center p-2">
                     <img
                         src={AmkorLogo}
@@ -74,6 +84,7 @@ function LandingPage() {
                 </div>
 
                 <div className="h-[30vh] flex flex-col items-center justify-center">
+
                     <form
                         className="text-[12px]"
                         onSubmit={handleSubmit}
@@ -115,7 +126,9 @@ function LandingPage() {
                             © 2026 Amkor Coop Technology, Inc. All rights reserved.
                         </p>
                     </div>
+
                 </div>
+
             </div>
         </div>
     );
