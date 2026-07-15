@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import FilterRequests from "./FilterRequests/FilterRequests";
+import ReviewRequests from "./ManageRequests/ReviewRequests";
 
 function LoadRequests({ requests = null }) {
     const [data, setData] = useState([]);
@@ -83,7 +84,7 @@ function LoadRequests({ requests = null }) {
                                 </p>
 
                                 <p className="text-gray-500 font-bold text-[13px]">
-                                    Purpose: {request.created_at}
+                                    Created at: {request.created_at}
                                 </p>
 
                             </div>
@@ -145,9 +146,7 @@ function LoadRequests({ requests = null }) {
                                 </div>
                                 {/* Buttons */}
                                 <div className="w-[15vh] flex flex-col justify-center gap-2">
-                                    <button className="bg-green-500 hover:bg-green-400 duration-300 text-white font-bold rounded cursor-pointer">
-                                        Review
-                                    </button>
+                                    <ReviewRequests/>
 
                                     <button className="bg-red-500 hover:bg-red-400 duration-300 text-white font-bold rounded cursor-pointer">
                                         Reject

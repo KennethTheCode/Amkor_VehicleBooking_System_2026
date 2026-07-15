@@ -1,44 +1,52 @@
-import React from 'react'
-import AmkorLogo from '../../Images/AmkorLogo.png'
+import React from "react";
+import AmkorLogo from "../../Images/AmkorLogo.png";
 
-function AvailableDrivers() {
-  return (
-    <div className='w-full flex flex-col items-center justify-center gap-2'>
-        <p className='text-blue-800 font-bold text-[15px]'>Available Drivers</p>
-            <div className='bg-gray-100 w-[30vh] h-[13vh] p-1 flex overflow-x-auto gap-4'>
-                {/* Available Drivers Card*/}
-                <div className='text-center w-[10vh] h-full flex flex-col items-center'>
-                    <div className='bg-white w-[8vh] h-[8vh] rounded-full flex items-center border-2 border-blue-500'>
-                        <img src={AmkorLogo} alt="Logo" className='h-[4vh] object-contain' />
-                    </div>
-                    <p className='text-blue-800 font-bold text-[10px]'>Carl Angelo Hernandez</p>
-                </div>
+function AvailableDrivers({ drivers }) {
+    return (
+        <div className="w-full flex flex-col items-center justify-center gap-2">
 
-                <div className='text-center w-[10vh] h-full flex flex-col items-center'>
-                    <div className='bg-white w-[8vh] h-[8vh] rounded-full flex items-center border-2 border-blue-500'>
-                        <img src={AmkorLogo} alt="Logo" className='h-[4vh] object-contain' />
-                    </div>
-                    <p className='text-blue-800 font-bold text-[10px]'>Carl Angelo Hernandez</p>
-                </div>
+            <p className="text-blue-800 font-bold text-[15px]">
+                Available Vehicles
+            </p>
 
-                <div className='text-center w-[10vh] h-full flex flex-col items-center'>
-                    <div className='bg-white w-[8vh] h-[8vh] rounded-full flex items-center border-2 border-blue-500'>
-                        <img src={AmkorLogo} alt="Logo" className='h-[4vh] object-contain' />
-                    </div>
-                    <p className='text-blue-800 font-bold text-[10px]'>Carl Angelo Hernandez</p>
-                </div>
-                <div className='text-center w-[10vh] h-full flex flex-col items-center'>
-                    <div className='bg-white w-[8vh] h-[8vh] rounded-full flex items-center border-2 border-blue-500'>
-                        <img src={AmkorLogo} alt="Logo" className='h-[4vh] object-contain' />
-                    </div>
-                    <p className='text-blue-800 font-bold text-[10px]'>Carl Angelo Hernandez</p>
-                </div>
+            <div className="bg-gray-100 w-[30vh] h-[13vh] p-1 flex overflow-x-auto gap-1">
+
+                {drivers
+                    .filter((drivers) => drivers.availability == 1)
+                    .map((drivers) => (
+                        <div
+                            key={drivers.id}
+                            className="text-center w-[10vh] h-full flex flex-col items-center justify-center"
+                        >
+                            <div className="bg-white w-[7vh] h-[7vh] rounded-full flex items-center justify-center border-2 border-blue-500 overflow-hidden">
+
+                                <img
+                                    src={
+                                        drivers.picture
+                                            ? `http://localhost/Amkor_VehicleBooking_System_2026/Backend/${drivers.picture}`
+                                            : AmkorLogo
+                                    }
+                                    className="w-full h-full object-contain"
+                                />
+
+                            </div>
+
+                            <p className="text-blue-800 font-bold text-[10px] mt-1">
+                                {drivers.username}
+                            </p>
+                        </div>
+                    ))}
+
             </div>
-            <button className='rounded border-blue-800 border-2 p-2 w-full hover:bg-gray-100 text-white duration-300 transition-colors cursor-pointer'>
-                <p className='text-blue-800 font-bold text-[15px]'>Driver Schedules</p>
+
+            <button className="rounded border-blue-800 border-2 p-2 w-full hover:bg-gray-100 transition-colors cursor-pointer">
+                <p className="text-blue-800 font-bold text-[15px]">
+                    Vehicle Schedules
+                </p>
             </button>
-    </div>
-  )
+
+        </div>
+    );
 }
 
-export default AvailableDrivers
+export default AvailableDrivers;

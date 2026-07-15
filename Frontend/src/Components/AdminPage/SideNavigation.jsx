@@ -6,7 +6,6 @@ import AvailableVehicles from "./AvailableVehicles";
 function SideNavigation() {
     const [showModal, setShowModal] = useState(false);
     const [vehicles, setVehicles] = useState([]);
-
     useEffect(() => {
         fetch(
             "http://localhost/Amkor_VehicleBooking_System_2026/Backend/ManageVehicles/LoadVehicles.php",
@@ -20,6 +19,25 @@ function SideNavigation() {
                     setVehicles(data);
                 } else {
                     setVehicles([]);
+                }
+            })
+            .catch((err) => console.error(err));
+    }, []);
+
+    const [drivers, setDrivers] = useState([]);
+    useEffect(() => {
+        fetch(
+            "http://localhost/Amkor_VehicleBooking_System_2026/Backend/ManageDrivers/LoadDrivers.php",
+            {
+                cache: "no-store",
+            }
+        )
+            .then((res) => res.json())
+            .then((data) => {
+                if (Array.isArray(data)) {
+                    setDrivers(data);
+                } else {
+                    setDrivers([]);
                 }
             })
             .catch((err) => console.error(err));
@@ -45,7 +63,7 @@ function SideNavigation() {
             <OngoingVehicles />
 
             <div className="flex flex-col gap-3 p-5 w-full">
-                <AvailableDrivers />
+                <AvailableDrivers drivers={drivers} />
 
                 <AvailableVehicles vehicles={vehicles} />
             </div>
