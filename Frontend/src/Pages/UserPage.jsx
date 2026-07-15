@@ -6,12 +6,12 @@ import Map from '../Components/LandingPage/Map.jsx'
 function UserPage() {
   return (
     <div>
-        <Navbar/>
-        <div className='flex'>
-        <RequestRide user={loggedInUser}/>
-        <Map/>
+      <Navbar />
 
-        </div>
+      <div className='flex'>
+        <RequestRide />
+        <Map />
+      </div>
     </div>
   )
 }
