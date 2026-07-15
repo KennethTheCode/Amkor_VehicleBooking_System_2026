@@ -98,16 +98,14 @@ function LoadRequests({ requests = null }) {
                                         Pick up at:
                                     </p>
 
-                                    <div className="flex items-center">
-
+                                    <div className="flex justify-center w-[28vh]">
                                         <span className="material-symbols-outlined text-blue-800">
                                             location_on
                                         </span>
 
-                                        <p className="text-blue-800 font-bold">
+                                        <p className="text-blue-800  truncate font-bold text-center">
                                             {request.pick_up}
                                         </p>
-
                                     </div>
 
                                     <p className="font-bold">
@@ -129,13 +127,13 @@ function LoadRequests({ requests = null }) {
                                         Drop off at:
                                     </p>
 
-                                    <div className="flex items-center">
+                                    <div className="flex justify-center w-[28vh]">
 
                                         <span className="material-symbols-outlined text-red-800">
                                             location_on
                                         </span>
 
-                                        <p className="text-red-800 font-bold">
+                                        <p className="text-red-800 font-bold truncate">
                                             {request.drop_off}
                                         </p>
                                         
@@ -146,7 +144,7 @@ function LoadRequests({ requests = null }) {
                                 </div>
                                 {/* Buttons */}
                                 <div className="w-[15vh] flex flex-col justify-center gap-2">
-                                    <ReviewRequests/>
+                                    <ReviewRequests summary={request}/>
 
                                     <button className="bg-red-500 hover:bg-red-400 duration-300 text-white font-bold rounded cursor-pointer">
                                         Reject

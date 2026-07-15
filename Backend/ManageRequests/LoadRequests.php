@@ -15,6 +15,8 @@ SELECT
     VehicleTable.vehicle_model,
     VehicleTable.image,
 
+    GROUP_CONCAT(PassengerTable.passengers SEPARATOR ', ') AS passengers,
+
     BookingTable.pick_up,
     BookingTable.drop_off,
     BookingTable.purpose,
@@ -30,6 +32,24 @@ INNER JOIN UserTable
 
 INNER JOIN VehicleTable
     ON BookingTable.vehicle_id = VehicleTable.id
+
+LEFT JOIN PassengerTable
+    ON BookingTable.ticket_id = PassengerTable.ticket_id
+
+GROUP BY
+    BookingTable.ticket_id,
+    BookingTable.user_id,
+    UserTable.username,
+    VehicleTable.id,
+    VehicleTable.vehicle_model,
+    VehicleTable.image,
+    BookingTable.pick_up,
+    BookingTable.drop_off,
+    BookingTable.purpose,
+    BookingTable.date_needed,
+    BookingTable.time_needed,
+    BookingTable.status,
+    BookingTable.created_at
 
 ORDER BY BookingTable.ticket_id DESC
 ";
@@ -56,6 +76,8 @@ while ($row = $result->fetch_assoc()) {
         "vehicle_id"     => $row["vehicle_id"],
         "vehicle_model"  => $row["vehicle_model"],
         "image"          => $row["image"],
+
+        "passengers"     => $row["passengers"],
 
         "pick_up"        => $row["pick_up"],
         "drop_off"       => $row["drop_off"],
