@@ -67,7 +67,7 @@ function LoadRequests({ requests = null }) {
 
                         <div
                             key={request.ticket_id}
-                            className="bg-white shadow rounded-lg h-[20vh] flex flex-col "
+                            className="bg-white shadow rounded-lg pb-1 flex flex-col  "
                         >
 
                             <div className={`w-full border-b px-3 border-gray-200 py-1 flex justify-between
