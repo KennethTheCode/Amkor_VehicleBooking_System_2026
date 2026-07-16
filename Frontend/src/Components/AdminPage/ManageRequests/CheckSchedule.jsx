@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 function CheckSchedule({ summary }) {
+    console.log(summary)
     const [schedule, setSchedule] = useState([]);
 
     useEffect(() => {

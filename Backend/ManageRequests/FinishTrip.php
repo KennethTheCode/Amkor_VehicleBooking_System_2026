@@ -35,7 +35,6 @@ set_exception_handler(function ($e) {
 });
 
 // --- DB connection ----------------------------------------------------
-// Adjust this path if db.php lives somewhere else relative to this file.
 require __DIR__ . "/../db.php";
 
 if (!isset($conn) || $conn->connect_error) {
@@ -83,52 +82,29 @@ if (
     exit;
 }
 
-// --- Transaction --------------------------------------------------------
-$conn->begin_transaction();
-
+// --- Insert only: record the finished trip ------------------------------
 try {
 
-    // Get assigned driver and vehicle
     $stmt = $conn->prepare("
-        SELECT driver_id, vehicle_id
-        FROM BookingTable
-        WHERE ticket_id = ?
+        INSERT INTO FinishedTicket
+        (
+            ticket_id,
+            pick_up,
+            drop_off,
+            beginning,
+            ending,
+            time_out,
+            time_in,
+            date_finished
+        )
+        VALUES
+        (?, ?, ?, ?, ?, ?, ?, ?)
     ");
+
     if (!$stmt) {
-        throw new Exception("Prepare failed (select booking): " . $conn->error);
+        throw new Exception("Prepare failed (insert finished ticket): " . $conn->error);
     }
 
-    $stmt->bind_param("i", $ticket_id);
-    $stmt->execute();
-
-    $result = $stmt->get_result();
-
-    if ($result->num_rows == 0) {
-        throw new Exception("Booking not found for ticket_id $ticket_id.");
-    }
-
-    $booking = $result->fetch_assoc();
-
-    $driver_id  = $booking["driver_id"];
-    $vehicle_id = $booking["vehicle_id"];
-
-    $stmt->close();
-
-
-    // Update booking status
-    $stmt = $conn->prepare("
-        UPDATE BookingTable
-        SET status = 'Finished'
-        WHERE ticket_id = ?
-    ");
-    if (!$stmt) {
-        throw new Exception("Prepare failed (update booking): " . $conn->error);
-    }
-
-    $stmt->bind_param("i", $ticket_id);
-    $stmt->execute();
-    $stmt->close();
-    
     $stmt->bind_param(
         "isssssss",
         $ticket_id,
@@ -144,49 +120,15 @@ try {
     if (!$stmt->execute()) {
         throw new Exception("Insert failed: " . $stmt->error);
     }
+
     $stmt->close();
-
-
-    // Driver available again
-    $stmt = $conn->prepare("
-        UPDATE DriverTable
-        SET availability = 1
-        WHERE id = ?
-    ");
-    if (!$stmt) {
-        throw new Exception("Prepare failed (update driver): " . $conn->error);
-    }
-
-    $stmt->bind_param("i", $driver_id);
-    $stmt->execute();
-    $stmt->close();
-
-
-    // Vehicle available again
-    $stmt = $conn->prepare("
-        UPDATE VehicleTable
-        SET availability = 1
-        WHERE id = ?
-    ");
-    if (!$stmt) {
-        throw new Exception("Prepare failed (update vehicle): " . $conn->error);
-    }
-
-    $stmt->bind_param("i", $vehicle_id);
-    $stmt->execute();
-    $stmt->close();
-
-
-    $conn->commit();
 
     echo json_encode([
         "success" => true,
-        "message" => "Trip finished successfully."
+        "message" => "Trip record saved successfully."
     ]);
 
 } catch (Exception $e) {
-
-    $conn->rollback();
 
     echo json_encode([
         "success" => false,

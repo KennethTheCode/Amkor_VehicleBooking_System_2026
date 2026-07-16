@@ -9,7 +9,7 @@ function AvailableDrivers({ drivers }) {
                 Available Vehicles
             </p>
 
-            <div className="bg-gray-100 w-[30vh] h-[13vh] p-1 flex overflow-x-auto gap-1">
+            <div className="bg-gray-100 w-[30vh] h-[13vh] p-1 flex overflow-x-auto gap-5">
 
                 {drivers
                     .filter((drivers) => drivers.availability == 1)
@@ -31,7 +31,7 @@ function AvailableDrivers({ drivers }) {
 
                             </div>
 
-                            <p className="text-blue-800 font-bold text-[10px] mt-1">
+                            <p className="text-blue-800 truncate w-[8vh] font-bold text-[10px] mt-1">
                                 {drivers.username}
                             </p>
                         </div>

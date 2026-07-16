@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
+import LoadOdometer from "./LoadOdometer";
 
 // Change this if your folder name is different on disk (case-sensitive on some setups)
 const API_BASE = "http://localhost/Amkor_VehicleBooking_System_2026/Backend/ManageRequests";
 
 function EditOdometer({ request }) {
     const [showModal, setShowModal] = useState(false);
-    const [submitting, setSubmitting] = useState(false);
+    const [addingOdometer, setAddingOdometer] = useState(false);
+    const [finishingTrip, setFinishingTrip] = useState(false);
 
     const [form, setForm] = useState({
         ticket_id: "",
@@ -42,22 +44,17 @@ function EditOdometer({ request }) {
         }));
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setSubmitting(true);
-
+    // Shared "fetch, safely parse JSON, alert" logic used by both actions.
+    const postAndHandle = async (url, payload, { closeOnSuccess = false } = {}) => {
         try {
-            const response = await fetch(`${API_BASE}/UpdateOdometer.php`, {
+            const response = await fetch(url, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify(form),
+                body: JSON.stringify(payload),
             });
 
-            // Read the raw text first so we can diagnose non-JSON
-            // responses (404 pages, PHP fatal errors, etc.) instead of
-            // just throwing an opaque "Unable to connect" error.
             const raw = await response.text();
 
             let data;
@@ -78,20 +75,43 @@ function EditOdometer({ request }) {
 
             alert(data.message);
 
-            if (data.success) {
+            if (data.success && closeOnSuccess) {
                 setShowModal(false);
                 window.location.reload();
             }
 
         } catch (error) {
-            // This only fires for actual network failures (server down,
-            // CORS block, wrong host/port) - not for 404s or PHP errors,
-            // since those still return a response.
             console.error(error);
             alert("Unable to connect to the server. Is Apache/XAMPP running?");
-        } finally {
-            setSubmitting(false);
         }
+    };
+
+    // Records the odometer/time log for this trip (insert only —
+    // does not change the booking's status or free up the driver/vehicle).
+    const handleAddOdometer = async (e) => {
+        e.preventDefault();
+
+        if (!form.beginning || !form.ending || !form.time_in || !form.time_out) {
+            alert("Please complete all odometer and time fields first.");
+            return;
+        }
+
+        setAddingOdometer(true);
+        await postAndHandle(`${API_BASE}/UpdateOdometer.php`, form, { closeOnSuccess: false });
+        setAddingOdometer(false);
+    };
+
+    // Marks the trip as Finished and frees the driver/vehicle back to available.
+    const handleFinishTrip = async (e) => {
+        e.preventDefault();
+
+        setFinishingTrip(true);
+        await postAndHandle(
+            `${API_BASE}/FinishTrip.php`,
+            { ticket_id: form.ticket_id },
+            { closeOnSuccess: true }
+        );
+        setFinishingTrip(false);
     };
 
     return (
@@ -133,15 +153,10 @@ function EditOdometer({ request }) {
 
                         </div>
 
-                        <form
-                            onSubmit={handleSubmit}
-                            className="flex flex-col"
-                        >
+                       <LoadOdometer/>
+                        <div className="flex flex-col">
 
                             <div className="grid grid-cols-3 gap-6 p-6">
-
-                                {/* Destination */}
-
                                 <div>
 
                                     <p className="font-bold text-blue-900 text-lg mb-3">
@@ -185,8 +200,6 @@ function EditOdometer({ request }) {
                                     </div>
 
                                 </div>
-
-                                {/* Odometer */}
 
                                 <div>
 
@@ -301,19 +314,29 @@ function EditOdometer({ request }) {
 
                             </div>
 
-                            <div className="p-5">
+                            <div className="p-5 flex gap-3">
 
                                 <button
-                                    type="submit"
-                                    disabled={submitting}
-                                    className="bg-blue-800 hover:bg-blue-700 disabled:bg-blue-300 text-white font-bold rounded w-full py-3 transition"
+                                    type="button"
+                                    onClick={handleAddOdometer}
+                                    disabled={addingOdometer}
+                                    className="bg-cyan-800 hover:bg-cyan-700 disabled:bg-cyan-300 text-white font-bold rounded w-1/2 py-3 transition"
                                 >
-                                    {submitting ? "Saving..." : "Finish Trip"}
+                                    {addingOdometer ? "Saving..." : "Add Odometer"}
+                                </button>
+
+                                <button
+                                    type="button"
+                                    onClick={handleFinishTrip}
+                                    disabled={finishingTrip}
+                                    className="bg-blue-800 hover:bg-blue-700 disabled:bg-blue-300 text-white font-bold rounded w-1/2 py-3 transition"
+                                >
+                                    {finishingTrip ? "Finishing..." : "Finish Trip"}
                                 </button>
 
                             </div>
 
-                        </form>
+                        </div>
 
                     </div>
 

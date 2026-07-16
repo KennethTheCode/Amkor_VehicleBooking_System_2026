@@ -26,7 +26,7 @@ function OngoingVehicles({ requests = [] }) {
                         <div className='flex justify-center items-center flex-col'>
                                 <div className='flex justify-center items-center'>
                                     <span className='material-symbols-outlined text-blue-800'>location_on</span>
-                                    <p className='text-blue-800 font-bold text-[14px]'>{item.time_needed}</p>
+                                    <p className='text-blue-800 font-bold text-[14px] truncate w-[8vh]'>{item.pick_up}</p>
                                 </div>
                             <p className='text-gray-400 font-bold text-[10px]'>{item.date_needed}</p>
                         </div>
@@ -34,7 +34,7 @@ function OngoingVehicles({ requests = [] }) {
 
                             <div className='flex justify-center items-center'>
                                 <span className='material-symbols-outlined text-red-800'>distance</span>
-                                <p className='text-red-800 font-bold text-[14px]'>{item.time_ended ?? '00:00:00'}</p>
+                                <p className='text-red-800 font-bold text-[14px] truncate w-[8vh]'>{item.drop_off ?? '00:00:00'}</p>
                             </div>
                             <p className='text-gray-400 font-bold text-[10px]'>{item.date_ended ?? '0000-00-00'}</p>
                         </div>

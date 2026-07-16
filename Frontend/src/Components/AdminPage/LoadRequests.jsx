@@ -9,11 +9,17 @@ function LoadRequests({ requests = null }) {
     const BACKEND_URL =
         "http://localhost/Amkor_VehicleBooking_System_2026/Backend/ManageRequests/LoadRequests.php";
 
+    // Hide tickets that are already Finished or Ongoing
+    const filterOutCompleted = (list) =>
+        list.filter(
+            (r) => r.status !== "Finished" && r.status !== "Ongoing"
+        );
+
     const loadRequests = () => {
         setIsSearching(true);
 
         if (Array.isArray(requests) && requests.length > 0) {
-            setData(requests);
+            setData(filterOutCompleted(requests));
             setIsSearching(false);
             return;
         }
@@ -23,7 +29,8 @@ function LoadRequests({ requests = null }) {
         })
             .then((res) => res.json())
             .then((json) => {
-                setData(Array.isArray(json) ? json : []);
+                const list = Array.isArray(json) ? json : [];
+                setData(filterOutCompleted(list));
                 setIsSearching(false);
             })
             .catch((err) => {
@@ -128,16 +135,11 @@ function LoadRequests({ requests = null }) {
                                     </p>
 
                                 </div>
-
-                                {/* Buttons */}
-                                <div className="w-[15vh] flex flex-col justify-center gap-2">
-                                    <ReviewRequests summary={request}/>
-
-                                    <button className="bg-red-500 hover:bg-red-400 duration-300 text-white font-bold rounded cursor-pointer">
-                                        Reject
-                                    </button>
-
+                                <div className="h-full flex items-center justify-center flex-col">
+                                    <p className="text-[25px] font-bold">→</p>
+                                    <p className="text-[25px] font-bold">←</p>
                                 </div>
+                                
 
                                 {/* Drop Off */}
                                 <div className="w-[35vh] flex flex-col justify-center items-center py-3">
@@ -161,8 +163,17 @@ function LoadRequests({ requests = null }) {
                                         <p className="text-gray-500 font-bold">--</p>
                                         <p className="text-gray-400 ">--</p>
                                 </div>
-                   
+                                {/* Buttons */}
+                                <div className="w-[15vh] flex flex-col justify-center gap-2">
+                                    <ReviewRequests summary={request}/>
+
+                                    <button className="bg-red-500 hover:bg-red-400 duration-300 text-white font-bold rounded cursor-pointer">
+                                        Reject
+                                    </button>
+
+                                </div>
                             </div>
+                            
                             <div className="pb-2 px-2">
                                 <div
                                     className={`text-center font-bold rounded 
