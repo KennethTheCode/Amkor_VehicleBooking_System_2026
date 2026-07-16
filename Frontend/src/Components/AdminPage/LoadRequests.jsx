@@ -67,29 +67,40 @@ function LoadRequests({ requests = null }) {
 
                         <div
                             key={request.ticket_id}
-                            className="bg-white rounded-lg h-[20vh] p-2 flex flex-col "
+                            className="bg-white shadow rounded-lg h-[20vh] flex flex-col "
                         >
 
-                            <div className="w-full border-b border-gray-200 pb-1 flex justify-between">
-                                <p className="text-gray-500 font-bold text-[13px]">
+                            <div className={`w-full border-b px-3 border-gray-200 py-1 flex justify-between
+                             ${
+                                            request.status === "Approved"
+                                                ? "bg-green-500 text-green-700 border border-green-200"
+                                                : request.status === "Rejected"
+                                                ? "bg-red-500  border border-red-200"
+                                                : request.status === "Pending"
+                                                ? "bg-orange-500 text-orange-700 border border-orange-200"
+                                                : "bg-blue-500 border border-blue-200"
+                                        }`
+                                
+                            }>
+                                <p className="text-white font-bold text-[13px]">
                                     Ticket ID: {request.ticket_id}
                                 </p>
 
-                                <p className="text-gray-500 font-bold text-[13px]">
+                                <p className="text-white font-bold text-[13px]">
                                     Requested By: {request.username}
                                 </p>
 
-                                <p className="text-gray-500 font-bold text-[13px]">
+                                <p className="text-white font-bold text-[13px]">
                                     Vehicle Needed: {request.vehicle_model}
                                 </p>
 
-                                <p className="text-gray-500 font-bold text-[13px]">
+                                <p className="text-white font-bold text-[13px]">
                                     Created at: {request.created_at}
                                 </p>
 
                             </div>
 
-                            <div className="flex justify-between h-full">
+                            <div className="flex justify-between h-full px-3">
 
                                 {/* Pickup */}
                                 <div className="w-[35vh] flex flex-col justify-center items-center">
@@ -118,7 +129,15 @@ function LoadRequests({ requests = null }) {
 
                                 </div>
 
-                               
+                                {/* Buttons */}
+                                <div className="w-[15vh] flex flex-col justify-center gap-2">
+                                    <ReviewRequests summary={request}/>
+
+                                    <button className="bg-red-500 hover:bg-red-400 duration-300 text-white font-bold rounded cursor-pointer">
+                                        Reject
+                                    </button>
+
+                                </div>
 
                                 {/* Drop Off */}
                                 <div className="w-[35vh] flex flex-col justify-center items-center py-3">
@@ -142,16 +161,9 @@ function LoadRequests({ requests = null }) {
                                         <p className="text-gray-500 font-bold">--</p>
                                         <p className="text-gray-400 ">--</p>
                                 </div>
-                                {/* Buttons */}
-                                <div className="w-[15vh] flex flex-col justify-center gap-2">
-                                    <ReviewRequests summary={request}/>
-
-                                    <button className="bg-red-500 hover:bg-red-400 duration-300 text-white font-bold rounded cursor-pointer">
-                                        Reject
-                                    </button>
-
-                                </div>
+                   
                             </div>
+                            <div className="pb-2 px-2">
                                 <div
                                     className={`text-center font-bold rounded 
                                         ${
@@ -161,11 +173,12 @@ function LoadRequests({ requests = null }) {
                                                 ? "bg-red-100 text-red-700 border border-red-200"
                                                 : request.status === "Pending"
                                                 ? "bg-orange-100 text-orange-700 border border-orange-200"
-                                                : "bg-gray-100 text-gray-700 border border-gray-200"
+                                                : "bg-blue-100 text-blue-700 border border-blue-200"
                                         }`}
                                 >
                                     <p>{request.status}</p>
                                 </div>
+                            </div>
                         </div>
 
                     ))

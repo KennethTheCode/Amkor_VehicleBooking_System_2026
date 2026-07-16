@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
+import CheckSchedule from "./CheckSchedule";
 
 function ReviewRequests({ summary  }) {
-    const [showModal, setShowModal] = useState(false)
+ const [showModal, setShowModal] = useState(false);
 
-    const [drivers, setDrivers] = useState([]);
+const [drivers, setDrivers] = useState([]);
+const [selectedDriver, setSelectedDriver] = useState("");
 
-    useEffect(() => {
+useEffect(() => {
     fetch(
         "http://localhost/Amkor_VehicleBooking_System_2026/Backend/ManageDrivers/LoadDrivers.php"
     )
@@ -16,12 +18,50 @@ function ReviewRequests({ summary  }) {
         .catch((err) => console.error(err));
 }, []);
 
-    const [selectedDriver, setSelectedDriver] = useState("");
+const handleSubmit = async (e) => {
+    e.preventDefault();
+    window.location.reload()
+
+    const schedule = {
+        id: selectedDriver,
+        vehicle_id: summary.vehicle_id,
+        ticket_id: summary.ticket_id,
+        date_needed: summary.date_needed,
+    };
+
+    console.log(schedule);
+
+    try {
+        const response = await fetch(
+            "http://localhost/Amkor_VehicleBooking_System_2026/Backend/ManageRequests/UpdateAvailability.php",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(schedule),
+            }
+        );
+
+        const result = await response.json();
+
+        if (result.success) {
+            alert(result.message);
+            setShowModal(false);
+        } else {
+            alert(result.message);
+        }
+
+    } catch (error) {
+        console.error(error);
+        alert("Something went wrong.");
+    }
+};
   return (
     <div>
         <button 
         onClick={() => setShowModal(true)}
-        className="w-full bg-green-500 hover:bg-green-400 duration-300 text-white font-bold rounded cursor-pointer">
+        className="w-full bg-cyan-900 hover:bg-blue-600 duration-300 text-white font-bold rounded cursor-pointer">
             Review
         </button>
         {showModal && (
@@ -83,7 +123,7 @@ function ReviewRequests({ summary  }) {
                             
 
                         </div>
-                        <form > 
+                        <form onSubmit={handleSubmit} > 
                             <div className="mt-4 bg-white shadow mx-5 p-5 border border-gray-200 rounded">                             
                                 <div className="border-b border-gray-300 pb-3"> 
                                     <p className="font-bold">Purpose of Request:</p>
@@ -108,6 +148,7 @@ function ReviewRequests({ summary  }) {
                                     ))}
                                 </select>
                             </div>
+                        <CheckSchedule summary={summary} />
                         <div
                             className={`mx-5 shadow-lg text-center py-2 font-bold rounded mt-4
                             ${
@@ -122,7 +163,9 @@ function ReviewRequests({ summary  }) {
                                 <p>{summary.status}</p>
                         </div>
                         <div className="flex justify-bottom gap-3  h-[10vh] mt-5 p-5 border-t-3 border-gray-200 rounded-lg bg-white">
-                            <button className="bg-blue-800 p-1 font-bold text-white rounded w-[70%]">
+                            <button 
+                            type="submit"
+                            className="bg-blue-800 p-1 font-bold text-white rounded w-[70%]">
                                 Approve
                             </button>
                             <button 
