@@ -17,7 +17,7 @@ SELECT
     BookingTable.ticket_id,
     BookingTable.driver_id,
     DriverTable.username AS driver_username,
-
+c
     BookingTable.vehicle_id,
     VehicleTable.vehicle_model,
 

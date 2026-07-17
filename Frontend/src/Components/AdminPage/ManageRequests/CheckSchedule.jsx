@@ -1,21 +1,23 @@
 import React, { useEffect, useState } from "react";
 
 function CheckSchedule({ summary }) {
-    console.log(summary)
     const [schedule, setSchedule] = useState([]);
 
     useEffect(() => {
-        if (!summary.date_needed) return;
+    if (!summary.date_needed) return;
 
-        fetch(
-            `http://localhost/Amkor_VehicleBooking_System_2026/Backend/ManageRequests/GetScheduleByDate.php?date=${summary.date_needed}`
-        )
-            .then((res) => res.json())
-            .then((data) => {
-                setSchedule(data);
-            })
-            .catch((err) => console.error(err));
-    }, [summary.date_needed]);
+    fetch(
+        `http://localhost/Amkor_VehicleBooking_System_2026/Backend/ManageRequests/GetScheduleByDate.php?date=${summary.date_needed}`
+    )
+        .then((res) => res.json())
+        .then((data) => {
+            const approvedOnly = (data || []).filter(
+                (item) => item.status === "Approved"
+            );
+            setSchedule(approvedOnly);
+        })
+        .catch((err) => console.error(err));
+}, [summary.date_needed]);
 
     return (
         <div className="mt-4 gap-2 flex flex-col h-[20vh] overflow-y-auto">
@@ -51,13 +53,8 @@ function CheckSchedule({ summary }) {
                         <div className="flex justify-between items-center">
                             <p className="font-bold">Time Needed:</p>
                             <p className="text-gray-500 font text-[14px]">{item.time_needed ?? "No Assigned Driver"}</p>
-                        </div>
-                        
-                        <div className="flex justify-between items-center">
-                            <p className="font-bold">Driver:</p>
-                            <p className="text-gray-500 font text-[14px]">{item.date_needed ?? "No Assigned Driver"}</p>
-                        </div>
-                        
+                        </div>            
+
                     </div>
                 ))
             )}
