@@ -29,7 +29,7 @@ $username = trim($data["username"]);
 $password = trim($data["password"]);
 
 $sql = "SELECT user_id, username, password, account_type, picture
-        FROM UserTable
+        FROM usertable
         WHERE username = ?";
 
 $stmt = $conn->prepare($sql);
