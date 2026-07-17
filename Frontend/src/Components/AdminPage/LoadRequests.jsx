@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import FilterRequests from "./FilterRequests/FilterRequests";
 import ReviewRequests from "./ManageRequests/ReviewRequests";
+import RejectRequests from "./ManageRequests/RejectRequests";
 
 function LoadRequests({ requests = null }) {
     const [data, setData] = useState([]);
@@ -167,9 +168,7 @@ function LoadRequests({ requests = null }) {
                                 <div className="w-[15vh] flex flex-col justify-center gap-2">
                                     <ReviewRequests summary={request}/>
 
-                                    <button className="bg-red-500 hover:bg-red-400 duration-300 text-white font-bold rounded cursor-pointer">
-                                        Reject
-                                    </button>
+                                    <RejectRequests summary={request}/>
 
                                 </div>
                             </div>

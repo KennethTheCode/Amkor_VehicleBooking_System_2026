@@ -19,8 +19,6 @@ function ReviewRequests({ summary }) {
             .catch((err) => console.error(err));
     }, []);
 
-    // Shared "fetch, safely parse JSON, alert, reload" logic used by
-    // both the Approve action and the Set-to-Ongoing action.
     const postAndHandle = async (url, payload) => {
         setSubmitting(true);
 
