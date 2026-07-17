@@ -36,7 +36,7 @@ function AddUsers() {
 
         try {
             const response = await fetch(
-                "http://localhost/Amkor_VehicleBooking_System_2026/Backend/ManageUsers/AddUsers.php",
+                "http://amkor-vehicle-booking-system-2026.ct.ws/Backend/ManageUsers/AddUsers.php",
                 {
                     method: "POST",
                     body: formData,

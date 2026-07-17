@@ -40,7 +40,7 @@ const [driver, setDriver] = useState({
 
         try {
             const response = await fetch(
-                "http://localhost/Amkor_VehicleBooking_System_2026/Backend/ManageDrivers/AddDrivers.php",
+                "http://amkor-vehicle-booking-system-2026.ct.ws/Backend/ManageDrivers/AddDrivers.php",
                 {
                     method: "POST",
                     body: formData,

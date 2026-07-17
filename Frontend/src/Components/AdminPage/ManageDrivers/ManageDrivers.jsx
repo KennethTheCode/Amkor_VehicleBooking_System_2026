@@ -13,7 +13,7 @@ function ManageDrivers({ drivers = null }) {
         (typeof import.meta !== "undefined" &&
             import.meta.env &&
             import.meta.env.VITE_BACKEND_URL) ||
-        "http://localhost/Amkor_VehicleBooking_System_2026/Backend/ManageDrivers/LoadDrivers.php";
+        "http://amkor-vehicle-booking-system-2026.ct.ws/Backend/ManageDrivers/LoadDrivers.php";
 
     const loadDrivers = () => {
         setIsSearching(true);
@@ -91,7 +91,7 @@ function ManageDrivers({ drivers = null }) {
                                                     <img
                                                         src={
                                                             driver.picture
-                                                                ? `http://localhost/Amkor_VehicleBooking_System_2026/Backend/${driver.picture}`
+                                                                ? `http://amkor-vehicle-booking-system-2026.ct.ws/Backend/${driver.picture}`
                                                                 : AmkorLogo
                                                         }
                                                         alt={driver.username}

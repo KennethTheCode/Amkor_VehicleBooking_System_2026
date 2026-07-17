@@ -8,7 +8,7 @@ function Dashboard() {
     const [vehicles, setVehicles] = useState([]);
     useEffect(() => {
         fetch(
-            "http://localhost/Amkor_VehicleBooking_System_2026/Backend/ManageVehicles/LoadVehicles.php",
+            "http://amkor-vehicle-booking-system-2026.ct.ws/Backend/ManageVehicles/LoadVehicles.php",
             {
                 cache: "no-store",
             }
@@ -32,7 +32,7 @@ function Dashboard() {
     const [drivers, setDrivers] = useState([]);
     useEffect(() => {
         fetch(
-            "http://localhost/Amkor_VehicleBooking_System_2026/Backend/ManageDrivers/LoadDrivers.php",
+            "http://amkor-vehicle-booking-system-2026.ct.ws/Backend/ManageDrivers/LoadDrivers.php",
             {
                 cache: "no-store",
             }
@@ -56,7 +56,7 @@ function Dashboard() {
     const [requests, setRequests] = useState([]);
     useEffect(() => {
         fetch(
-            "http://localhost/Amkor_VehicleBooking_System_2026/Backend/ManageRequests/LoadRequests.php",
+            "http://amkor-vehicle-booking-system-2026.ct.ws/Backend/ManageRequests/LoadRequests.php",
             {
                 cache: "no-store",
             }

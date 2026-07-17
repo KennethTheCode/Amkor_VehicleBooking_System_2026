@@ -27,7 +27,7 @@ function LandingPage() {
 
         try {
             const response = await fetch(
-                "http://localhost/Amkor_VehicleBooking_System_2026/Backend/LoginAuthentication.php",
+                "http://amkor-vehicle-booking-system-2026.ct.ws/Backend/LoginAuthentication.php",
                 {
                     method: "POST",
                     headers: {

@@ -14,7 +14,7 @@ function ManageVehicles({ vehicles = null }) {
         (typeof import.meta !== "undefined" &&
             import.meta.env &&
             import.meta.env.VITE_BACKEND_URL) ||
-        "http://localhost/Amkor_VehicleBooking_System_2026/Backend/ManageVehicles/LoadVehicles.php";
+        "http://amkor-vehicle-booking-system-2026.ct.ws/Backend/ManageVehicles/LoadVehicles.php";
 
     const loadVehicle = () => {
         setIsSearching(true);
@@ -96,7 +96,7 @@ function ManageVehicles({ vehicles = null }) {
                                                             <img
                                                                 src={
                                                                     vehicle.image
-                                                                        ? `http://localhost/Amkor_VehicleBooking_System_2026/Backend/${vehicle.image}`
+                                                                        ? `http://amkor-vehicle-booking-system-2026.ct.ws/Backend/${vehicle.image}`
                                                                         : AmkorLogo
                                                                 }
                                                                 alt={vehicle.vehicle_model}
@@ -138,7 +138,7 @@ function ManageVehicles({ vehicles = null }) {
                                                         <img
                                                             src={
                                                                 vehicle.orcr
-                                                                    ? `http://localhost/Amkor_VehicleBooking_System_2026/Backend/${vehicle.orcr}`
+                                                                    ? `http://amkor-vehicle-booking-system-2026.ct.ws/Backend/${vehicle.orcr}`
                                                                     : AmkorLogo
                                                             }
                                                             alt={vehicle.vehicle_model}

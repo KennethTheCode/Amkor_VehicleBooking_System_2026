@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import LoadOdometer from "./LoadOdometer";
 
 // Change this if your folder name is different on disk (case-sensitive on some setups)
-const API_BASE = "http://localhost/Amkor_VehicleBooking_System_2026/Backend/ManageRequests";
+const API_BASE = "http://amkor-vehicle-booking-system-2026.ct.ws/Backend/ManageRequests";
 
 function EditOdometer({ request }) {
     const [showModal, setShowModal] = useState(false);

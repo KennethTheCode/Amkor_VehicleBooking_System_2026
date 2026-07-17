@@ -7,7 +7,7 @@ function CheckSchedule({ summary }) {
     if (!summary.date_needed) return;
 
     fetch(
-        `http://localhost/Amkor_VehicleBooking_System_2026/Backend/ManageRequests/GetScheduleByDate.php?date=${summary.date_needed}`
+        `http://amkor-vehicle-booking-system-2026.ct.ws/Backend/ManageRequests/GetScheduleByDate.php?date=${summary.date_needed}`
     )
         .then((res) => res.json())
         .then((data) => {

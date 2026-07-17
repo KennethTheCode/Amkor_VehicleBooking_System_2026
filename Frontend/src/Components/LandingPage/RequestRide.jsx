@@ -29,7 +29,7 @@ function RequestRide() {
 
     useEffect(() => {
         fetch(
-            "http://localhost/Amkor_VehicleBooking_System_2026/Backend/ManageVehicles/LoadVehicles.php"
+            "http://amkor-vehicle-booking-system-2026.ct.ws/Backend/ManageVehicles/LoadVehicles.php"
         )
             .then((res) => res.json())
             .then((data) => {
@@ -91,7 +91,7 @@ function RequestRide() {
     try {
 
         const response = await fetch(
-            "http://localhost/Amkor_VehicleBooking_System_2026/Backend/ManageRequests/AddRequest.php",
+            "http://amkor-vehicle-booking-system-2026.ct.ws/Backend/ManageRequests/AddRequest.php",
             {
                 method: "POST",
                 headers: {
@@ -200,7 +200,7 @@ function RequestRide() {
                                         <img
                                             src={
                                                 vehicle.image
-                                                    ? `http://localhost/Amkor_VehicleBooking_System_2026/Backend/${vehicle.image}`
+                                                    ? `http://amkor-vehicle-booking-system-2026.ct.ws/Backend/${vehicle.image}`
                                                     : AmkorLogo
                                             }
                                             alt={vehicle.vehicle_model}

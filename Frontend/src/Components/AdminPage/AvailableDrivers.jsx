@@ -23,7 +23,7 @@ function AvailableDrivers({ drivers }) {
                                 <img
                                     src={
                                         drivers.picture
-                                            ? `http://localhost/Amkor_VehicleBooking_System_2026/Backend/${drivers.picture}`
+                                            ? `http://amkor-vehicle-booking-system-2026.ct.ws/Backend/${drivers.picture}`
                                             : AmkorLogo
                                     }
                                     className="w-full h-full object-contain"

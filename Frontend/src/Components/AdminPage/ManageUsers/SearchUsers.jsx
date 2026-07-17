@@ -7,7 +7,7 @@ function SearchUsers( {onSearch} ) {
   const doSearch = async (value) => {
     try {
       const response = await fetch(
-        "http://localhost/Amkor_VehicleBooking_System_2026/Backend/ManageUsers/SearchUsers.php",
+        "http://lamkor-vehicle-booking-system-2026.ct.ws/Backend/ManageUsers/SearchUsers.php",
         {
           method: "POST",
           headers: {

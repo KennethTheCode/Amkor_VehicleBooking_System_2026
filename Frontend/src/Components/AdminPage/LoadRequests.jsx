@@ -9,9 +9,9 @@ function LoadRequests({ requests = null }) {
     const [filter, setFilter] = useState("");
 
     const BACKEND_URL =
-        "http://localhost/Amkor_VehicleBooking_System_2026/Backend/ManageRequests/LoadRequests.php";
+        "http://amkor-vehicle-booking-system-2026.ct.ws/Backend/ManageRequests/LoadRequests.php";
     const FILTER_URL =
-        "http://localhost/Amkor_VehicleBooking_System_2026/Backend/ManageRequests/FilterRequests.php";
+        "http://amkor-vehicle-booking-system-2026.ct.ws/Backend/ManageRequests/FilterRequests.php";
 
     // Hide tickets that are already Finished or Ongoing
     const filterOutCompleted = (list) =>

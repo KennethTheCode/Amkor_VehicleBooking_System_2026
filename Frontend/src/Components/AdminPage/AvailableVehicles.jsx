@@ -23,7 +23,7 @@ function AvailableVehicles({ vehicles }) {
                                 <img
                                     src={
                                         vehicle.image
-                                            ? `http://localhost/Amkor_VehicleBooking_System_2026/Backend/${vehicle.image}`
+                                            ? `http://amkor-vehicle-booking-system-2026.ct.ws/Backend/${vehicle.image}`
                                             : AmkorLogo
                                     }
                                     alt={vehicle.vehicle_model}

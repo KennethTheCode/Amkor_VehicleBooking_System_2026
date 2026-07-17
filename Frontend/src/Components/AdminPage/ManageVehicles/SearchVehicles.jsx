@@ -7,7 +7,7 @@ function SearchVehicles( {onSearch} ) {
   const doSearch = async (value) => {
     try {
       const response = await fetch(
-        "http://localhost/Amkor_VehicleBooking_System_2026/Backend/ManageVehicles/SearchVehicles.php",
+        "http://amkor-vehicle-booking-system-2026.ct.ws/Backend/ManageVehicles/SearchVehicles.php",
         {
           method: "POST",
           headers: {

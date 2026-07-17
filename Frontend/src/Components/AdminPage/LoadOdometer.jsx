@@ -10,7 +10,7 @@ function LoadOdometer({ ticket_id }) {
         setIsLoading(true);
 
         fetch(
-            `http://localhost/Amkor_VehicleBooking_System_2026/Backend/ManageRequests/LoadOdometer.php?ticket_id=${ticket_id}`,
+            `http://amkor-vehicle-booking-system-2026.ct.ws/Backend/ManageRequests/LoadOdometer.php?ticket_id=${ticket_id}`,
             {
                 cache: "no-store",
             }

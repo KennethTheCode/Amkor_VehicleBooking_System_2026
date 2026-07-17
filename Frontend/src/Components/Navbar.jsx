@@ -32,7 +32,7 @@ function Navbar() {
                     <img
                         src={
                             user?.picture
-                                ? `http://localhost/Amkor_VehicleBooking_System_2026/Backend/${user.picture}`
+                                ? `http://amkor-vehicle-booking-system-2026.ct.ws/Backend/${user.picture}`
                                 : AmkorLogo
                         }
                         alt="Profile"
