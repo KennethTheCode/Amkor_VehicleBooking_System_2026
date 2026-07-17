@@ -4,7 +4,7 @@ $conn = new mysqli(
     "localhost",
     "root",
     "",
-    "amkorvehiclebookingsystem"
+    "AmkorVehicleBookingSystem"
 );
 
 if ($conn->connect_error) {
