@@ -6,9 +6,12 @@ import RejectRequests from "./ManageRequests/RejectRequests";
 function LoadRequests({ requests = null }) {
     const [data, setData] = useState([]);
     const [isSearching, setIsSearching] = useState(false);
+    const [filter, setFilter] = useState("");
 
     const BACKEND_URL =
         "http://localhost/Amkor_VehicleBooking_System_2026/Backend/ManageRequests/LoadRequests.php";
+    const FILTER_URL =
+        "http://localhost/Amkor_VehicleBooking_System_2026/Backend/ManageRequests/FilterRequests.php";
 
     // Hide tickets that are already Finished or Ongoing
     const filterOutCompleted = (list) =>
@@ -25,7 +28,11 @@ function LoadRequests({ requests = null }) {
             return;
         }
 
-        fetch(BACKEND_URL, {
+        const url = filter
+            ? `${FILTER_URL}?filter=${encodeURIComponent(filter)}`
+            : BACKEND_URL;
+
+        fetch(url, {
             cache: "no-store",
         })
             .then((res) => res.json())
@@ -42,7 +49,7 @@ function LoadRequests({ requests = null }) {
 
     useEffect(() => {
         loadRequests();
-    }, [requests]);
+    }, [requests, filter]);
 
     return (
         <div className="h-[80vh] w-full flex flex-col overflow-y-auto">
@@ -52,7 +59,7 @@ function LoadRequests({ requests = null }) {
                     Ticket Count: {data.length}
                 </p>
 
-                <FilterRequests />
+                <FilterRequests onFilterChange={setFilter} />
             </div>
 
             <div className="w-full py-1 flex flex-col gap-3">

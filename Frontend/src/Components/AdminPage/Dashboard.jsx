@@ -121,17 +121,12 @@ function Dashboard() {
                 </div>
             </div>
              <div className='flex'>
-                <div className='border-r-2 border-gray-400 px-1'>
+                <div className='px-1'>
                     <p 
                     onClick={() => navigate('/admin')}
                     className='text-gray-500 font-bold text-[12px] hover:text-gray-400 duration-300 transition-colors cursor-pointer'>Manage Requests</p>
                 </div>
-                <div className='border-r-2 border-gray-400 px-1'>
-                    <p className='text-gray-500 font-bold text-[12px] hover:text-gray-400 duration-300 transition-colors cursor-pointer'>Manage All Tickets</p>
-                </div>
-                <div className='px-1'>
-                    <p className='text-gray-500 font-bold text-[12px] hover:text-gray-400 duration-300 transition-colors cursor-pointer'>Manage All Tickets</p>
-                </div>
+                
             </div>
             
         </div>
