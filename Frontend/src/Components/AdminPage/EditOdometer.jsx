@@ -21,7 +21,11 @@ function EditOdometer({ request }) {
     });
 
     useEffect(() => {
-        if (request) {
+        // Guard against re-initializing on every re-render of `request`.
+        // If the parent recreates the `request` object on each render
+        // (e.g. from a polling refetch) but it's still the SAME ticket,
+        // we don't want to wipe out whatever the user has already typed.
+        if (request && request.ticket_id !== form.ticket_id) {
             setForm({
                 ticket_id: request.ticket_id,
                 pick_up: request.pick_up,
@@ -33,6 +37,7 @@ function EditOdometer({ request }) {
                 date_finished: new Date().toISOString().split("T")[0],
             });
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [request]);
 
     const handleChange = (e) => {
@@ -153,7 +158,7 @@ function EditOdometer({ request }) {
 
                         </div>
 
-                       <LoadOdometer/>
+                       <LoadOdometer ticket_id={request.ticket_id} />
                         <div className="flex flex-col">
 
                             <div className="grid grid-cols-3 gap-6 p-6">

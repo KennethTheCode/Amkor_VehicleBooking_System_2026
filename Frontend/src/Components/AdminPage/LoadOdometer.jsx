@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from "react";
 
-const API_URL =
-    "http://localhost/Amkor_VehicleBooking_System_2026/Backend/ManageRequests/LoadOdometer.php";
-
-function LoadOdometer() {
+function LoadOdometer({ ticket_id }) {
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
 
     const loadOdometer = () => {
+        if (!ticket_id) return;
+
         setIsLoading(true);
 
-        fetch(API_URL, {
-            cache: "no-store",
-        })
+        fetch(
+            `http://localhost/Amkor_VehicleBooking_System_2026/Backend/ManageRequests/LoadOdometer.php?ticket_id=${ticket_id}`,
+            {
+                cache: "no-store",
+            }
+        )
             .then((res) => res.json())
             .then((json) => {
                 setData(Array.isArray(json) ? json : []);
@@ -26,7 +28,7 @@ function LoadOdometer() {
 
     useEffect(() => {
         loadOdometer();
-    }, []);
+    }, [ticket_id]);
 
     return (
         <div className="h-[35vh] px-5 w-full flex flex-col overflow-y-auto">
@@ -80,13 +82,13 @@ function LoadOdometer() {
 
                             <div className="flex justify-between h-full px-3 py-3">
 
-                                {/* Pickup / Drop off */}
                                 <div className="w-[35vh] flex flex-col justify-center">
 
                                     <div className="flex items-center gap-1">
                                         <span className="material-symbols-outlined text-blue-800">
                                             location_on
                                         </span>
+
                                         <p className="text-blue-800 truncate font-bold">
                                             {item.pick_up}
                                         </p>
@@ -96,6 +98,7 @@ function LoadOdometer() {
                                         <span className="material-symbols-outlined text-red-800">
                                             location_on
                                         </span>
+
                                         <p className="text-red-800 truncate font-bold">
                                             {item.drop_off}
                                         </p>
@@ -103,14 +106,15 @@ function LoadOdometer() {
 
                                 </div>
 
-                                {/* Odometer */}
                                 <div className="w-[25vh] flex flex-col justify-center items-center">
                                     <p className="text-gray-500 font-bold text-[13px]">
                                         Odometer
                                     </p>
+
                                     <p className="font-bold">
                                         {item.beginning} → {item.ending}
                                     </p>
+
                                     <p className="text-gray-400 text-[13px]">
                                         {item.distance_travelled !== null
                                             ? `${item.distance_travelled} km travelled`
@@ -118,14 +122,15 @@ function LoadOdometer() {
                                     </p>
                                 </div>
 
-                                {/* Time */}
                                 <div className="w-[25vh] flex flex-col justify-center items-center">
                                     <p className="text-gray-500 font-bold text-[13px]">
                                         Trip Time
                                     </p>
+
                                     <p className="font-bold text-[13px]">
                                         Out: {item.time_out}
                                     </p>
+
                                     <p className="font-bold text-[13px]">
                                         In: {item.time_in}
                                     </p>

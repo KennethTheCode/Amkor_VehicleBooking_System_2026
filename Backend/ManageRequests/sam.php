@@ -11,6 +11,8 @@ if ($_SERVER["REQUEST_METHOD"] === "OPTIONS") {
     exit;
 }
 
+// Make sure PHP errors never leak as raw HTML into what the frontend
+// expects to be JSON. Instead, convert them into a JSON error response.
 ini_set('display_errors', '0');
 error_reporting(E_ALL);
 
@@ -33,6 +35,7 @@ set_exception_handler(function ($e) {
 });
 
 // --- DB connection ----------------------------------------------------
+// Adjust this path if db.php lives somewhere else relative to this file.
 require __DIR__ . "/../db.php";
 
 if (!isset($conn) || $conn->connect_error) {
@@ -55,12 +58,27 @@ if (!$data) {
     exit;
 }
 
-$ticket_id = (int)($data["ticket_id"] ?? 0);
+$ticket_id     = (int)($data["ticket_id"] ?? 0);
+$pick_up       = trim($data["pick_up"] ?? "");
+$drop_off      = trim($data["drop_off"] ?? "");
+$beginning     = trim($data["beginning"] ?? "");
+$ending        = trim($data["ending"] ?? "");
+$time_out      = trim($data["time_out"] ?? "");
+$time_in       = trim($data["time_in"] ?? "");
+$date_finished = trim($data["date_finished"] ?? date("Y-m-d"));
 
-if ($ticket_id <= 0) {
+if (
+    $ticket_id === 0 ||
+    $pick_up === "" ||
+    $drop_off === "" ||
+    $beginning === "" ||
+    $ending === "" ||
+    $time_out === "" ||
+    $time_in === ""
+) {
     echo json_encode([
         "success" => false,
-        "message" => "Missing or invalid ticket_id."
+        "message" => "Please complete all fields."
     ]);
     exit;
 }
@@ -96,6 +114,7 @@ try {
 
     $stmt->close();
 
+
     // Update booking status
     $stmt = $conn->prepare("
         UPDATE BookingTable
@@ -107,10 +126,26 @@ try {
     }
 
     $stmt->bind_param("i", $ticket_id);
+    $stmt->execute();
+    $stmt->close();
+    
+    $stmt->bind_param(
+        "isssssss",
+        $ticket_id,
+        $pick_up,
+        $drop_off,
+        $beginning,
+        $ending,
+        $time_out,
+        $time_in,
+        $date_finished
+    );
+
     if (!$stmt->execute()) {
-        throw new Exception("Update booking status failed: " . $stmt->error);
+        throw new Exception("Insert failed: " . $stmt->error);
     }
     $stmt->close();
+
 
     // Driver available again
     $stmt = $conn->prepare("
@@ -126,6 +161,7 @@ try {
     $stmt->execute();
     $stmt->close();
 
+
     // Vehicle available again
     $stmt = $conn->prepare("
         UPDATE VehicleTable
@@ -139,6 +175,7 @@ try {
     $stmt->bind_param("i", $vehicle_id);
     $stmt->execute();
     $stmt->close();
+
 
     $conn->commit();
 
