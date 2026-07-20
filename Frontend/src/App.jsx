@@ -9,7 +9,7 @@ import ManageDrivers from './Components/AdminPage/ManageDrivers/ManageDrivers';
 function App() {
   return (
     <div>
-      <Router>
+      <Router basename="/Amkor_VehicleBooking_System_2026/Frontend">
         <Routes>
           <Route path="/" element={<LandingPage/>} />
           <Route path="/user" element={<UserPage/>} />
