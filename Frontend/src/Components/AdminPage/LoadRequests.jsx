@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import FilterRequests from "./FilterRequests/FilterRequests";
 import ReviewRequests from "./ManageRequests/ReviewRequests";
 import RejectRequests from "./ManageRequests/RejectRequests";
+import ExportCSV from "./ExportCSV";
+
+import { API_BASE } from '../../config'
 
 function LoadRequests({ requests = null }) {
     const [data, setData] = useState([]);
@@ -9,9 +12,9 @@ function LoadRequests({ requests = null }) {
     const [filter, setFilter] = useState("");
 
     const BACKEND_URL =
-        "http://localhost/Amkor_VehicleBooking_System_2026/Backend/ManageRequests/LoadRequests.php";
+        `${API_BASE}/ManageRequests/LoadRequests.php`;
     const FILTER_URL =
-        "http://localhost/Amkor_VehicleBooking_System_2026/Backend/ManageRequests/FilterRequests.php";
+        `${API_BASE}/Backend/ManageRequests/FilterRequests.php`;
 
     // Hide tickets that are already Finished or Ongoing
     const filterOutCompleted = (list) =>
@@ -54,12 +57,14 @@ function LoadRequests({ requests = null }) {
     return (
         <div className="h-[80vh] w-full flex flex-col overflow-y-auto">
 
-            <div className="flex justify-between items-center p-1">
+            <div className="flex justify-between items-center p-1 bg-gray-100">
                 <p className="text-gray-500 font-bold text-[15px]">
                     Ticket Count: {data.length}
                 </p>
-
-                <FilterRequests onFilterChange={setFilter} />
+                <div className="flex items-center justify-center gap-3">
+                    <ExportCSV />                    
+                    <FilterRequests onFilterChange={setFilter} />                
+                </div>                
             </div>
 
             <div className="w-full py-1 flex flex-col gap-3">

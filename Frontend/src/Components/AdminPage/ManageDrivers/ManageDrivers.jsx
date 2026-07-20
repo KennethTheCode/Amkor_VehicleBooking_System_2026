@@ -5,6 +5,8 @@ import AddDrivers from "./AddDrivers";
 import SearchDrivers from "./SearchDrivers";
 import AmkorLogo from "../../../Images/AmkorLogo.png";
 
+import { API_BASE } from '../../../config'
+
 function ManageDrivers({ drivers = null }) {
     const [data, setData] = useState([]);
     const [isSearching, setIsSearching] = useState(false);
@@ -13,7 +15,7 @@ function ManageDrivers({ drivers = null }) {
         (typeof import.meta !== "undefined" &&
             import.meta.env &&
             import.meta.env.VITE_BACKEND_URL) ||
-        "http://localhost/Amkor_VehicleBooking_System_2026/Backend/ManageDrivers/LoadDrivers.php";
+        `${API_BASE}/ManageDrivers/LoadDrivers.php`;
 
     const loadDrivers = () => {
         setIsSearching(true);

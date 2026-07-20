@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+import { API_BASE } from '../../../config'
+
 function AddDrivers( {onDriverAdded}) {
 
 const [driver, setDriver] = useState({
@@ -40,7 +42,7 @@ const [driver, setDriver] = useState({
 
         try {
             const response = await fetch(
-                "http://localhost/Amkor_VehicleBooking_System_2026/Backend/ManageDrivers/AddDrivers.php",
+                `${API_BASE}/ManageDrivers/AddDrivers.php`,
                 {
                     method: "POST",
                     body: formData,

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 
+import { API_BASE } from '../../config'
+
 
 function Dashboard() {
     const navigate = useNavigate()
@@ -8,7 +10,7 @@ function Dashboard() {
     const [vehicles, setVehicles] = useState([]);
     useEffect(() => {
         fetch(
-            "http://localhost/Amkor_VehicleBooking_System_2026/Backend/ManageVehicles/LoadVehicles.php",
+            `${API_BASE}/ManageVehicles/LoadVehicles.php`,
             {
                 cache: "no-store",
             }
@@ -32,7 +34,7 @@ function Dashboard() {
     const [drivers, setDrivers] = useState([]);
     useEffect(() => {
         fetch(
-            "http://localhost/Amkor_VehicleBooking_System_2026/Backend/ManageDrivers/LoadDrivers.php",
+            `${API_BASE}/ManageDrivers/LoadDrivers.php`,
             {
                 cache: "no-store",
             }
@@ -56,7 +58,7 @@ function Dashboard() {
     const [requests, setRequests] = useState([]);
     useEffect(() => {
         fetch(
-            "http://localhost/Amkor_VehicleBooking_System_2026/Backend/ManageRequests/LoadRequests.php",
+            `${API_BASE}/ManageRequests/LoadRequests.php`,
             {
                 cache: "no-store",
             }

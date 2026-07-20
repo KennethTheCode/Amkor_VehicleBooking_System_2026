@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import AmkorLogo from "../Images/AmkorLogo.png";
 import { useNavigate } from "react-router-dom";
+import { API_BASE } from '../config'
+
 
 function LandingPage() {
     const navigate = useNavigate();
@@ -27,7 +29,7 @@ function LandingPage() {
 
         try {
             const response = await fetch(
-                "http://localhost/Amkor_VehicleBooking_System_2026/Backend/LoginAuthentication.php",
+                `${API_BASE}/LoginAuthentication.php`,
                 {
                     method: "POST",
                     headers: {

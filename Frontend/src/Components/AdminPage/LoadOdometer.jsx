@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 
+import { API_BASE } from '../../config'
+
 function LoadOdometer({ ticket_id }) {
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -10,7 +12,7 @@ function LoadOdometer({ ticket_id }) {
         setIsLoading(true);
 
         fetch(
-            `http://localhost/Amkor_VehicleBooking_System_2026/Backend/ManageRequests/LoadOdometer.php?ticket_id=${ticket_id}`,
+            `${API_BASE}/ManageRequests/LoadOdometer.php?ticket_id=${ticket_id}`,
             {
                 cache: "no-store",
             }

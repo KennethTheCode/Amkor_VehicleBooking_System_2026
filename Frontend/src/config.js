@@ -1,0 +1,1 @@
+export const API_BASE = 'http://localhost/Amkor_VehicleBooking_System_2026/Backend';

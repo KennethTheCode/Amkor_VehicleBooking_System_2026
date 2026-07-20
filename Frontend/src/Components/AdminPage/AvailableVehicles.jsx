@@ -1,6 +1,9 @@
 import React from "react";
 import AmkorLogo from "../../Images/AmkorLogo.png";
 
+import { API_BASE } from '../../config'
+
+
 function AvailableVehicles({ vehicles }) {
     return (
         <div className="w-full flex flex-col items-center justify-center gap-2">
@@ -23,7 +26,7 @@ function AvailableVehicles({ vehicles }) {
                                 <img
                                     src={
                                         vehicle.image
-                                            ? `http://localhost/Amkor_VehicleBooking_System_2026/Backend/${vehicle.image}`
+                                            ? `${API_BASE}/${vehicle.image}`
                                             : AmkorLogo
                                     }
                                     alt={vehicle.vehicle_model}
@@ -40,11 +43,7 @@ function AvailableVehicles({ vehicles }) {
 
             </div>
 
-            <button className="rounded border-blue-800 border-2 p-2 w-full hover:bg-gray-100 transition-colors cursor-pointer">
-                <p className="text-blue-800 font-bold text-[15px]">
-                    Vehicle Schedules
-                </p>
-            </button>
+           
 
         </div>
     );

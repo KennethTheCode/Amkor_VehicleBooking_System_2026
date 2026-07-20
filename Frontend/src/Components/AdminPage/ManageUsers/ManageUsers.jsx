@@ -5,6 +5,9 @@ import AddUsers from "./AddUsers";
 import SearchUsers from "./SearchUsers";
 import AmkorLogo from "../../../Images/AmkorLogo.png";
 
+import { API_BASE } from '../../../config'
+
+
 function ManageUsers({ users = null }) {
     const [data, setData] = useState([]);
     const [isSearching, setIsSearching] = useState(false);
@@ -13,7 +16,7 @@ function ManageUsers({ users = null }) {
         (typeof import.meta !== "undefined" &&
             import.meta.env &&
             import.meta.env.VITE_BACKEND_URL) ||
-        "http://localhost/Amkor_VehicleBooking_System_2026/Backend/ManageVehicles/LoadVehicles.php";
+        `${API_BASE}/ManageVehicles/LoadVehicles.php`;
 
     const loadUsers = () => {
         setIsSearching(true);

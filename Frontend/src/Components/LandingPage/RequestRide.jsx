@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import AmkorLogo from "../../Images/AmkorLogo.png";
+import { API_BASE } from '../../config'
+
 
 function RequestRide() {
     // Logged in user
@@ -29,7 +31,7 @@ function RequestRide() {
 
     useEffect(() => {
         fetch(
-            "http://localhost/Amkor_VehicleBooking_System_2026/Backend/ManageVehicles/LoadVehicles.php"
+            `${API_BASE}/ManageVehicles/LoadVehicles.php`
         )
             .then((res) => res.json())
             .then((data) => {
@@ -91,7 +93,7 @@ function RequestRide() {
     try {
 
         const response = await fetch(
-            "http://localhost/Amkor_VehicleBooking_System_2026/Backend/ManageRequests/AddRequest.php",
+            `${API_BASE}/ManageRequests/AddRequest.php`,
             {
                 method: "POST",
                 headers: {
@@ -200,7 +202,7 @@ function RequestRide() {
                                         <img
                                             src={
                                                 vehicle.image
-                                                    ? `http://localhost/Amkor_VehicleBooking_System_2026/Backend/${vehicle.image}`
+                                                    ? `${API_BASE}/${vehicle.image}`
                                                     : AmkorLogo
                                             }
                                             alt={vehicle.vehicle_model}

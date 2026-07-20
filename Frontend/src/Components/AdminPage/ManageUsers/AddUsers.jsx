@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+import { API_BASE } from '../../../config'
+
 function AddUsers() {
     const [user, setUser] = useState({
         username: "",
@@ -36,7 +38,7 @@ function AddUsers() {
 
         try {
             const response = await fetch(
-                "http://localhost/Amkor_VehicleBooking_System_2026/Backend/ManageUsers/AddUsers.php",
+                `${API_BASE}/ManageUsers/AddUsers.php`,
                 {
                     method: "POST",
                     body: formData,

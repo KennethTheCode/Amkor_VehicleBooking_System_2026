@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 
+import { API_BASE } from '../../../config'
+
 function SearchDrivers( {onSearch} ) {
   const [keyword, setKeyword] = useState("");
     const debounceRef = useRef(null);
@@ -7,7 +9,7 @@ function SearchDrivers( {onSearch} ) {
     const doSearch = async (value) => {
       try {
         const response = await fetch(
-          "http://localhost/Amkor_VehicleBooking_System_2026/Backend/ManageDrivers/SearchDrivers.php",
+          `${API_BASE}/ManageDrivers/SearchDrivers.php`,
           {
             method: "POST",
             headers: {

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import CheckSchedule from "./CheckSchedule";
 
+import { API_BASE } from '../../../config'
+
 function RejectRequests({ summary, onRejected }) {
     const [showModal, setShowModal] = useState(false);
     const [deleting, setDeleting] = useState(false);
@@ -11,7 +13,7 @@ function RejectRequests({ summary, onRejected }) {
         setError(null);
 
         try {
-            const response = await fetch("http://localhost/Amkor_VehicleBooking_System_2026/Backend/ManageRequests/Reject.php", {
+            const response = await fetch(`${API_BASE}/ManageRequests/Reject.php`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

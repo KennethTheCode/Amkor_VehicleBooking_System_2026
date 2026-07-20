@@ -5,6 +5,8 @@ import SearchVehicles from "./SearchVehicles";
 import Dashboard from "../Dashboard";
 import AmkorLogo from "../../../Images/AmkorLogo.png";
 
+import { API_BASE } from '../../../config'
+
 function ManageVehicles({ vehicles = null }) {
     const [data, setData] = useState([]);
     const [isSearching, setIsSearching] = useState(false);
@@ -14,7 +16,7 @@ function ManageVehicles({ vehicles = null }) {
         (typeof import.meta !== "undefined" &&
             import.meta.env &&
             import.meta.env.VITE_BACKEND_URL) ||
-        "http://localhost/Amkor_VehicleBooking_System_2026/Backend/ManageVehicles/LoadVehicles.php";
+        `${API_BASE}/ManageVehicles/LoadVehicles.php`;
 
     const loadVehicle = () => {
         setIsSearching(true);
@@ -96,7 +98,7 @@ function ManageVehicles({ vehicles = null }) {
                                                             <img
                                                                 src={
                                                                     vehicle.image
-                                                                        ? `http://localhost/Amkor_VehicleBooking_System_2026/Backend/${vehicle.image}`
+                                                                        ? `${API_BASE}/${vehicle.image}`
                                                                         : AmkorLogo
                                                                 }
                                                                 alt={vehicle.vehicle_model}
@@ -138,7 +140,7 @@ function ManageVehicles({ vehicles = null }) {
                                                         <img
                                                             src={
                                                                 vehicle.orcr
-                                                                    ? `http://localhost/Amkor_VehicleBooking_System_2026/Backend/${vehicle.orcr}`
+                                                                    ? `${API_BASE}/${vehicle.orcr}`
                                                                     : AmkorLogo
                                                             }
                                                             alt={vehicle.vehicle_model}

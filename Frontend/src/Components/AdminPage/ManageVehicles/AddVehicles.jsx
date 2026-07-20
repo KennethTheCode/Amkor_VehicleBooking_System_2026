@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+import { API_BASE } from '../../../config'
+
 function AddVehicles( {onVehicleAdded} ) {
     const [vehicle, setVehicle] = useState({
         vehicle_model: "",
@@ -48,7 +50,7 @@ function AddVehicles( {onVehicleAdded} ) {
 
         try {
             const response = await fetch(
-                "http://localhost/Amkor_VehicleBooking_System_2026/Backend/ManageVehicles/AddVehicle.php",
+                `${API_BASE}/AddVehicle.php`,
                 {
                     method: "POST",
                     body: formData,

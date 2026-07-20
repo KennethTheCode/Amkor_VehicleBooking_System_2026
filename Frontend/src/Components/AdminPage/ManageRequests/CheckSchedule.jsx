@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 
+import { API_BASE } from '../../../config'
+
 function CheckSchedule({ summary }) {
     const [schedule, setSchedule] = useState([]);
 
@@ -7,7 +9,7 @@ function CheckSchedule({ summary }) {
     if (!summary.date_needed) return;
 
     fetch(
-        `http://localhost/Amkor_VehicleBooking_System_2026/Backend/ManageRequests/GetScheduleByDate.php?date=${summary.date_needed}`
+        `${API_BASE}/ManageRequests/GetScheduleByDate.php?date=${summary.date_needed}`
     )
         .then((res) => res.json())
         .then((data) => {

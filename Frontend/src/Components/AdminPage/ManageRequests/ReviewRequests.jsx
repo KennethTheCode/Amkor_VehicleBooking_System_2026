@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import CheckSchedule from "./CheckSchedule";
 
+import { API_BASE } from '../../../config'
+
+
 function ReviewRequests({ summary }) {
     const [showModal, setShowModal] = useState(false);
 
@@ -10,7 +13,7 @@ function ReviewRequests({ summary }) {
 
     useEffect(() => {
         fetch(
-            "http://localhost/Amkor_VehicleBooking_System_2026/Backend/ManageDrivers/LoadDrivers.php"
+            `${API_BASE}/ManageDrivers/LoadDrivers.php`
         )
             .then((res) => res.json())
             .then((data) => {
@@ -78,7 +81,7 @@ function ReviewRequests({ summary }) {
         };
 
         await postAndHandle(
-            "http://localhost/Amkor_VehicleBooking_System_2026/Backend/ManageRequests/UpdateAvailability.php",
+            `${API_BASE}/ManageRequests/UpdateAvailability.php`,
             schedule
         );
     };
@@ -87,7 +90,7 @@ function ReviewRequests({ summary }) {
         e.preventDefault();
 
         await postAndHandle(
-            "http://localhost/Amkor_VehicleBooking_System_2026/Backend/ManageRequests/SetOngoing.php",
+            `${API_BASE}/ManageRequests/SetOngoing.php`,
             { ticket_id: summary.ticket_id }
         );
     };

@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import LoadOdometer from "./LoadOdometer";
 
+import { API_BASE } from '../../config'
+
+
 // Change this if your folder name is different on disk (case-sensitive on some setups)
-const API_BASE = "http://localhost/Amkor_VehicleBooking_System_2026/Backend/ManageRequests";
+const API_BASE1 = `${API_BASE}/ManageRequests`;
 
 function EditOdometer({ request }) {
     const [showModal, setShowModal] = useState(false);
@@ -102,7 +105,7 @@ function EditOdometer({ request }) {
         }
 
         setAddingOdometer(true);
-        await postAndHandle(`${API_BASE}/UpdateOdometer.php`, form, { closeOnSuccess: false });
+        await postAndHandle(`${API_BASE1}/UpdateOdometer.php`, form, { closeOnSuccess: false });
         setAddingOdometer(false);
     };
 
@@ -112,7 +115,7 @@ function EditOdometer({ request }) {
 
         setFinishingTrip(true);
         await postAndHandle(
-            `${API_BASE}/FinishTrip.php`,
+            `${API_BASE1}/FinishTrip.php`,
             { ticket_id: form.ticket_id },
             { closeOnSuccess: true }
         );
