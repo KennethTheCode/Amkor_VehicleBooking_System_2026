@@ -4,6 +4,8 @@ import AddVehicles from "./AddVehicles";
 import SearchVehicles from "./SearchVehicles";
 import Dashboard from "../Dashboard";
 import AmkorLogo from "../../../Images/AmkorLogo.png";
+import EditVehicle from "./EditVehicle";
+import DisableVehicles from "./DisableVehicles";
 
 import { API_BASE } from '../../../config'
 
@@ -160,19 +162,41 @@ function ManageVehicles({ vehicles = null }) {
                                                                 ? "Available"
                                                                 : "Unavailable"}
                                                         </p>
+
+                                                        <p>
+                                                            <strong>RFID Balance:</strong>{" "}
+                                                            {vehicle.rfid_balance}
+                                                        </p>
+
+                                                        <p>
+                                                            <strong>Status:</strong>{" "}
+                                                            {vehicle.status}
+                                                        </p>
                                                     </div>
 
                                                 </div>
 
                                                 <div className="flex flex-col gap-3">
 
-                                                    <button className="bg-green-500 hover:bg-green-400 duration-300 text-white rounded px-5 py-2 font-bold">
-                                                        Edit
-                                                    </button>
+                                                    <EditVehicle
+                                                        id={vehicle.id}
+                                                        vehicles={vehicle}
+                                                        onUpdated={(id, updatedFields) =>
+                                                            setData((prev) =>
+                                                                prev.map((v) => (v.id === id ? { ...v, ...updatedFields } : v))
+                                                            )
+                                                        }
+                                                    />
 
-                                                    <button className="bg-red-500 hover:bg-red-400 duration-300 text-white rounded px-5 py-2 font-bold">
-                                                        Delete
-                                                    </button>
+                                                    <DisableVehicles
+                                                        id={vehicle.id}
+                                                        vehicles={vehicle}
+                                                        onStatusChanged={(id, newStatus) =>
+                                                            setData((prev) =>
+                                                                prev.map((v) => (v.id === id ? { ...v, status: newStatus } : v))
+                                                            )
+                                                        }
+                                                    />
 
                                                 </div>
 

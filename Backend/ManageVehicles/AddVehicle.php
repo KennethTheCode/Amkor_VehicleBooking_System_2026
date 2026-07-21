@@ -19,6 +19,7 @@ if (
     !isset($_POST["platenumber"]) ||
     !isset($_POST["expiration"]) ||
     !isset($_POST["seater"]) ||
+    !isset($_POST["rfid_balance"]) ||
     !isset($_POST["availability"]) ||
     !isset($_FILES["orcr"]) ||
     !isset($_FILES["image"])
@@ -35,7 +36,9 @@ $color = $_POST["color"];
 $platenumber = $_POST["platenumber"];
 $expiration = $_POST["expiration"];
 $seater = (int)$_POST["seater"];
+$rfid_balance = (int)$_POST["rfid_balance"];
 $availability = (int)$_POST["availability"];
+$status = $_POST["status"];
 
 // Upload folders
 $orcrFolder = "../uploadsVehicle/orcr/";
@@ -125,11 +128,13 @@ $sql = "INSERT INTO VehicleTable
     orcr,
     image,
     seater,
-    availability
+    rfid_balance,
+    availability,
+    status
 )
 VALUES
 (
-    ?, ?, ?, ?, ?, ?, ?, ?
+    ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
 )";
 
 $stmt = $conn->prepare($sql);
@@ -145,7 +150,7 @@ if (!$stmt) {
 }
 
 $stmt->bind_param(
-    "ssssssis",
+    "ssssssiiis",
     $vehicle_model,
     $color,
     $platenumber,
@@ -153,7 +158,9 @@ $stmt->bind_param(
     $orcr,
     $image,
     $seater,
-    $availability
+    $rfid_balance,
+    $availability,
+    $status
 );
 
 if ($stmt->execute()) {

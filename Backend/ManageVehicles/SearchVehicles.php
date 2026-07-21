@@ -17,7 +17,7 @@ $data = json_decode(file_get_contents("php://input"), true);
 $keyword = trim($data["keyword"] ?? "");
 
 if ($keyword == "") {
-    $sql = "SELECT id, vehicle_model, color, platenumber, expiration, seater, orcr, image, availability
+    $sql = "SELECT id, vehicle_model, color, platenumber, expiration, seater, orcr, image, availability, rfid_balance, status
             FROM VehicleTable
             ORDER BY id ASC";
 
@@ -37,11 +37,15 @@ if ($keyword == "") {
                OR image LIKE ?
                OR availability LIKE ?
                OR seater LIKE ?
+               OR rfid_balance LIKE ?
+               OR status LIKE ?
             ORDER BY id ASC";
 
     $stmt = $conn->prepare($sql);
     $stmt->bind_param(
-        "ssssssss",
+        "ssssssssss",
+        $search,
+        $search,
         $search,
         $search,
         $search,
@@ -68,7 +72,9 @@ while ($row = $result->fetch_assoc()) {
         'orcr' => $row['orcr'],
         'image' => $row['image'],
         'seater' => $row['seater'],
-        'availability' => $row['availability']
+        'rfid_balance' => $row['rfid_balance'],
+        'availability' => $row['availability'],
+        'status' => $row['status']
     ];
 }
 

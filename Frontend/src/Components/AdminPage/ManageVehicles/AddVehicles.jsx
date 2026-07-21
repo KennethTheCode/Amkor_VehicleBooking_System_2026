@@ -11,7 +11,9 @@ function AddVehicles( {onVehicleAdded} ) {
         orcr: null,
         image: null,
         seater: "",
+        rfid_balance: "",
         availability: 1,
+        status: "Enabled",
     });
 
     const handleChange = (e) => {
@@ -31,7 +33,8 @@ function AddVehicles( {onVehicleAdded} ) {
             !vehicle.expiration ||
             !vehicle.orcr ||
             !vehicle.image ||
-            !vehicle.seater
+            !vehicle.seater ||
+            !vehicle.rfid_balance
         ) {
             alert("Please fill in all fields.");
             return;
@@ -46,11 +49,13 @@ function AddVehicles( {onVehicleAdded} ) {
         formData.append("orcr", vehicle.orcr);
         formData.append("image", vehicle.image);
         formData.append("seater", vehicle.seater);
+        formData.append("rfid_balance", vehicle.rfid_balance);
         formData.append("availability", vehicle.availability);
+        formData.append("status", vehicle.status);
 
         try {
             const response = await fetch(
-                `${API_BASE}/AddVehicle.php`,
+                `${API_BASE}/ManageVehicles/AddVehicle.php`,
                 {
                     method: "POST",
                     body: formData,
@@ -70,7 +75,9 @@ function AddVehicles( {onVehicleAdded} ) {
                     orcr: null,
                     image: null,
                     seater: "",
+                    rfid_balance: "",
                     availability: 1,
+                    status: "Active",
                 });
                 if (onVehicleAdded) {
                     onVehicleAdded();
@@ -89,7 +96,7 @@ function AddVehicles( {onVehicleAdded} ) {
                 <h1 className="text-gray-800 font-bold text-[20px] mb-5">
                     Register Vehicles
                 </h1>
-
+                <div className="h-[60vh] flex flex-col overflow-y-auto">
                 <p className="font-bold">Vehicle Model</p>
                 <input
                     type="text"
@@ -169,6 +176,17 @@ function AddVehicles( {onVehicleAdded} ) {
                     className="mb-5 w-full bg-gray-100 p-2 border-b"
                 />
 
+                <p className="font-bold">RFID Balance</p>
+                <input
+                    type="number"
+                    name="rfid_balance"
+                    value={vehicle.rfid_balance}
+                    onChange={handleChange}
+                    placeholder="Available Balance"
+                    className="mb-5 w-full bg-gray-100 p-2 border-b"
+                />               
+
+                </div>                
                 <button
                     type="submit"
                     className="bg-blue-900 text-white w-full p-3 rounded hover:bg-blue-800"
