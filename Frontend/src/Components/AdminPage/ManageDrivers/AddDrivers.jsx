@@ -1,17 +1,17 @@
 import React, { useState } from "react";
-
 import { API_BASE } from '../../../config'
 
-function AddDrivers( {onDriverAdded}) {
-
-const [driver, setDriver] = useState({
+function AddDrivers({ onDriverAdded }) {
+    const [driver, setDriver] = useState({
         username: "",
         password: "",
+        contact_number: "",
         license_no: "",
         expiration_date: "",
         picture: null,
         availability: 1,
     });
+    const [loading, setLoading] = useState(false)
 
     const handleChange = (e) => {
         setDriver({
@@ -25,16 +25,22 @@ const [driver, setDriver] = useState({
 
         if (
             !driver.username ||
-            !driver.password
+            !driver.password ||
+            !driver.contact_number ||
+            !driver.license_no ||
+            !driver.expiration_date ||
+            !driver.picture
         ) {
-            alert("All fields are required.");
+            alert("All fields are required, including a picture.");
             return;
         }
 
-        const formData = new FormData();
+        setLoading(true)
 
+        const formData = new FormData();
         formData.append("username", driver.username);
         formData.append("password", driver.password);
+        formData.append("contact_number", driver.contact_number);
         formData.append("license_no", driver.license_no);
         formData.append("expiration_date", driver.expiration_date);
         formData.append("picture", driver.picture);
@@ -50,76 +56,90 @@ const [driver, setDriver] = useState({
             );
 
             const data = await response.json();
-
             alert(data.message);
 
             if (data.success) {
                 setDriver({
                     username: "",
                     password: "",
+                    contact_number: "",
                     license_no: "",
                     expiration_date: "",
                     picture: null,
                     availability: 1,
                 });
 
-                window.location.reload();
+                if (onDriverAdded) {
+                    onDriverAdded()
+                } else {
+                    window.location.reload();
+                }
             }
         } catch (error) {
             console.error(error);
             alert("Unable to connect to the server.");
+        } finally {
+            setLoading(false)
         }
     };
-    
-  return (
-    <div className='bg-white w-[50vh] h-full p-3'>
-        <div className=''>
+
+    return (
+        <div className='bg-white w-[50vh] h-full p-3'>
             <form onSubmit={handleSubmit}>
                 <h1 className='text-gray-800 font-bold text-[20px] mb-5'>Register Drivers</h1>
+
                 <p className='text-gray-800 font-bold text-[15px]'>Enter Username</p>
                 <input
-                type="text"
-                name="username"
-                value={driver.username}
-                onChange={handleChange}
-                placeholder='Username'
-                className='mb-5 w-full bg-gray-100 text-gray-500 font-bold text-[13px] p-2 border-b border-gray-300'>
-                </input>
+                    type="text"
+                    name="username"
+                    value={driver.username}
+                    onChange={handleChange}
+                    placeholder='Username'
+                    className='mb-5 w-full bg-gray-100 text-gray-500 font-bold text-[13px] p-2 border-b border-gray-300'
+                />
 
                 <p className='text-gray-800 font-bold text-[15px]'>Enter Password</p>
                 <input
-                type="text"
-                name="password"
-                value={driver.password}
-                onChange={handleChange}
-                placeholder='Password'
-                className='mb-5 w-full bg-gray-100 text-gray-500 font-bold text-[13px] p-2 border-b border-gray-300'>
-                </input>
+                    type="text"
+                    name="password"
+                    value={driver.password}
+                    onChange={handleChange}
+                    placeholder='Password'
+                    className='mb-5 w-full bg-gray-100 text-gray-500 font-bold text-[13px] p-2 border-b border-gray-300'
+                />
+
+                <p className='text-gray-800 font-bold text-[15px]'>Enter Contact Number</p>
+                <input
+                    type="text"
+                    name="contact_number"
+                    minLength={11}
+                    maxLength={11}
+                    value={driver.contact_number}
+                    onChange={handleChange}
+                    placeholder='Contact Number'
+                    className='mb-5 w-full bg-gray-100 text-gray-500 font-bold text-[13px] p-2 border-b border-gray-300'
+                />
 
                 <p className='text-gray-800 font-bold text-[15px]'>Enter License No.</p>
                 <input
-                type="text"
-                name="license_no"
-                value={driver.license_no}
-                onChange={handleChange}
-                maxLength={11}
-                minLength={11}
-                placeholder='License No.'
-                className='mb-5 w-full bg-gray-100 text-gray-500 font-bold text-[13px] p-2 border-b border-gray-300'>
-                </input>
-
-                
+                    type="text"
+                    name="license_no"
+                    value={driver.license_no}
+                    onChange={handleChange}
+                    maxLength={11}
+                    minLength={11}
+                    placeholder='License No.'
+                    className='mb-5 w-full bg-gray-100 text-gray-500 font-bold text-[13px] p-2 border-b border-gray-300'
+                />
 
                 <p className='text-gray-800 font-bold text-[15px]'>Enter Expiration Date</p>
                 <input
-                type="text"
-                name="expiration_date"
-                value={driver.expiration_date}
-                onChange={handleChange}
-                type="date"
-                placeholder='Expiration Date'
-                className='mb-5 w-full bg-gray-100 text-gray-500 font-bold text-[13px] p-2 border-b border-gray-300'>
-                </input>
+                    type="date"
+                    name="expiration_date"
+                    value={driver.expiration_date}
+                    onChange={handleChange}
+                    className='mb-5 w-full bg-gray-100 text-gray-500 font-bold text-[13px] p-2 border-b border-gray-300'
+                />
 
                 <p className='text-gray-800 font-bold text-[15px]'>Upload 2x2 picture</p>
                 <input
@@ -129,23 +149,21 @@ const [driver, setDriver] = useState({
                     onChange={(e) =>
                         setDriver({
                             ...driver,
-                            picture: e.target.files[0],
+                            picture: e.target.files[0] || null,
                         })
-                    }               
-                className='mb-5 w-full bg-gray-100 text-gray-500 font-bold text-[13px] p-2 border-b border-gray-300'>
-                </input>
-            
-                <button 
-                type="submit"
-                className='bg-blue-900 text-white font-bold text-[15px] p-3 rounded w-full'>
-                    Register
+                    }
+                    className='mb-5 w-full bg-gray-100 text-gray-500 font-bold text-[13px] p-2 border-b border-gray-300'
+                />
+
+                <button
+                    type="submit"
+                    disabled={loading}
+                    className='bg-blue-900 text-white font-bold text-[15px] p-3 rounded w-full disabled:opacity-50'>
+                    {loading ? "Registering..." : "Register"}
                 </button>
             </form>
-
-            
         </div>
-    </div>
-  )
+    )
 }
 
 export default AddDrivers

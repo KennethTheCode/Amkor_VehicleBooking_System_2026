@@ -12,13 +12,13 @@ if ($_SERVER["REQUEST_METHOD"] === "OPTIONS") {
 
 include "../db.php";
 
-// Check required fields
+// Check required text fields
 if (
     !isset($_POST["username"]) ||
     !isset($_POST["password"]) ||
+    !isset($_POST["contact_number"]) ||
     !isset($_POST["license_no"]) ||
-    !isset($_POST["expiration_date"]) ||
-    !isset($_FILES["picture"])
+    !isset($_POST["expiration_date"])
 ) {
     echo json_encode([
         "success" => false,
@@ -27,62 +27,132 @@ if (
     exit;
 }
 
-$username = $_POST["username"];
+$username = trim($_POST["username"]);
 $password = $_POST["password"];
-$license_no = $_POST["license_no"];
+$contact_number = trim($_POST["contact_number"]);
+$license_no = trim($_POST["license_no"]);
 $expiration_date = $_POST["expiration_date"];
-$availability = (int)$_POST["availability"];
+$availability = isset($_POST["availability"]) ? intval($_POST["availability"]) : 1;
 
-
-
-// Upload image
-$uploadDir = dirname(__DIR__) . "/uploadsDriver/";
-if (!file_exists($uploadDir)) {
-    mkdir($uploadDir, 0777, true);
-}
-
-if (!isset($_FILES["picture"])) {
+if ($username === "" || $password === "" || $contact_number === "" || $license_no === "" || $expiration_date === "") {
     echo json_encode([
         "success" => false,
-        "message" => "No file received."
+        "message" => "All fields are required."
+    ]);
+    exit;
+}
+
+// --- File upload validation ---
+
+if (!isset($_FILES["picture"]) || $_FILES["picture"]["error"] === UPLOAD_ERR_NO_FILE) {
+    echo json_encode([
+        "success" => false,
+        "message" => "Please select a picture to upload."
     ]);
     exit;
 }
 
 if ($_FILES["picture"]["error"] !== UPLOAD_ERR_OK) {
+    $uploadErrors = [
+        UPLOAD_ERR_INI_SIZE   => "File is larger than the server allows (upload_max_filesize).",
+        UPLOAD_ERR_FORM_SIZE  => "File is larger than the form allows.",
+        UPLOAD_ERR_PARTIAL    => "File was only partially uploaded. Please try again.",
+        UPLOAD_ERR_NO_TMP_DIR => "Server is missing a temporary folder for uploads.",
+        UPLOAD_ERR_CANT_WRITE => "Server could not write the file to disk.",
+        UPLOAD_ERR_EXTENSION  => "A server extension stopped the file upload.",
+    ];
+
+    $message = $uploadErrors[$_FILES["picture"]["error"]] ?? "Unknown upload error (code " . $_FILES["picture"]["error"] . ").";
+
     echo json_encode([
         "success" => false,
-        "message" => "Upload Error Code: " . $_FILES["picture"]["error"]
+        "message" => $message
     ]);
     exit;
 }
 
+if (!is_uploaded_file($_FILES["picture"]["tmp_name"])) {
+    echo json_encode([
+        "success" => false,
+        "message" => "Invalid upload request."
+    ]);
+    exit;
+}
+
+$allowedTypes = ["image/jpeg", "image/png", "image/webp"];
+$fileType = mime_content_type($_FILES["picture"]["tmp_name"]);
+
+if ($fileType === false) {
+    echo json_encode([
+        "success" => false,
+        "message" => "Could not read the uploaded file. It may be corrupted."
+    ]);
+    exit;
+}
+
+if (!in_array($fileType, $allowedTypes)) {
+    echo json_encode([
+        "success" => false,
+        "message" => "Invalid file type. Only JPG, PNG, or WEBP images are allowed."
+    ]);
+    exit;
+}
+
+$maxBytes = 5 * 1024 * 1024;
+if ($_FILES["picture"]["size"] > $maxBytes) {
+    echo json_encode([
+        "success" => false,
+        "message" => "Picture must be smaller than 5MB."
+    ]);
+    exit;
+}
+
+// --- Prepare upload directory ---
+$uploadDir = dirname(__DIR__) . "/uploadsDriver/";
+
+if (!file_exists($uploadDir)) {
+    if (!mkdir($uploadDir, 0777, true)) {
+        echo json_encode([
+            "success" => false,
+            "message" => "Could not create upload directory on the server."
+        ]);
+        exit;
+    }
+}
+
+if (!is_writable($uploadDir)) {
+    echo json_encode([
+        "success" => false,
+        "message" => "Upload directory exists but is not writable by the server."
+    ]);
+    exit;
+}
+
+// --- Move the file ---
 $imageName = time() . "_" . basename($_FILES["picture"]["name"]);
 $targetFile = $uploadDir . $imageName;
 
 if (!move_uploaded_file($_FILES["picture"]["tmp_name"], $targetFile)) {
     echo json_encode([
         "success" => false,
-        "message" => "Could not move uploaded file.",
-        "tmp_name" => $_FILES["picture"]["tmp_name"],
-        "target" => realpath(dirname(__FILE__)) . "/" . $targetFile,
-        "uploadDirExists" => file_exists($uploadDir),
-        "uploadDirWritable" => is_writable($uploadDir),
-        "error" => error_get_last()
+        "message" => "Could not save the uploaded file. Please try again."
     ]);
     exit;
 }
 
 // Save the relative path
 $picture = "uploadsDriver/" . $imageName;
-// Insert user
+$status = "Active"; // matches DriverTable.status column
+
+// Insert driver
 $sql = "INSERT INTO DriverTable
-(username, password, license_no, expiration_date, picture, availability)
-VALUES (?, ?, ?, ?, ?, ?)";
+(username, password, contact_number, license_no, expiration_date, picture, availability, status)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
 $stmt = $conn->prepare($sql);
 
 if (!$stmt) {
+    unlink($targetFile); // clean up the saved file since we can't use it
     echo json_encode([
         "success" => false,
         "message" => $conn->error
@@ -91,21 +161,24 @@ if (!$stmt) {
 }
 
 $stmt->bind_param(
-    "ssssss",
+    "ssssssis",
     $username,
     $password,
+    $contact_number,
     $license_no,
     $expiration_date,
     $picture,
-    $availability
+    $availability,
+    $status
 );
 
 if ($stmt->execute()) {
     echo json_encode([
         "success" => true,
-        "message" => "User added successfully."
+        "message" => "Driver added successfully."
     ]);
 } else {
+    unlink($targetFile); // clean up the saved file since the row wasn't created
     echo json_encode([
         "success" => false,
         "message" => $stmt->error

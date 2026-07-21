@@ -6,6 +6,8 @@ import SearchDrivers from "./SearchDrivers";
 import AmkorLogo from "../../../Images/AmkorLogo.png";
 
 import { API_BASE } from '../../../config'
+import DisableDrivers from "./DisableDrivers";
+import UpdateDrivers from "./UpdateDrivers";
 
 function ManageDrivers({ drivers = null }) {
     const [data, setData] = useState([]);
@@ -81,7 +83,7 @@ function ManageDrivers({ drivers = null }) {
                             ) : (
                                 data.map((driver) => (
                                     <div
-                                        key={driver.driver_id}
+                                        key={driver.id}
                                         className="w-full flex justify-between h-[15vh] p-3 bg-gray-200 rounded mb-3"
                                     >
                                         <div className="flex gap-5">
@@ -142,19 +144,56 @@ function ManageDrivers({ drivers = null }) {
 
                                                 <p className="text-gray-700 font-bold">
                                                     {driver.expiration_date}
+                                                </p>                                        
+
+                                            </div>
+
+                                                <div className="h-full flex flex-col justify">
+                                                <p className="text-gray-400 font-bold text-sm mt-2">
+                                                    Contact Number
                                                 </p>
 
-                                            </div>  
+                                                <p className="text-gray-700 font-bold">
+                                                    {driver.contact_number}
+                                                </p>
+
+                                              
+
+                                                <p className="text-gray-400 font-bold text-sm mt-2">
+                                                    Status
+                                                </p>
+
+                                                <p className="text-gray-700 font-bold">
+                                                    {driver.status}
+                                                </p>
+
+                                            </div>    
 
                                         <div className="flex flex-col justify-center gap-2">
 
-                                            <button className="bg-green-500 hover:bg-green-400 duration-300 text-white rounded px-5 py-2 font-bold">
-                                                Edit
-                                            </button>
+                                            <UpdateDrivers
+                                                id={driver.id}
+                                                drivers={driver}
+                                                onUpdated={(id, updatedFields) =>
+                                                    setData((prev) =>
+                                                        prev.map((d) =>
+                                                            d.id === id ? { ...d, ...updatedFields } : d
+                                                        )
+                                                    )
+                                                }
+                                            />
 
-                                            <button className="bg-red-500 hover:bg-red-400 duration-300 text-white rounded px-5 py-2 font-bold">
-                                                Delete
-                                            </button>
+                                            <DisableDrivers
+                                                id={driver.id}
+                                                drivers={driver}
+                                                onStatusChanged={(id, newStatus) =>
+                                                    setData((prev) =>
+                                                        prev.map((d) =>
+                                                            d.id === id ? { ...d, status: newStatus } : d
+                                                        )
+                                                    )
+                                                }
+                                            />
 
                                         </div>
 

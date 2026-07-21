@@ -14,7 +14,7 @@ include "../db.php";
 
 $data = json_decode(file_get_contents("php://input"), true);
 
-$id = isset($data["user_id"]) ? intval($data["user_id"]) : 0;
+$id = isset($data["driver_id"]) ? intval($data["driver_id"]) : 0;
 $status = isset($data["status"]) ? $data["status"] : "";
 
 $allowedStatuses = ["Active", "Disabled"];
@@ -22,7 +22,7 @@ $allowedStatuses = ["Active", "Disabled"];
 if ($id <= 0) {
     echo json_encode([
         "success" => false,
-        "message" => "Invalid user ID."
+        "message" => "Invalid driver ID."
     ]);
     exit;
 }
@@ -35,7 +35,7 @@ if (!in_array($status, $allowedStatuses)) {
     exit;
 }
 
-$sql = "UPDATE UserTable SET status = ? WHERE user_id = ?";
+$sql = "UPDATE DriverTable SET status = ? WHERE id = ?";
 
 $stmt = $conn->prepare($sql);
 
@@ -52,7 +52,7 @@ $stmt->bind_param("si", $status, $id);
 if ($stmt->execute()) {
     echo json_encode([
         "success" => true,
-        "message" => $status === "Disabled" ? "User disabled successfully." : "User enabled successfully."
+        "message" => $status === "Disabled" ? "Driver disabled successfully." : "Driver enabled successfully."
     ]);
 } else {
     echo json_encode([
