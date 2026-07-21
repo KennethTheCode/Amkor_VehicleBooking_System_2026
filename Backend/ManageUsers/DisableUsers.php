@@ -15,6 +15,9 @@ include "../db.php";
 $data = json_decode(file_get_contents("php://input"), true);
 
 $id = isset($data["user_id"]) ? intval($data["user_id"]) : 0;
+$status = isset($data["status"]) ? $data["status"] : "";
+
+$allowedStatuses = ["Active", "Disabled"];
 
 if ($id <= 0) {
     echo json_encode([
@@ -24,7 +27,15 @@ if ($id <= 0) {
     exit;
 }
 
-$sql = "UPDATE UserTable SET status = 'Disabled' WHERE user_id = ?";
+if (!in_array($status, $allowedStatuses)) {
+    echo json_encode([
+        "success" => false,
+        "message" => "Invalid status value."
+    ]);
+    exit;
+}
+
+$sql = "UPDATE UserTable SET status = ? WHERE user_id = ?";
 
 $stmt = $conn->prepare($sql);
 
@@ -36,12 +47,12 @@ if (!$stmt) {
     exit;
 }
 
-$stmt->bind_param("i", $id);
+$stmt->bind_param("si", $status, $id);
 
 if ($stmt->execute()) {
     echo json_encode([
         "success" => true,
-        "message" => "User disabled successfully."
+        "message" => $status === "Disabled" ? "User disabled successfully." : "User enabled successfully."
     ]);
 } else {
     echo json_encode([

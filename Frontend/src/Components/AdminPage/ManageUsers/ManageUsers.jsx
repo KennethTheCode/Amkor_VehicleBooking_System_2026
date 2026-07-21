@@ -7,6 +7,7 @@ import AmkorLogo from "../../../Images/AmkorLogo.png";
 
 import { API_BASE } from '../../../config'
 import DisableUsers from "./DisableUsers";
+import UpdateUsers from "./UpdateUsers";
 
 
 function ManageUsers({ users = null }) {
@@ -131,6 +132,13 @@ function ManageUsers({ users = null }) {
                                                     {user.contact_number}
                                                 </p>
 
+                                                <p className="text-gray-400 font-bold text-sm mt-2">
+                                                    Status
+                                                </p>
+                                                <p className="text-gray-700 font-bold">
+                                                    {user.status}
+                                                </p>
+
                                                
                                                
                                             </div>
@@ -139,9 +147,17 @@ function ManageUsers({ users = null }) {
 
                                         <div className="flex flex-col justify-center gap-2">
 
-                                            <button className="bg-green-500 hover:bg-green-400 duration-300 text-white rounded px-5 py-2 font-bold">
-                                                Edit
-                                            </button>
+                                            <UpdateUsers
+                                                id={user.user_id}
+                                                users={user}
+                                                onUpdated={(id, updatedFields) =>
+                                                    setData((prev) =>
+                                                        prev.map((u) =>
+                                                            u.user_id === id ? { ...u, ...updatedFields } : u
+                                                        )
+                                                    )
+                                                }
+                                            />
 
                                             <DisableUsers
                                                 id={user.user_id}
