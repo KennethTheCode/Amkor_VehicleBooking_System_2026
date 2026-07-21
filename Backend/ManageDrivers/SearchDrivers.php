@@ -17,7 +17,7 @@ $data = json_decode(file_get_contents("php://input"), true);
 $keyword = trim($data["keyword"] ?? "");
 
 if ($keyword == "") {
-    $sql = "SELECT id, username, password, contact_number, license_no, expiration_date, picture, availability, status
+    $sql = "SELECT id, username, password, email, license_no, expiration_date, picture, availability, status
             FROM DriverTable
             ORDER BY id ASC";
 
@@ -27,11 +27,11 @@ if ($keyword == "") {
 
     $search = "%" . $keyword . "%";
 
-    $sql = "SELECT id, username, password, contact_number, license_no, expiration_date, picture, availability, status
+    $sql = "SELECT id, username, password, email, license_no, expiration_date, picture, availability, status
             FROM DriverTable
             WHERE username LIKE ?
                OR password LIKE ?
-               OR contact_number LIKE ?
+               OR email LIKE ?
                OR license_no LIKE ?
                OR expiration_date LIKE ?
                OR picture LIKE ?
@@ -63,7 +63,7 @@ while ($row = $result->fetch_assoc()) {
         'id' => $row['id'],
         'username' => $row['username'],
         'password' => $row['password'],
-        'contact_number' => $row['contact_number'],
+        'email' => $row['email'],
         'license_no' => $row['license_no'],
         'expiration_date' => $row['expiration_date'],
         'picture' => $row['picture'],

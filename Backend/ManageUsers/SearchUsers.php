@@ -17,7 +17,7 @@ $data = json_decode(file_get_contents("php://input"), true);
 $keyword = trim($data["keyword"] ?? "");
 
 if ($keyword == "") {
-    $sql = "SELECT user_id, username, password, contact_number, account_type, picture, status
+    $sql = "SELECT user_id, username, password, email, account_type, picture, status
             FROM UserTable
             ORDER BY user_id ASC";
 
@@ -27,11 +27,11 @@ if ($keyword == "") {
 
     $search = "%" . $keyword . "%";
 
-    $sql = "SELECT user_id, username, password, contact_number, account_type, picture, status
+    $sql = "SELECT user_id, username, password, email, account_type, picture, status
             FROM UserTable
             WHERE username LIKE ?
                OR password LIKE ?
-               OR contact_number LIKE ?
+               OR email LIKE ?
                OR account_type LIKE ?
                OR status LIKE ?
             ORDER BY user_id ASC";
@@ -56,7 +56,7 @@ while ($row = $result->fetch_assoc()) {
         'user_id' => $row['user_id'],
         'username' => $row['username'],
         'password' => $row['password'],
-        'contact_number' => $row['contact_number'],
+        'email' => $row['email'],
         'account_type' => $row['account_type'],
         'picture' => $row['picture'],
         'status' => $row['status'],

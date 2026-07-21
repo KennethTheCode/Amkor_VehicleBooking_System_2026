@@ -126,10 +126,10 @@ function ManageUsers({ users = null }) {
                                             </div>
                                              <div className="flex flex-col">
                                                 <p className="text-gray-400 font-bold text-sm mt-2">
-                                                    Contact Number
+                                                    Email
                                                 </p>
                                                 <p className="text-gray-700 font-bold">
-                                                    {user.contact_number}
+                                                    {user.email}
                                                 </p>
 
                                                 <p className="text-gray-400 font-bold text-sm mt-2">

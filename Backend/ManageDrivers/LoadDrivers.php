@@ -5,7 +5,7 @@ header("Content-Type: application/json; charset=UTF-8");
 
 include "../db.php";
 
-$sql = "SELECT id, username, password, contact_number, license_no, picture, expiration_date, availability, status
+$sql = "SELECT id, username, password, email, license_no, picture, expiration_date, availability, status
 FROM DriverTable
 ";
 $result = $conn->query($sql);
@@ -18,7 +18,7 @@ if ($result) {
             'id' => $row['id'],
             'username' => $row['username'],
             'password' => $row['password'],
-            'contact_number' => $row['contact_number'],
+            'email' => $row['email'],
             'license_no' => $row['license_no'],
             'picture' => $row['picture'],
             'expiration_date' => $row['expiration_date'],

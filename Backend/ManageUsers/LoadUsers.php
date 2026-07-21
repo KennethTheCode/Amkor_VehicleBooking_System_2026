@@ -5,7 +5,7 @@ header("Content-Type: application/json; charset=UTF-8");
 
 include "../db.php";
 
-$sql = "SELECT user_id, username, password, contact_number, account_type, picture, status
+$sql = "SELECT user_id, username, password, email, account_type, picture, status
 FROM UserTable
 ORDER BY user_id DESC";
 $result = $conn->query($sql);
@@ -18,7 +18,7 @@ if ($result) {
             'user_id' => $row['user_id'],
             'username' => $row['username'],
             'password' => $row['password'],
-            'contact_number' => $row['contact_number'],
+            'email' => $row['email'],
             'account_type' => $row['account_type'],
             'status' => $row['status'],
             'picture' => $row['picture']

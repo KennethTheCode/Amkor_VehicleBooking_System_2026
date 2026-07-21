@@ -150,11 +150,11 @@ function ManageDrivers({ drivers = null }) {
 
                                                 <div className="h-full flex flex-col justify">
                                                 <p className="text-gray-400 font-bold text-sm mt-2">
-                                                    Contact Number
+                                                    Email
                                                 </p>
 
                                                 <p className="text-gray-700 font-bold">
-                                                    {driver.contact_number}
+                                                    {driver.email}
                                                 </p>
 
                                               

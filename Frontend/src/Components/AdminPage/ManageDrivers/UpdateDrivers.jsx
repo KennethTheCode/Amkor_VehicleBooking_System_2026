@@ -9,7 +9,7 @@ function UpdateDrivers({ id, drivers, onUpdated }) {
     const [form, setForm] = useState({
         username: drivers.username || "",
         password: drivers.password || "",
-        contact_number: drivers.contact_number || "",
+        email: drivers.email || "",
         license_no: drivers.license_no || "",
         expiration_date: drivers.expiration_date || "",
         picture: null, // only set if driver picks a new one
@@ -28,7 +28,7 @@ function UpdateDrivers({ id, drivers, onUpdated }) {
         if (
             !form.username ||
             !form.password ||
-            !form.contact_number ||
+            !form.email ||
             !form.license_no ||
             !form.expiration_date
         ) {
@@ -43,7 +43,7 @@ function UpdateDrivers({ id, drivers, onUpdated }) {
         formData.append("driver_id", id)
         formData.append("username", form.username)
         formData.append("password", form.password)
-        formData.append("contact_number", form.contact_number)
+        formData.append("email", form.email)
         formData.append("license_no", form.license_no)
         formData.append("expiration_date", form.expiration_date)
         if (form.picture) {
@@ -69,7 +69,7 @@ function UpdateDrivers({ id, drivers, onUpdated }) {
                 onUpdated(id, {
                     username: form.username,
                     password: form.password,
-                    contact_number: form.contact_number,
+                    email: form.email,
                     license_no: form.license_no,
                     expiration_date: form.expiration_date,
                     ...(data.picture ? { picture: data.picture } : {}),
@@ -126,13 +126,11 @@ function UpdateDrivers({ id, drivers, onUpdated }) {
                             </div>
 
                             <div>
-                                <p className="text-gray-800 font-bold text-[13px]">Contact Number</p>
+                                <p className="text-gray-800 font-bold text-[13px]">Email</p>
                                 <input
                                     type="text"
-                                    name="contact_number"
-                                    minLength={11}
-                                    maxLength={11}
-                                    value={form.contact_number}
+                                    name="email"                                   
+                                    value={form.email}
                                     onChange={handleChange}
                                     className="w-full bg-gray-100 text-gray-500 font-bold text-[13px] p-2 border-b border-gray-300"
                                 />

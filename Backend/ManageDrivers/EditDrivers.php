@@ -17,7 +17,7 @@ if (
     !isset($_POST["driver_id"]) ||
     !isset($_POST["username"]) ||
     !isset($_POST["password"]) ||
-    !isset($_POST["contact_number"]) ||
+    !isset($_POST["email"]) ||
     !isset($_POST["license_no"]) ||
     !isset($_POST["expiration_date"])
 ) {
@@ -31,7 +31,7 @@ if (
 $driver_id = intval($_POST["driver_id"]);
 $username = trim($_POST["username"]);
 $password = $_POST["password"];
-$contact_number = trim($_POST["contact_number"]);
+$email = trim($_POST["email"]);
 $license_no = trim($_POST["license_no"]);
 $expiration_date = $_POST["expiration_date"];
 
@@ -39,7 +39,7 @@ if (
     $driver_id <= 0 ||
     $username === "" ||
     $password === "" ||
-    $contact_number === "" ||
+    $email === "" ||
     $license_no === "" ||
     $expiration_date === ""
 ) {
@@ -159,7 +159,7 @@ if (isset($_FILES["picture"]) && $_FILES["picture"]["error"] !== UPLOAD_ERR_NO_F
 
 // --- Update driver ---
 $sql = "UPDATE DriverTable
-SET username = ?, password = ?, contact_number = ?, license_no = ?, expiration_date = ?, picture = ?
+SET username = ?, password = ?, email = ?, license_no = ?, expiration_date = ?, picture = ?
 WHERE id = ?";
 
 $stmt = $conn->prepare($sql);
@@ -179,7 +179,7 @@ $stmt->bind_param(
     "ssssssi",
     $username,
     $password,
-    $contact_number,
+    $email,
     $license_no,
     $expiration_date,
     $picture,

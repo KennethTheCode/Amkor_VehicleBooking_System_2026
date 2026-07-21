@@ -16,7 +16,7 @@ include "../db.php";
 if (
     !isset($_POST["username"]) ||
     !isset($_POST["password"]) ||
-    !isset($_POST["contact_number"]) ||
+    !isset($_POST["email"]) ||
     !isset($_POST["license_no"]) ||
     !isset($_POST["expiration_date"])
 ) {
@@ -29,12 +29,12 @@ if (
 
 $username = trim($_POST["username"]);
 $password = $_POST["password"];
-$contact_number = trim($_POST["contact_number"]);
+$email = trim($_POST["email"]);
 $license_no = trim($_POST["license_no"]);
 $expiration_date = $_POST["expiration_date"];
 $availability = isset($_POST["availability"]) ? intval($_POST["availability"]) : 1;
 
-if ($username === "" || $password === "" || $contact_number === "" || $license_no === "" || $expiration_date === "") {
+if ($username === "" || $password === "" || $email === "" || $license_no === "" || $expiration_date === "") {
     echo json_encode([
         "success" => false,
         "message" => "All fields are required."
@@ -146,7 +146,7 @@ $status = "Active"; // matches DriverTable.status column
 
 // Insert driver
 $sql = "INSERT INTO DriverTable
-(username, password, contact_number, license_no, expiration_date, picture, availability, status)
+(username, password, email, license_no, expiration_date, picture, availability, status)
 VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
 $stmt = $conn->prepare($sql);
@@ -164,7 +164,7 @@ $stmt->bind_param(
     "ssssssis",
     $username,
     $password,
-    $contact_number,
+    $email,
     $license_no,
     $expiration_date,
     $picture,

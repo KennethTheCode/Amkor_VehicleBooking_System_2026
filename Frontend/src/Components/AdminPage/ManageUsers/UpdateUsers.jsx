@@ -9,7 +9,7 @@ function UpdateUsers({ id, users, onUpdated }) {
     const [form, setForm] = useState({
         username: users.username || "",
         password: users.password || "",
-        contact_number: users.contact_number || "",
+        email: users.email || "",
         account_type: users.account_type || "",
         picture: null, // only set if user picks a new one
     })
@@ -24,7 +24,7 @@ function UpdateUsers({ id, users, onUpdated }) {
     const handleUpdate = async (e) => {
         e.preventDefault()
 
-        if (!form.username || !form.password || !form.contact_number || !form.account_type) {
+        if (!form.username || !form.password || !form.email || !form.account_type) {
             setError("All fields are required.")
             return
         }
@@ -36,7 +36,7 @@ function UpdateUsers({ id, users, onUpdated }) {
         formData.append("user_id", id)
         formData.append("username", form.username)
         formData.append("password", form.password)
-        formData.append("contact_number", form.contact_number)
+        formData.append("email", form.email)
         formData.append("account_type", form.account_type)
         if (form.picture) {
             formData.append("picture", form.picture)
@@ -61,7 +61,7 @@ function UpdateUsers({ id, users, onUpdated }) {
                 onUpdated(id, {
                     username: form.username,
                     password: form.password,
-                    contact_number: form.contact_number,
+                    email: form.email,
                     account_type: form.account_type,
                     ...(data.picture ? { picture: data.picture } : {}),
                 })
@@ -117,7 +117,7 @@ function UpdateUsers({ id, users, onUpdated }) {
                             </div>
 
                             <div>
-                                <p className="text-gray-800 font-bold text-[13px]">Contact Number</p>
+                                <p className="text-gray-800 font-bold text-[13px]">Email </p>
                                 <input
                                     type="text"
                                     name="contact_number"

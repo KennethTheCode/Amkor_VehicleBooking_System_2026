@@ -5,7 +5,7 @@ function AddDrivers({ onDriverAdded }) {
     const [driver, setDriver] = useState({
         username: "",
         password: "",
-        contact_number: "",
+        email: "",
         license_no: "",
         expiration_date: "",
         picture: null,
@@ -26,7 +26,7 @@ function AddDrivers({ onDriverAdded }) {
         if (
             !driver.username ||
             !driver.password ||
-            !driver.contact_number ||
+            !driver.email ||
             !driver.license_no ||
             !driver.expiration_date ||
             !driver.picture
@@ -40,7 +40,7 @@ function AddDrivers({ onDriverAdded }) {
         const formData = new FormData();
         formData.append("username", driver.username);
         formData.append("password", driver.password);
-        formData.append("contact_number", driver.contact_number);
+        formData.append("email", driver.email);
         formData.append("license_no", driver.license_no);
         formData.append("expiration_date", driver.expiration_date);
         formData.append("picture", driver.picture);
@@ -62,7 +62,7 @@ function AddDrivers({ onDriverAdded }) {
                 setDriver({
                     username: "",
                     password: "",
-                    contact_number: "",
+                    email: "",
                     license_no: "",
                     expiration_date: "",
                     picture: null,
@@ -108,15 +108,13 @@ function AddDrivers({ onDriverAdded }) {
                     className='mb-5 w-full bg-gray-100 text-gray-500 font-bold text-[13px] p-2 border-b border-gray-300'
                 />
 
-                <p className='text-gray-800 font-bold text-[15px]'>Enter Contact Number</p>
+                <p className='text-gray-800 font-bold text-[15px]'>Enter Email</p>
                 <input
                     type="text"
-                    name="contact_number"
-                    minLength={11}
-                    maxLength={11}
-                    value={driver.contact_number}
+                    name="email"                
+                    value={driver.email}
                     onChange={handleChange}
-                    placeholder='Contact Number'
+                    placeholder='Email'
                     className='mb-5 w-full bg-gray-100 text-gray-500 font-bold text-[13px] p-2 border-b border-gray-300'
                 />
 

@@ -16,7 +16,7 @@ include "../db.php";
 if (
     !isset($_POST["username"]) ||
     !isset($_POST["password"]) ||
-    !isset($_POST["contact_number"]) ||
+    !isset($_POST["email"]) ||
     !isset($_POST["account_type"])
 ) {
     echo json_encode([
@@ -28,10 +28,10 @@ if (
 
 $username = trim($_POST["username"]);
 $password = $_POST["password"];
-$contact_number = $_POST["contact_number"];
+$email = $_POST["email"];
 $account_type = $_POST["account_type"];
 
-if ($username === "" || $password === "" || $contact_number === "" || $account_type === "") {
+if ($username === "" || $password === "" || $email === "" || $account_type === "") {
     echo json_encode([
         "success" => false,
         "message" => "All fields are required."
@@ -142,7 +142,7 @@ $status = "Active"; // matches UserTable.status column
 
 // --- Insert user ---
 $sql = "INSERT INTO UserTable
-(username, password, contact_number ,account_type, picture, status)
+(username, password, email ,account_type, picture, status)
 VALUES (?, ?, ?, ?, ?, ?)";
 
 $stmt = $conn->prepare($sql);
@@ -160,7 +160,7 @@ $stmt->bind_param(
     "ssssss",
     $username,
     $password,
-    $contact_number,
+    $email,
     $account_type,
     $picture,
     $status
