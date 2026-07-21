@@ -81,7 +81,7 @@ function ReviewRequests({ summary }) {
         };
 
         await postAndHandle(
-            `${API_BASE}/ManageRequests/UpdateAvailability.php`,
+            `http://localhost/Amkor_VehicleBooking_System_2026/Backend/ManageRequests/UpdateAvailability.php`,
             schedule
         );
     };

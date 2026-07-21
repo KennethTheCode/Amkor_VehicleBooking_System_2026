@@ -23,77 +23,69 @@ if (!$data) {
     exit;
 }
 
-$id = (int)($data["id"] ?? 0);                  // Driver ID
-$vehicle_id = (int)($data["vehicle_id"] ?? 0);  // Vehicle ID
-$ticket_id = (int)($data["ticket_id"] ?? 0);    // Booking Ticket ID
-$date_needed = $data["date_needed"] ?? "";      // Booking Date
+$ticket_id = (int)($data["ticket_id"] ?? 0);
 
-$currentDate = date("Y-m-d");
-
-$conn->begin_transaction();
+if ($ticket_id === 0) {
+    http_response_code(400);
+    echo json_encode([
+        "success" => false,
+        "message" => "Missing ticket id."
+    ]);
+    exit;
+}
 
 try {
 
-    // Approve booking
-    $stmt3 = $conn->prepare("
-        UPDATE BookingTable
-        SET status = 'Approved'
+    // Only allow rejecting a booking that's still Pending —
+    // stops an Approved/Ongoing/Finished ticket from being
+    // flipped to Rejected by mistake.
+    $checkStmt = $conn->prepare("
+        SELECT status
+        FROM BookingTable
         WHERE ticket_id = ?
     ");
 
-    if (!$stmt3) {
+    if (!$checkStmt) {
         throw new Exception($conn->error);
     }
 
-    $stmt3->bind_param("i", $ticket_id);
-    $stmt3->execute();
+    $checkStmt->bind_param("i", $ticket_id);
+    $checkStmt->execute();
+    $result = $checkStmt->get_result();
 
-    // Update availability ONLY if today is the scheduled date
-    if ($currentDate === $date_needed) {
-
-        // Update driver availability
-        $stmt1 = $conn->prepare("
-            UPDATE DriverTable
-            SET availability = 0
-            WHERE id = ?
-        ");
-
-        if (!$stmt1) {
-            throw new Exception($conn->error);
-        }
-
-        $stmt1->bind_param("i", $id);
-        $stmt1->execute();
-
-        // Update vehicle availability
-        $stmt2 = $conn->prepare("
-            UPDATE VehicleTable
-            SET availability = 0
-            WHERE id = ?
-        ");
-
-        if (!$stmt2) {
-            throw new Exception($conn->error);
-        }
-
-        $stmt2->bind_param("i", $vehicle_id);
-        $stmt2->execute();
+    if ($result->num_rows === 0) {
+        throw new Exception("Booking not found.");
     }
 
-    $conn->commit();
+    $booking = $result->fetch_assoc();
+    $checkStmt->close();
+
+    if ($booking["status"] !== "Pending") {
+        throw new Exception("Only pending bookings can be rejected.");
+    }
+
+    $stmt = $conn->prepare("
+        UPDATE BookingTable
+        SET status = 'Rejected'
+        WHERE ticket_id = ?
+    ");
+
+    if (!$stmt) {
+        throw new Exception($conn->error);
+    }
+
+    $stmt->bind_param("i", $ticket_id);
+    $stmt->execute();
+    $stmt->close();
 
     echo json_encode([
         "success" => true,
-        "message" => ($currentDate === $date_needed)
-            ? "Driver Unavailable"
-            : "Booking approved. Driver and vehicle remain available until $date_needed."
+        "message" => "Ticket rejected."
     ]);
 
 } catch (Exception $e) {
 
-    $conn->rollback();
-
-    http_response_code(500);
+    http_response_code(400);
 
     echo json_encode([
         "success" => false,

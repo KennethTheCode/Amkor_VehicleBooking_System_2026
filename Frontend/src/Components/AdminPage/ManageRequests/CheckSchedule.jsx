@@ -13,10 +13,10 @@ function CheckSchedule({ summary }) {
     )
         .then((res) => res.json())
         .then((data) => {
-            const approvedOnly = (data || []).filter(
-                (item) => item.status === "Approved"
-            );
-            setSchedule(approvedOnly);
+            // Backend already filters to status = 'Approved' in its SQL,
+            // and doesn't even select a `status` column — so filtering
+            // on item.status here was always dropping every row.
+            setSchedule(data || []);
         })
         .catch((err) => console.error(err));
 }, [summary.date_needed]);

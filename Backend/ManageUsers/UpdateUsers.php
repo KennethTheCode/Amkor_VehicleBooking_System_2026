@@ -17,7 +17,7 @@ if (
     !isset($_POST["user_id"]) ||
     !isset($_POST["username"]) ||
     !isset($_POST["password"]) ||
-    !isset($_POST["contact_number"]) ||
+    !isset($_POST["email"]) ||
     !isset($_POST["account_type"])
 ) {
     echo json_encode([
@@ -30,7 +30,7 @@ if (
 $id = intval($_POST["user_id"]);
 $username = trim($_POST["username"]);
 $password = $_POST["password"];
-$contact_number = trim($_POST["contact_number"]);
+$email = trim($_POST["email"]);
 $account_type = $_POST["account_type"];
 
 if ($id <= 0) {
@@ -41,7 +41,7 @@ if ($id <= 0) {
     exit;
 }
 
-if ($username === "" || $password === "" || $contact_number === "" || $account_type === "") {
+if ($username === "" || $password === "" || $email === "" || $account_type === "") {
     echo json_encode([
         "success" => false,
         "message" => "All fields are required."
@@ -111,7 +111,7 @@ if (isset($_FILES["picture"]) && $_FILES["picture"]["error"] !== UPLOAD_ERR_NO_F
 // --- Build the update query (only touches `picture` if a new one was uploaded) ---
 if ($newPicture !== null) {
     $sql = "UPDATE UserTable
-            SET username = ?, password = ?, contact_number = ?, account_type = ?, picture = ?
+            SET username = ?, password = ?, email = ?, account_type = ?, picture = ?
             WHERE user_id = ?";
 
     $stmt = $conn->prepare($sql);
@@ -124,14 +124,14 @@ if ($newPicture !== null) {
         "sssssi",
         $username,
         $password,
-        $contact_number,
+        $email,
         $account_type,
         $newPicture,
         $id
     );
 } else {
     $sql = "UPDATE UserTable
-            SET username = ?, password = ?, contact_number = ?, account_type = ?
+            SET username = ?, password = ?, email = ?, account_type = ?
             WHERE user_id = ?";
 
     $stmt = $conn->prepare($sql);
@@ -144,7 +144,7 @@ if ($newPicture !== null) {
         "ssssi",
         $username,
         $password,
-        $contact_number,
+        $email,
         $account_type,
         $id
     );

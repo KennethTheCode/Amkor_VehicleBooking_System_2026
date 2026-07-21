@@ -17,7 +17,7 @@ SELECT
     BookingTable.ticket_id,
     BookingTable.driver_id,
     DriverTable.username AS driver_username,
-c
+
     BookingTable.vehicle_id,
     VehicleTable.vehicle_model,
 
@@ -40,6 +40,16 @@ ORDER BY BookingTable.time_needed
 ";
 
 $stmt = $conn->prepare($sql);
+
+if (!$stmt) {
+    http_response_code(500);
+    echo json_encode([
+        "success" => false,
+        "message" => $conn->error
+    ]);
+    exit;
+}
+
 $stmt->bind_param("s", $date);
 $stmt->execute();
 

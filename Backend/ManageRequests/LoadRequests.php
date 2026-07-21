@@ -12,10 +12,10 @@ SELECT
     BookingTable.driver_id,
 
     UserTable.username,
-    UserTable.contact_number AS user_contact_number,
+    UserTable.email AS user_email,
 
     DriverTable.username AS driver_username,
-    DriverTable.contact_number AS driver_contact_number,
+    DriverTable.email AS driver_email,
 
     VehicleTable.id AS vehicle_id,
     VehicleTable.vehicle_model,
@@ -51,10 +51,10 @@ GROUP BY
     BookingTable.driver_id,
 
     UserTable.username,
-    UserTable.contact_number,
+    UserTable.email,
 
     DriverTable.username,
-    DriverTable.contact_number,
+    DriverTable.email,
 
     VehicleTable.id,
     VehicleTable.vehicle_model,
@@ -86,15 +86,15 @@ $tickets = [];
 while ($row = $result->fetch_assoc()) {
 
     $tickets[] = [
-        "ticket_id"             => $row["ticket_id"],
-        "user_id"               => $row["user_id"],
-        "driver_id"             => $row["driver_id"],
+        "ticket_id"       => $row["ticket_id"],
+        "user_id"         => $row["user_id"],
+        "driver_id"       => $row["driver_id"],
 
-        "username"              => $row["username"],
-        "user_contact_number"   => $row["user_contact_number"],
+        "username"        => $row["username"],
+        "user_email"      => $row["user_email"],
 
-        "driver_username"       => $row["driver_username"],
-        "driver_contact_number" => $row["driver_contact_number"],
+        "driver_username" => $row["driver_username"],
+        "driver_email"    => $row["driver_email"],
 
         "vehicle_id"      => $row["vehicle_id"],
         "vehicle_model"   => $row["vehicle_model"],

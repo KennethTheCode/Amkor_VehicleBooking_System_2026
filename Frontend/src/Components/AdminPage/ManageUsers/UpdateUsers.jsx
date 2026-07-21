@@ -120,8 +120,8 @@ function UpdateUsers({ id, users, onUpdated }) {
                                 <p className="text-gray-800 font-bold text-[13px]">Email </p>
                                 <input
                                     type="text"
-                                    name="contact_number"
-                                    value={form.contact_number}
+                                    name="email"
+                                    value={form.email}
                                     onChange={handleChange}
                                     className="w-full bg-gray-100 text-gray-500 font-bold text-[13px] p-2 border-b border-gray-300"
                                 />

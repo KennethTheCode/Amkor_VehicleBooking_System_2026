@@ -110,7 +110,7 @@ function ManageVehicles({ vehicles = null }) {
                                                     </div>
 
                                                     <div className="flex flex-col justify-center">
-                                                        <h2 className="font-bold text-lg">
+                                                        <h2 className="font-bold text-lg text-gray-600">
                                                             {vehicle.vehicle_model}
                                                         </h2>
 
@@ -156,12 +156,7 @@ function ManageVehicles({ vehicles = null }) {
                                                             {vehicle.expiration}
                                                         </p>
 
-                                                        <p>
-                                                            <strong>Availability:</strong>{" "}
-                                                            {vehicle.availability == 1
-                                                                ? "Available"
-                                                                : "Unavailable"}
-                                                        </p>
+                                                        
 
                                                         <p>
                                                             <strong>RFID Balance:</strong>{" "}

@@ -13,7 +13,7 @@ function RejectRequests({ summary, onRejected }) {
         setError(null);
 
         try {
-            const response = await fetch(`${API_BASE}/ManageRequests/Reject.php`, {
+            const response = await fetch(`${API_BASE}/ManageRequests/RejectTicket.php`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
