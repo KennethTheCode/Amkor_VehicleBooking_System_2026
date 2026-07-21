@@ -6,6 +6,7 @@ function AddUsers() {
     const [user, setUser] = useState({
         username: "",
         password: "",
+        contact_number: "",
         account_type: "",
         picture: null,
     });
@@ -33,6 +34,7 @@ function AddUsers() {
 
         formData.append("username", user.username);
         formData.append("password", user.password);
+        formData.append("contact_number", user.contact_number);
         formData.append("account_type", user.account_type);
         formData.append("picture", user.picture);
 
@@ -53,6 +55,7 @@ function AddUsers() {
                 setUser({
                     username: "",
                     password: "",
+                    contact_number: "",
                     account_type: "",
                     picture: null,
                 });
@@ -95,6 +98,21 @@ function AddUsers() {
                     value={user.password}
                     onChange={handleChange}
                     placeholder="Password"
+                    className="mb-5 w-full bg-gray-100 text-gray-500 font-bold text-[13px] p-2 border-b border-gray-300"
+                />
+ 
+                <p className="text-gray-800 font-bold text-[15px]">
+                    Contact Number
+                </p>
+
+                <input
+                    type="text"
+                    name="contact_number"
+                    value={user.contact_number}
+                    onChange={handleChange}
+                    placeholder="Contact number"
+                    maxLength={11}
+                    min={11}
                     className="mb-5 w-full bg-gray-100 text-gray-500 font-bold text-[13px] p-2 border-b border-gray-300"
                 />
 

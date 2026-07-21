@@ -6,6 +6,7 @@ import SearchUsers from "./SearchUsers";
 import AmkorLogo from "../../../Images/AmkorLogo.png";
 
 import { API_BASE } from '../../../config'
+import DisableUsers from "./DisableUsers";
 
 
 function ManageUsers({ users = null }) {
@@ -16,7 +17,7 @@ function ManageUsers({ users = null }) {
         (typeof import.meta !== "undefined" &&
             import.meta.env &&
             import.meta.env.VITE_BACKEND_URL) ||
-        `${API_BASE}/ManageVehicles/LoadVehicles.php`;
+        `${API_BASE}/ManageUsers/LoadUsers.php`;
 
     const loadUsers = () => {
         setIsSearching(true);
@@ -45,7 +46,6 @@ function ManageUsers({ users = null }) {
                 setIsSearching(false);
             });
     };
-
     useEffect(() => {
         loadUsers();
     }, [users]);
@@ -84,7 +84,7 @@ function ManageUsers({ users = null }) {
                                         key={user.user_id}
                                         className="w-full flex justify-between h-[15vh] p-3 bg-gray-200 rounded mb-3"
                                     >
-                                        <div className="flex justify-center gap-5 ">
+                                        <div className="flex justify-center gap-5  ">
                                             <div className="flex flex-col items-center justify-center">
 
                                             <div className="w-20 h-20 rounded-full border-4 border-gray-500 overflow-hidden">
@@ -106,7 +106,7 @@ function ManageUsers({ users = null }) {
                                                 </p>
 
                                             </div>
-                                            <div>
+                                            <div className="flex  w-[10vh] flex-col ">
                                                 <p className="text-gray-400 font-bold text-sm">
                                                     Username
                                                 </p>
@@ -121,9 +121,21 @@ function ManageUsers({ users = null }) {
 
                                                 <p className="text-gray-700 font-bold">
                                                     {user.password}
+                                                </p>                                                                                               
+                                            </div>
+                                             <div className="flex flex-col">
+                                                <p className="text-gray-400 font-bold text-sm mt-2">
+                                                    Contact Number
                                                 </p>
+                                                <p className="text-gray-700 font-bold">
+                                                    {user.contact_number}
+                                                </p>
+
+                                               
+                                               
                                             </div>
                                         </div>
+                                        
 
                                         <div className="flex flex-col justify-center gap-2">
 
@@ -131,10 +143,11 @@ function ManageUsers({ users = null }) {
                                                 Edit
                                             </button>
 
-                                            <button className="bg-red-500 hover:bg-red-400 duration-300 text-white rounded px-5 py-2 font-bold">
-                                                Delete
-                                            </button>
-
+                                            <DisableUsers
+                                                id={user.user_id}
+                                                users={user}
+                                                
+                                            />
                                         </div>
                                     </div>
                                 ))
