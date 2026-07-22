@@ -69,7 +69,7 @@ function AddUsers() {
     };
 
     return (
-        <div className="bg-white w-[50vh] h-full p-3">
+        <div className="bg-white  h-full p-3">
             <form onSubmit={handleSubmit}>
                 <h1 className="text-gray-800 font-bold text-[20px] mb-5">
                     Register Users

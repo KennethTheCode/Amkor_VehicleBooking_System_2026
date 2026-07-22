@@ -80,7 +80,7 @@ function UpdateUsers({ id, users, onUpdated }) {
         <div>
             <button
                 onClick={() => setShowModal(true)}
-                className="bg-blue-500 w-full hover:bg-blue-400 duration-300 text-white rounded px-5 py-2 font-bold">
+                className="bg-blue-500 w-full text-[10px] px-3 hover:bg-blue-400 duration-300 text-white rounded sm:px-5 py-2 font-bold">
                 <p>Edit</p>
             </button>
 

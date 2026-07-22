@@ -47,7 +47,7 @@ function DisableUsers({ id, users, onStatusChanged }) {
         <div>
             <button
                 onClick={() => setShowModal(true)}
-                className={`${isDisabled ? "bg-green-500 hover:bg-green-400" : "bg-red-500 hover:bg-red-400"} duration-300 text-white rounded px-5 py-2 font-bold`}>
+                className={`${isDisabled ? "bg-green-500 hover:bg-green-400" : "bg-red-500 hover:bg-red-400"} duration-300 text-white rounded text-[10px] px-3 sm:px-5 py-2 font-bold`}>
                 <p>{actionLabel}</p>
             </button>
 

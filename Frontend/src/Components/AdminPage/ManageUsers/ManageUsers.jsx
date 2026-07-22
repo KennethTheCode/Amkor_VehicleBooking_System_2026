@@ -55,10 +55,10 @@ function ManageUsers({ users = null }) {
         <div>
             <Navbar />
 
-            <div className="bg-gray-100 px-[20vh] pt-3 py-4 h-screen flex flex-col gap-3">
+            <div className="bg-gray-100 px-2 sm:px-[20vh] pt-3 py-4 h-screen flex flex-col gap-3">
                 <Dashboard />
 
-                <div className="w-full h-[75vh] flex gap-3">
+                <div className="w-full h-[75vh] flex flex-col sm:flex-row gap-3">
 
                     {/* User List */}
                     <div className="bg-gray-200 w-full h-full rounded p-3">
@@ -83,8 +83,8 @@ function ManageUsers({ users = null }) {
                                 data.map((user) => (
                                     <div
                                         key={user.user_id}
-                                        className="w-full flex justify-between h-[15vh] p-3 bg-gray-200 rounded mb-3"
-                                    >
+                                        className="w-full flex  justify-between p-3 bg-gray-200 rounded mb-3">
+                                        <div className="flex flex-col">
                                         <div className="flex justify-center gap-5  ">
                                             <div className="flex flex-col items-center justify-center">
 
@@ -107,8 +107,8 @@ function ManageUsers({ users = null }) {
                                                 </p>
 
                                             </div>
-                                            <div className="flex  w-[10vh] flex-col ">
-                                                <p className="text-gray-400 font-bold text-sm">
+                                            <div className="flex flex-col w-[5vh] text-[12px] sm:w-[10vh] text-sm">
+                                                <p className="text-gray-400 font-bold ">
                                                     Username
                                                 </p>
 
@@ -116,7 +116,7 @@ function ManageUsers({ users = null }) {
                                                     {user.username}
                                                 </p>
 
-                                                <p className="text-gray-400 font-bold text-sm mt-2">
+                                                <p className="text-gray-400 font-bold  mt-2">
                                                     Password
                                                 </p>
 
@@ -124,15 +124,17 @@ function ManageUsers({ users = null }) {
                                                     {user.password}
                                                 </p>                                                                                               
                                             </div>
-                                             <div className="flex flex-col">
-                                                <p className="text-gray-400 font-bold text-sm mt-2">
+                                             <div className="flex flex-col  w-[12vh] text-[12px] ml-2 sm:text-sm">
+                                                <p className="text-gray-400 font-bold text-sm">
                                                     Email
                                                 </p>
-                                                <p className="text-gray-700 font-bold">
+                                                
+                                                <p className="text-gray-700 break-words font-bold">
                                                     {user.email}
                                                 </p>
+                                              
 
-                                                <p className="text-gray-400 font-bold text-sm mt-2">
+                                                <p className="text-gray-400 font-bold text-sm">
                                                     Status
                                                 </p>
                                                 <p className="text-gray-700 font-bold">
@@ -141,11 +143,34 @@ function ManageUsers({ users = null }) {
 
                                                
                                                
-                                            </div>
+                                            </div>  
+                                                                                      
+                                        </div>
+                                        <div className="flex justify-start gap-2 w-full sm:hidden">
+
+                                            <UpdateUsers
+                                                id={user.user_id}
+                                                users={user}
+                                                onUpdated={(id, updatedFields) =>
+                                                    setData((prev) =>
+                                                        prev.map((u) =>
+                                                            u.user_id === id ? { ...u, ...updatedFields } : u
+                                                        )
+                                                    )
+                                                }
+                                            />
+
+                                            <DisableUsers
+                                                id={user.user_id}
+                                                users={user}
+                                                
+                                            />
+                                        </div>
+                                        
                                         </div>
                                         
 
-                                        <div className="flex flex-col justify-center gap-2">
+                                        <div className="flex flex-col justify-center gap-2 hidden sm:block">
 
                                             <UpdateUsers
                                                 id={user.user_id}
