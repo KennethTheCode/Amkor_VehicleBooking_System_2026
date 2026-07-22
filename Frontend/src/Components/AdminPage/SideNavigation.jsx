@@ -5,6 +5,7 @@ import AvailableDrivers from "./AvailableDrivers";
 import AvailableVehicles from "./AvailableVehicles";
 
 import { API_BASE } from '../../config'
+import EditOdometer from "./EditOdometer";
 
 
 
@@ -152,11 +153,10 @@ function SideNavigation({ requests = null }) {
 
     return (
 
-        <div className="bg-white shadow-lg h-[80vh] w-[45vh] flex flex-col items-center">
+        <div className="bg-white shadow-lg h-[70vh] w-[45vh] flex flex-col items-center">
 
 
             <button
-                onClick={() => setShowModal(true)}
                 className="
                     flex 
                     items-center 
@@ -170,10 +170,6 @@ function SideNavigation({ requests = null }) {
                     cursor-pointer
                 "
             >
-
-                <p className="text-white font-bold text-[18px]">
-                    View History
-                </p>
 
             </button>
 

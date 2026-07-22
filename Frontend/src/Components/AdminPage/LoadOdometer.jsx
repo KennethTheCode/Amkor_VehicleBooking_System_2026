@@ -7,6 +7,7 @@ function LoadOdometer({ ticket_id }) {
     const [isLoading, setIsLoading] = useState(false);
 
     const loadOdometer = () => {
+        console.log(ticket_id)
         if (!ticket_id) return;
 
         setIsLoading(true);
@@ -32,12 +33,19 @@ function LoadOdometer({ ticket_id }) {
         loadOdometer();
     }, [ticket_id]);
 
+    // Only keep rows that actually belong to this card's ticket_id —
+    // guards against the backend ever returning more than it should,
+    // e.g. if the query param gets dropped or ignored server-side.
+    const filtered = data.filter(
+        (item) => String(item.ticket_id) === String(ticket_id)
+    );
+
     return (
         <div className="h-[35vh] px-5 w-full flex flex-col overflow-y-auto">
 
             <div className="flex justify-between items-center p-1">
                 <p className="text-gray-500 font-bold text-[15px]">
-                    Finished Trips: {data.length}
+                    Finished Trips: {filtered.length}
                 </p>
             </div>
 
@@ -49,7 +57,7 @@ function LoadOdometer({ ticket_id }) {
                         Loading...
                     </p>
 
-                ) : data.length === 0 ? (
+                ) : filtered.length === 0 ? (
 
                     <p className="text-center font-bold text-gray-500">
                         No Finished Trips Found
@@ -57,10 +65,10 @@ function LoadOdometer({ ticket_id }) {
 
                 ) : (
 
-                    data.map((item) => (
+                    filtered.map((item) => (
 
                         <div
-                            key={item.finished_id}
+                            key={item.ticket_id}
                             className="bg-white shadow rounded-lg pb-1 flex flex-col"
                         >
 

@@ -8,7 +8,7 @@ function AvailableDrivers({ drivers }) {
         <div className="w-full flex flex-col items-center justify-center gap-2">
 
             <p className="text-blue-800 font-bold text-[15px]">
-                Available Vehicles
+                Available Drivers
             </p>
 
             <div className="bg-gray-100 w-[30vh] h-[13vh] p-1 flex overflow-x-auto gap-5">

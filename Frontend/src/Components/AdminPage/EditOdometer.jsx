@@ -24,10 +24,7 @@ function EditOdometer({ request }) {
     });
 
     useEffect(() => {
-        // Guard against re-initializing on every re-render of `request`.
-        // If the parent recreates the `request` object on each render
-        // (e.g. from a polling refetch) but it's still the SAME ticket,
-        // we don't want to wipe out whatever the user has already typed.
+       
         if (request && request.ticket_id !== form.ticket_id) {
             setForm({
                 ticket_id: request.ticket_id,
@@ -40,7 +37,6 @@ function EditOdometer({ request }) {
                 date_finished: new Date().toISOString().split("T")[0],
             });
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [request]);
 
     const handleChange = (e) => {
@@ -52,7 +48,6 @@ function EditOdometer({ request }) {
         }));
     };
 
-    // Shared "fetch, safely parse JSON, alert" logic used by both actions.
     const postAndHandle = async (url, payload, { closeOnSuccess = false } = {}) => {
         try {
             const response = await fetch(url, {
@@ -94,8 +89,6 @@ function EditOdometer({ request }) {
         }
     };
 
-    // Records the odometer/time log for this trip (insert only —
-    // does not change the booking's status or free up the driver/vehicle).
     const handleAddOdometer = async (e) => {
         e.preventDefault();
 
@@ -103,7 +96,8 @@ function EditOdometer({ request }) {
             alert("Please complete all odometer and time fields first.");
             return;
         }
-
+        
+        window.location.reload()
         setAddingOdometer(true);
         await postAndHandle(`${API_BASE1}/UpdateOdometer.php`, form, { closeOnSuccess: false });
         setAddingOdometer(false);
@@ -182,8 +176,8 @@ function EditOdometer({ request }) {
                                             <input
                                                 type="text"
                                                 name="pick_up"
+                                                onChange={handleChange}
                                                 value={form.pick_up}
-                                                readOnly
                                                 className="w-full bg-gray-100 border-b-2 border-blue-500 px-2 py-2"
                                             />
 
@@ -199,7 +193,7 @@ function EditOdometer({ request }) {
                                                 type="text"
                                                 name="drop_off"
                                                 value={form.drop_off}
-                                                readOnly
+                                                onChange={handleChange}
                                                 className="w-full bg-gray-100 border-b-2 border-blue-500 px-2 py-2"
                                             />
 
