@@ -91,7 +91,7 @@ function ManageDrivers({ drivers = null }) {
                                             <div className="flex flex-col items-center justify-center">
 
                                                 <div className="w-20 h-20 rounded-full border-4 border-gray-500 overflow-hidden">
-
+                                                     {/* fix api */}
                                                     <img
                                                         src={
                                                             driver.picture

@@ -18,7 +18,7 @@ function Navbar() {
 
     useEffect(() => {
         if (!isAdmin) return;
-
+//fix api
         const fetchAlerts = () => {
             fetch(`http://localhost/Amkor_VehicleBooking_System_2026/Backend/Getvehiclealrts.php`)
                 .then((res) => res.json())
@@ -65,9 +65,9 @@ function Navbar() {
     }, [])
 
     return (
-        <div className='h-[7vh] border-b border-gray-300 bg-gray-100 shadow flex justify-between sticky top-0 z-50'>
+        <div className='h-[7vh]  p-4 sm:p-0 border-b border-gray-300 bg-gray-100 shadow flex justify-between sticky top-0 z-50'>
 
-            <div className='w-[20vh] h-full flex items-center justify-center'>
+            <div className='w-[10vh] sm:w-[20vh] h-full flex items-center justify-center'>
                 <img
                     src={AmkorLogo}
                     alt="Logo"
@@ -106,7 +106,7 @@ function Navbar() {
                         </button>
 
                         {showAlerts && (
-                            <div className='absolute top-[6vh] z-100  bg-white border border-gray-300 rounded shadow-md w-80 max-h-[60vh] overflow-y-auto z-50'>
+                            <div className='absolute right-[-20vh] sm:left-[0vh] top-[6vh] z-100  bg-white border border-gray-300 rounded shadow-md w-80 max-h-[60vh] overflow-y-auto z-50'>
                                 <div className='px-4 py-2 border-b border-gray-200 font-bold text-sm text-blue-900'>
                                     Vehicle Alerts
                                 </div>
@@ -139,23 +139,23 @@ function Navbar() {
                     </div>
                 )}
 
-                <div className='relative w-[30vh] h-full p-1 flex justify-center items-center gap-3' ref={dropdownRef}>
+                <div className='relative w-[13vh] sm:w-[30vh] h-full p-1 flex justify-center items-center gap-3' ref={dropdownRef}>
 
                     <div
                         className='flex items-center gap-3 cursor-pointer select-none'
                         onClick={() => setShowDropdown((prev) => !prev)}
                     >
                         <div className='text-right'>
-                            <p className='font-bold text-[12px]'>
+                            <p className='font-bold text-[10px] sm:text-[12px]'>
                                 Welcome Back!
                            </p>
 
-                            <p className='text-[13px] text-blue-900 font-bold'>
+                            <p className='text-[10px] sm:text-[13px] text-blue-900 font-bold'>
                                 {user?.username}
                             </p>
                         </div>
 
-                        <div className='border-2 w-[6vh] h-[6vh] rounded-full flex items-center justify-center overflow-hidden'>
+                        <div className='border-2 w-[7vh] h-[4vh] sm:w-[6vh] h-[6vh] rounded-full flex items-center justify-center overflow-hidden'>
                             <img
                                 src={
                                     user?.picture

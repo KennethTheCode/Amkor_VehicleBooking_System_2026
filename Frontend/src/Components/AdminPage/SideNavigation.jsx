@@ -153,9 +153,7 @@ function SideNavigation({ requests = null }) {
 
     return (
 
-        <div className="bg-white shadow-lg h-[70vh] w-[45vh] flex flex-col items-center">
-
-
+        <div className="bg-white shadow-lg h-[27vh] sm:h-[70vh] w-[45vh] flex flex-col items-center">
             <button
                 className="
                     flex 
@@ -172,8 +170,6 @@ function SideNavigation({ requests = null }) {
             >
 
             </button>
-
-
 
             {showModal && (
 
@@ -194,16 +190,18 @@ function SideNavigation({ requests = null }) {
 
             <div className="flex flex-col gap-3 p-5 w-full">
 
-
+            <div className="hidden sm:block">
                 <AvailableDrivers 
                     drivers={drivers} 
                 />
-
-
-
+            </div>
+                
+            <div className="hidden sm:block">
                 <AvailableVehicles 
                     vehicles={vehicles} 
                 />
+            </div>
+            
 
 
             </div>

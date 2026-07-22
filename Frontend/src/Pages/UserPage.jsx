@@ -8,7 +8,7 @@ function UserPage() {
     <div>
       <Navbar />
 
-      <div className='flex'>
+      <div className='flex '>
         <RequestRide />
         <Map />
       </div>

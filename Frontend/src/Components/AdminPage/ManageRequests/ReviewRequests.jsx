@@ -79,7 +79,7 @@ function ReviewRequests({ summary }) {
             ticket_id: summary.ticket_id,
             date_needed: summary.date_needed,
         };
-
+        {/* fix api */}
         await postAndHandle(
             `http://localhost/Amkor_VehicleBooking_System_2026/Backend/ManageRequests/UpdateAvailability.php`,
             schedule
@@ -104,14 +104,14 @@ function ReviewRequests({ summary }) {
         <div>
             <button
                 onClick={() => setShowModal(true)}
-                className="w-full bg-cyan-900 hover:bg-blue-600 duration-300 text-white font-bold rounded cursor-pointer"
+                className="w-full bg-cyan-900 text-[9px] py-1 sm:text-[14px] sm:mb-3 hover:bg-blue-600 duration-300 text-white font-bold rounded cursor-pointer"
             >
                 Review
             </button>
 
             {showModal && (
                 <div className="bg-black/20 fixed inset-0 h-screen flex items-center justify-center z-100">
-                    <div className="bg-white h-[80vh] rounded w-[55vh] overflow-y-auto">
+                    <div className="bg-white overflow-y-auto h-[65vh] sm:h-[80vh] rounded">
 
                         <div className="p-4 border-b-3 border-blue-500">
                             <p className="text-[12px] text-gray-500">Requested by: <span></span></p>

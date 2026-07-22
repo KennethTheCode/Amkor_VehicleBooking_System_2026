@@ -148,7 +148,7 @@ function ExportXSLX() {
     <div className='flex items-center gap-2'>
     <button
         onClick={()=>setShowModal(true)}
-        className='bg-green-500 px-2 py-1 text-white font-bold rounded hover:bg-green-600 duration-300 transition-colors cursor-pointer disabled:opacity-50'
+        className='bg-green-500 text-white font-bold rounded text-[8px] sm:text-[14px] px-2 py-1 hover:bg-green-600 duration-300 transition-colors cursor-pointer disabled:opacity-50'
     >
         Export .xslx
     </button>

@@ -114,7 +114,7 @@ function ExportToday() {
     <button
       onClick={handleExport}
       disabled={loading}
-      className='bg-pink-500 px-2 py-1 text-white font-bold rounded hover:bg-pink-600 duration-300 transition-colors cursor-pointer disabled:opacity-50'
+      className='bg-pink-500 text-white font-bold rounded text-[8px] sm:text-[14px] px-2 py-1 hover:bg-pink-600 duration-300 transition-colors cursor-pointer disabled:opacity-50'
     >
       {loading ? 'Exporting...' : 'Export Excel (Today)'}
     </button>

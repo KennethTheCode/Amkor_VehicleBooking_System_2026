@@ -121,7 +121,7 @@ function RequestRide() {
 };
 
     return (
-        <div className="w-[60vh] h-screen p-5 border-r border-gray-300">
+        <div className="w-full sm:w-[60vh] h-screen p-5 border-r border-gray-300">
 
             <div className="flex flex-col">
 
@@ -309,7 +309,7 @@ function RequestRide() {
                 {/* Modal */}
                 {showModal && (
                     <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50">
-                        <div className="bg-white rounded-lg shadow-xl w-[70vh] max-h-[90vh] overflow-y-auto p-6">
+                        <div className="bg-white rounded-lg shadow-xl w-[40vh] h-[40vh] sm:w-[70vh] h-[80vh] overflow-y-auto p-6">
 
                             <h1 className="text-2xl font-bold text-blue-900 mb-5 hover:duration-300 transition-colors ">
                                 Review Booking
@@ -405,7 +405,7 @@ function RequestRide() {
                             </div>
 
                             {/* Buttons */}
-                            <div className="flex justify-end gap-3">
+                            <div className="flex justify-between sm:justify-between gap-3">
 
                                 <button
                                     type="button"

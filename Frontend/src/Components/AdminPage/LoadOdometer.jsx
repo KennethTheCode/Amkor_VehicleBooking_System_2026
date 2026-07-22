@@ -72,82 +72,84 @@ function LoadOdometer({ ticket_id }) {
                             className="bg-white shadow rounded-lg pb-1 flex flex-col"
                         >
 
-                            <div className="w-full border-b px-3 border-gray-200 py-1 flex justify-between bg-blue-800">
-                                <p className="text-white font-bold text-[13px]">
+                            <div className="w-full border-b px-3 border-gray-200 py-1 flex justify-center gap-5 sm:justify-between bg-blue-800">
+                                <p className="text-white font-bold text-[8px] sm:text-[13px]">
                                     Ticket ID: {item.ticket_id}
                                 </p>
 
-                                <p className="text-white font-bold text-[13px]">
+                                <p className="text-white font-bold text-[8px] sm:text-[13px]">
                                     Driver: {item.driver_username ?? "No Driver"}
                                 </p>
 
-                                <p className="text-white font-bold text-[13px]">
+                                <p className="text-white font-bold text-[8px] sm:text-[13px]">
                                     Vehicle: {item.vehicle_model ?? "N/A"}
                                 </p>
 
-                                <p className="text-white font-bold text-[13px]">
+                                <p className="text-white font-bold text-[8px] sm:text-[13px]">
                                     Finished: {item.date_finished}
                                 </p>
                             </div>
 
-                            <div className="flex justify-between h-full px-3 py-3">
+                            <div className="flex justify-between h-full px-3 py-3 text-[12px] sm:text-[14px]">
 
-                                <div className="w-[35vh] flex flex-col justify-center">
+                                <div className="flex flex-col justify-center ">
 
                                     <div className="flex items-center gap-1">
-                                        <span className="material-symbols-outlined text-blue-800">
-                                            location_on
-                                        </span>
-
+                                        <div className="hidden sm:block">
+                                            <span className="material-symbols-outlined text-blue-800">
+                                                location_on
+                                            </span>
+                                        </div>
                                         <p className="text-blue-800 truncate font-bold">
                                             {item.pick_up}
                                         </p>
                                     </div>
 
                                     <div className="flex items-center gap-1">
-                                        <span className="material-symbols-outlined text-red-800">
-                                            location_on
-                                        </span>
-
-                                        <p className="text-red-800 truncate font-bold">
+                                        <div className="hidden sm:block">
+                                            <span className="material-symbols-outlined text-red-800">
+                                                location_on
+                                            </span>
+                                        </div>
+                                        <p className="text-red-800 truncate font-bold ">
                                             {item.drop_off}
                                         </p>
                                     </div>
 
                                 </div>
 
-                                <div className="w-[25vh] flex flex-col justify-center items-center">
-                                    <p className="text-gray-500 font-bold text-[13px]">
+                                <div className=" flex flex-col justify-center items-center">
+                                    <p className="text-gray-500 font-bold text-[10px] sm:text-[13px]">
                                         Odometer
                                     </p>
 
-                                    <p className="font-bold">
+                                    <p className="font-bold sm:text-[13px]">
                                         {item.beginning} → {item.ending}
                                     </p>
 
-                                    <p className="text-gray-400 text-[13px]">
+                                    <p className="text-gray-400 text-[10px] sm:text-[13px]">
                                         {item.distance_travelled !== null
                                             ? `${item.distance_travelled} km travelled`
                                             : "—"}
                                     </p>
                                 </div>
 
-                                <div className="w-[25vh] flex flex-col justify-center items-center">
-                                    <p className="text-gray-500 font-bold text-[13px]">
+                                <div className=" flex flex-col justify-center items-center">
+                                    <p className="text-gray-500 font-bold text-[10px] sm:text-[13px]">
                                         Trip Time
                                     </p>
 
-                                    <p className="font-bold text-[13px]">
+                                    <p className="font-bold text-[10px] sm:text-[13px]">
                                         Out: {item.time_out}
                                     </p>
 
-                                    <p className="font-bold text-[13px]">
+                                    <p className="font-bold text-[10px] sm:text-[13px]">
                                         In: {item.time_in}
                                     </p>
                                 </div>
 
-                                <div className="w-[20vh] flex flex-col justify-center items-center">
-                                    <p className="text-gray-500 font-bold text-[13px]">
+                                <div className=" flex flex-col justify-center items-center">
+                                    <p className="text-gray-500 font-bold text-[10px] sm:text-[13px]">
                                         RFID Balance
                                     </p>
 

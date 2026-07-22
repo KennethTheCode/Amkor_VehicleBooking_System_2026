@@ -149,9 +149,9 @@ function EditOdometer({ request }) {
 
             {showModal && (
 
-                <div className="fixed inset-0 bg-black/20 flex justify-center items-center z-50">
+                <div className="fixed inset-0 bg-black/20 px-[1vh] flex justify-center items-center z-50">
 
-                    <div className="bg-white rounded w-[150vh]">
+                    <div className="bg-white rounded ">
 
                         <div className="flex justify-between items-center border-b-2 border-blue-500 p-5">
 

@@ -19,7 +19,7 @@ function FilterRequests({ onFilterChange }) {
             <select
                 value={selected}
                 onChange={handleChange}
-                className="bg-white w-[15vh] p-2 border border-gray-300 text-gray-500 font-bold text-[14px]"
+                className="bg-white w-[10vh] text-[13px] sm:w-[15vh] p-2 border border-gray-300 text-gray-500 font-bold"
             >
                 <option value="">
                     Filter By

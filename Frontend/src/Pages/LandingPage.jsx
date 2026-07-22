@@ -71,7 +71,7 @@ function LandingPage() {
 
     return (
         <div className="bg-gray-100 h-screen flex items-center justify-center">
-            <div className="bg-white p-4 shadow-xl w-[50vh] h-[45vh] rounded">
+            <div className="p-4 shadow-xl w-[40vh] sm:w-[50vh] h-[45vh] rounded ">
 
                 <div className="flex gap-2 flex-col justify-center items-center p-2">
                     <img
@@ -99,7 +99,7 @@ function LandingPage() {
                                 value={login.username}
                                 onChange={handleChange}
                                 placeholder="Username"
-                                className="bg-yellow-100/50 border-2 border-yellow-300 rounded py-2 px-2 placeholder:text-[13px] font-bold text-gray-900"
+                                className="bg-yellow-100/50 border-2 border-yellow-300 rounded mx-[2vh] sm:mx-[0vh] py-2 px-2 placeholder:text-[13px] font-bold text-gray-900"
                             />
 
                             <input
@@ -108,12 +108,12 @@ function LandingPage() {
                                 value={login.password}
                                 onChange={handleChange}
                                 placeholder="Password"
-                                className="bg-yellow-100/50 border-2 border-yellow-300 rounded py-2 px-2 placeholder:text-[13px] font-bold text-gray-900"
+                                className="bg-yellow-100/50 border-2 border-yellow-300 rounded mx-[2vh] sm:mx-[0vh] py-2 px-2 placeholder:text-[13px] font-bold text-gray-900"
                             />
 
                             <button
                                 type="submit"
-                                className="bg-yellow-500 rounded p-2 hover:bg-yellow-400 duration-300 transition-colors"
+                                className="bg-yellow-500 rounded p-2 mx-[2vh] sm:mx-[0vh] hover:bg-yellow-400 duration-300 transition-colors"
                             >
                                 <p className="font-bold text-[14px] text-white">
                                     Login
@@ -123,7 +123,7 @@ function LandingPage() {
                         </div>
                     </form>
 
-                    <div className="mt-7 border-t border-gray-200 h-[5vh] w-[40vh] flex items-center justify-center">
+                    <div className="mt-7 border-t border-gray-200 h-[5vh] w-[40vh] flex items-center justify-center ">
                         <p className="text-gray-500 text-[12px]">
                             © 2026 Amkor Coop Technology, Inc. All rights reserved.
                         </p>

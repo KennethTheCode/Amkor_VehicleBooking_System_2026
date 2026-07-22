@@ -59,10 +59,10 @@ function LoadRequests({ requests = null }) {
         <div className="h-[80vh] w-full flex flex-col overflow-y-auto">
 
             <div className="flex justify-between items-center p-1 bg-gray-100">
-                <p className="text-gray-500 font-bold text-[15px]">
+                <p className="text-gray-500 font-bold text-[10px] sm:text-[15px]">
                     Ticket Count: {data.length}
                 </p>
-                <div className="flex items-center justify-center gap-3">
+                <div className="flex items-center gap-1 sm:justify-center gap-3">
                     <ExportToday/>
                     <ExportXSLX />                    
                     <FilterRequests onFilterChange={setFilter} />                
@@ -89,10 +89,10 @@ function LoadRequests({ requests = null }) {
 
                         <div
                             key={request.ticket_id}
-                            className="bg-white shadow rounded-lg pb-1 flex flex-col  "
+                            className="bg-white shadow rounded-lg pb-1 flex flex-col "
                         >
 
-                            <div className={`w-full border-b px-3 border-gray-200 py-1 flex justify-between
+                            <div className={`w-full border-b px-3 border-gray-200 py-1 flex gap-5 sm:gap-0 justify-between
                              ${
                                             request.status === "Approved"
                                                 ? "bg-green-500 text-green-700 border border-green-200"
@@ -104,92 +104,92 @@ function LoadRequests({ requests = null }) {
                                         }`
                                 
                             }>
-                                <p className="text-white font-bold text-[13px]">
+                                <p className="text-white font-bold text-[8px] sm:text-[13px]">
                                     Ticket ID: {request.ticket_id}
                                 </p>
 
-                                <p className="text-white font-bold text-[13px]">
+                                <p className="text-white font-bold text-[8px] sm:text-[13px]">
                                     Requested By: {request.username}
                                 </p>
 
-                                <p className="text-white font-bold text-[13px]">
+                                <p className="text-white font-bold text-[8px] sm:text-[13px]">
                                     Vehicle Needed: {request.vehicle_model}
                                 </p>
 
-                                <p className="text-white font-bold text-[13px]">
+                                <p className="text-white font-bold text-[8px] sm:text-[13px]">
                                     Created at: {request.created_at}
                                 </p>
 
                             </div>
 
-                            <div className="flex justify-between h-full px-3">
+                            <div className="flex px-1  sm:justify-between h-full px-3">
 
                                 {/* Pickup */}
-                                <div className="w-[35vh] flex flex-col justify-center items-center">
+                                <div className="w-[15vh] sm:w-[35vh] flex flex-col justify-center items-center">
 
-                                    <p className="text-gray-500 font-bold">
+                                    <p className="text-[10px] sm:text-[14px] text-gray-500 font-bold">
                                         Pick up at:
                                     </p>
 
                                     <div className="flex justify-center w-[28vh]">
-                                        <span className="material-symbols-outlined text-blue-800">
+                                        <div className="hidden sm:block">
+                                        <span className="material-symbols-outlined text-blue-800 ">
                                             location_on
                                         </span>
+                                        </div>
 
-                                        <p className="text-blue-800  truncate font-bold text-center">
+                                        <p className="text-[14px] truncate sm:text-[14px] text-blue-800  truncate font-bold text-center">
                                             {request.pick_up}
                                         </p>
                                     </div>
 
-                                    <p className="font-bold">
+                                    <p className="font-bold text-[10px] sm:text-[14px]">
                                         {request.date_needed}
                                     </p>
 
-                                    <p className="text-gray-500">
+                                    <p className="text-gray-500 text-[10px] sm:text-[14px]">
                                         {request.time_needed}
                                     </p>
+                                
+                                </div>
 
-                                </div>
-                                <div className="h-full flex items-center justify-center flex-col">
-                                    <p className="text-[25px] font-bold">→</p>
-                                    <p className="text-[25px] font-bold">←</p>
-                                </div>
+                                
                                 
 
                                 {/* Drop Off */}
                                 <div className="w-[35vh] flex flex-col justify-center items-center py-3">
 
-                                    <p className="text-gray-500 font-bold">
+                                    <p className="text-gray-500 font-bold text-[10px] sm:text-[14px]">
                                         Drop off at:
                                     </p>
 
                                     <div className="flex justify-center w-[28vh]">
-
-                                        <span className="material-symbols-outlined text-red-800">
-                                            location_on
-                                        </span>
-
-                                        <p className="text-red-800 font-bold truncate">
+                                        <div className="hidden sm:block">
+                                            <span className="material-symbols-outlined text-red-800">
+                                                location_on
+                                            </span>
+                                        </div>
+                                        <p className="text-red-800 font-bold truncate text-[14px] sm:text-[14px]">
                                             {request.drop_off}
                                         </p>
                                         
 
                                     </div>
-                                        <p className="text-gray-500 font-bold">--</p>
-                                        <p className="text-gray-400 ">--</p>
-                                </div>
+                                        <p className="text-gray-500 font-bold text-[10px] sm:text-[14px]">--</p>
+                                        <p className="text-gray-400  text-[10px] sm:text-[14px]">--</p>
+                                    </div>
                                 {/* Buttons */}
-                                <div className="w-[15vh] flex flex-col justify-center gap-2">
+                                <div className="w-[10vh] flex flex-col justify-center h-full py-5 items-center hidden sm:block">
                                     <ReviewRequests summary={request}/>
 
                                     <RejectRequests summary={request}/>
 
                                 </div>
                             </div>
-                            
-                            <div className="pb-2 px-2">
+                                                  
+                            <div className=" px-2">
                                 <div
-                                    className={`text-center font-bold rounded 
+                                    className={`text-center font-bold rounded text-[10px] mb-1 sm:text-[14px] mb-3
                                         ${
                                             request.status === "Approved"
                                                 ? "bg-green-100 text-green-700 border border-green-200"
@@ -203,6 +203,12 @@ function LoadRequests({ requests = null }) {
                                     <p>{request.status}</p>
                                 </div>
                             </div>
+
+                            <div className="flex flex-col w-full px-2 justify-center  sm:hidden">
+                                    <ReviewRequests summary={request}/>
+
+                                    <RejectRequests summary={request}/>
+                            </div>  
                         </div>
 
                     ))

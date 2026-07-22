@@ -44,7 +44,7 @@ function RejectRequests({ summary, onRejected }) {
         <div>
             <button
                 onClick={() => setShowModal(true)}
-                className="w-full bg-red-500 hover:bg-red-400 duration-300 text-white font-bold rounded cursor-pointer"
+                className="w-full bg-red-500 text-[9px] py-1 sm:text-[14px] hover:bg-red-400 duration-300 text-white font-bold rounded cursor-pointer"
             >
                 Reject
             </button>
