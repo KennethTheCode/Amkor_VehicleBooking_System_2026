@@ -195,7 +195,7 @@ function ReviewRequests({ summary }) {
                                             <>
                                                 <option value="">Select Driver</option>
                                                 {drivers
-                                                    .filter((driver) => Number(driver.availability) === 1)
+                                                    .filter((driver) => Number(driver.availability) === 1 && driver.status === "Active")
                                                     .map((driver) => (
                                                         <option
                                                             key={driver.id}

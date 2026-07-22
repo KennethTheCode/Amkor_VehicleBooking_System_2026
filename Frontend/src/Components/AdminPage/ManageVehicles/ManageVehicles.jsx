@@ -159,13 +159,28 @@ function ManageVehicles({ vehicles = null }) {
                                                         
 
                                                         <p>
+                                                            {/* Threshold*/}
                                                             <strong>RFID Balance:</strong>{" "}
-                                                            {vehicle.rfid_balance}
+                                                            <span
+                                                                className={
+                                                                    Number(vehicle.rfid_balance) <= 500
+                                                                        ? "text-red-500 font-semibold"
+                                                                        : Number(vehicle.rfid_balance) <= 1000
+                                                                        ? "text-yellow-600 font-semibold"
+                                                                        : "text-green-500"
+                                                                }
+                                                            >
+                                                                ₱{vehicle.rfid_balance}
+                                                            </span>
                                                         </p>
 
                                                         <p>
                                                             <strong>Status:</strong>{" "}
-                                                            {vehicle.status}
+                                                            <span className=
+                                                            {vehicle.status === "Enabled" 
+                                                            ? "text-green-500": "text-red-500"}>
+                                                                {vehicle.status}
+                                                            </span>                                                                                                                       
                                                         </p>
                                                     </div>
 

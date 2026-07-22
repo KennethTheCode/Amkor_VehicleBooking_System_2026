@@ -110,7 +110,6 @@ function RequestRide() {
         if (data.success) {
             setShowModal(false);
 
-            // Optional: reload or reset the form
             window.location.reload();
         }
 
@@ -183,7 +182,7 @@ function RequestRide() {
                     <div className="flex gap-3 p-2 w-max">
 
                         {vehicles
-                            .filter(v => Number(v.availability) === 1)
+                            .filter(v => Number(v.availability) === 1 && v.status === "Enabled")
                             .map(vehicle => (
 
                                 <div

@@ -14,7 +14,7 @@ function AvailableDrivers({ drivers }) {
             <div className="bg-gray-100 w-[30vh] h-[13vh] p-1 flex overflow-x-auto gap-5">
 
                 {drivers
-                    .filter((drivers) => drivers.availability == 1)
+                    .filter((drivers) => drivers.availability == 1 && drivers.status === "Active")
                     .map((drivers) => (
                         <div
                             key={drivers.id}

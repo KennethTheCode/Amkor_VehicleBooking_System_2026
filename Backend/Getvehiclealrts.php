@@ -6,9 +6,8 @@ header("Content-Type: application/json; charset=UTF-8");
 include "db.php";
 
 // Thresholds
-$BALANCE_THRESHOLD = 1000;   // alert when rfid_balance <= this
-$DAYS_THRESHOLD     = 15;    // alert when expiration is within this many days
-
+$BALANCE_THRESHOLD = 1000;   //RFID
+$DAYS_THRESHOLD     = 15;    //Expiration
 $sql = "
     SELECT
         id,

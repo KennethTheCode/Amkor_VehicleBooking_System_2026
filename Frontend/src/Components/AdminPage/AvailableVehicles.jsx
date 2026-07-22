@@ -15,7 +15,7 @@ function AvailableVehicles({ vehicles }) {
             <div className="bg-gray-100 w-[30vh] h-[13vh] p-1 flex overflow-x-auto gap-4">
 
                 {vehicles
-                    .filter((vehicle) => vehicle.availability == 1)
+                    .filter((vehicle) => vehicle.availability == 1  && vehicle.status === "Enabled")
                     .map((vehicle) => (
                         <div
                             key={vehicle.id}
