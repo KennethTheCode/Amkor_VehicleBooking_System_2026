@@ -89,7 +89,7 @@ function UpdateDrivers({ id, drivers, onUpdated }) {
         <div>
             <button
                 onClick={() => setShowModal(true)}
-                className="bg-blue-500 w-full hover:bg-blue-400 duration-300 text-white rounded px-5 py-2 font-bold">
+                className="bg-blue-500 w-full  px-4 text-[8px] sm:px-5 py-2 sm:text-[14px] hover:bg-blue-400 duration-300 text-white rounded  font-bold">
                 <p>Edit</p>
             </button>
 

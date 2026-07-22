@@ -55,13 +55,13 @@ function ManageDrivers({ drivers = null }) {
         <div>
             <Navbar />
 
-            <div className="bg-gray-100 px-[20vh] pt-3 py-4 h-screen flex flex-col gap-3">
+            <div className="bg-gray-100 px-2 flex flex-col sm:px-[20vh] pt-3 py-4 h-screen  gap-3">
 
                 <Dashboard />
 
-                <div className="w-full h-[75vh] flex gap-3 items-center justify-center">
+                <div className="w-full flex flex-col sm:flex-row gap-3 items-center justify-center">
 
-                    <div className="bg-gray-200 w-full h-full p-3">
+                    <div className="bg-gray-200 w-[45vh] sm:w-[250vh] h-full p-3">
 
                         <div className="bg-white w-full h-full rounded p-3 overflow-y-auto">
 
@@ -84,13 +84,14 @@ function ManageDrivers({ drivers = null }) {
                                 data.map((driver) => (
                                     <div
                                         key={driver.id}
-                                        className="w-full flex justify-between h-[15vh] p-3 bg-gray-200 rounded mb-3"
+                                        className="w-full flex flex-col justify-between  p-3 bg-gray-100 rounded mb-3"
                                     >
-                                        <div className="flex gap-5">
+                                        <div className="flex">
+                                        <div className="flex gap-3 sm:gap-5">
 
-                                            <div className="flex flex-col items-center justify-center">
+                                            <div className="flex flex-col items-center justify-center ">
 
-                                                <div className="w-20 h-20 rounded-full border-4 border-gray-500 overflow-hidden">
+                                                <div className="w-[7vh] h-[7vh]  sm:w-20 h-20 rounded-full border-4 border-gray-500 overflow-hidden">
                                                      {/* fix api */}
                                                     <img
                                                         src={
@@ -106,21 +107,21 @@ function ManageDrivers({ drivers = null }) {
 
 
                                             </div>
-                                            <div className="pt-2">
+                                            <div className="pt-2 mr-2 sm:mr-5">
 
-                                                <p className="text-gray-400 font-bold text-sm">
+                                                <p className="text-gray-400 font-bold text-[10px] sm:text-sm">
                                                     Username
                                                 </p>
 
-                                                <p className="text-gray-700 font-bold">
+                                                <p className="text-gray-700 font-bold text-[10px] sm:text-sm">
                                                     {driver.username}
                                                 </p>
 
-                                                <p className="text-gray-400 font-bold text-sm mt-2">
+                                                <p className="text-gray-400 font-bold mt-2 text-[10px] sm:text-sm ">
                                                     Password
                                                 </p>
 
-                                                <p className="text-gray-700 font-bold">
+                                                <p className="text-gray-700 font-bold text-[10px] sm:text-sm">
                                                     {driver.password}
                                                 </p>
 
@@ -129,31 +130,31 @@ function ManageDrivers({ drivers = null }) {
 
                                         </div>
 
-                                          <div className="h-full flex flex-col justify">
-                                                <p className="text-gray-400 font-bold text-sm mt-2">
+                                          <div className="h-full flex flex-col justify mr-2 sm:mr-5">
+                                                <p className="text-gray-400 font-bold mt-2 text-[10px] sm:text-sm ">
                                                     License No.
                                                 </p>
 
-                                                <p className="text-gray-700 font-bold">
+                                                <p className="text-gray-700 font-bold text-[10px] sm:text-sm">
                                                     {driver.license_no}
                                                 </p>
 
-                                                <p className="text-gray-400 font-bold text-sm mt-2">
+                                                <p className="text-gray-400 font-bold mt-2 text-[10px] sm:text-sm">
                                                     Expiration
                                                 </p>
 
-                                                <p className="text-gray-700 font-bold">
+                                                <p className="text-gray-700 font-bold text-[10px] sm:text-sm">
                                                     {driver.expiration_date}
                                                 </p>                                        
 
                                             </div>
 
-                                                <div className="h-full flex flex-col justify">
-                                                <p className="text-gray-400 font-bold text-sm mt-2">
+                                                <div className="h-full flex flex-col justify sm:mr-5">
+                                                <p className="text-gray-400 font-bold mt-2 text-[10px] sm:text-sm">
                                                     Email
                                                 </p>
 
-                                                <p className="text-gray-700 font-bold">
+                                                <p className="text-gray-700 font-bold text-[10px] sm:text-sm">
                                                     {driver.email}
                                                 </p>
 
@@ -163,13 +164,13 @@ function ManageDrivers({ drivers = null }) {
                                                     Status
                                                 </p>
 
-                                                <p className="text-gray-700 font-bold">
+                                                <p className="text-gray-700 font-bold text-[10px] sm:text-sm">
                                                     {driver.status}
                                                 </p>
 
                                             </div>    
 
-                                        <div className="flex flex-col justify-center gap-2">
+                                        <div className="flex flex-col justify-center hidden sm:block">
 
                                             <UpdateDrivers
                                                 id={driver.id}
@@ -196,8 +197,36 @@ function ManageDrivers({ drivers = null }) {
                                             />
 
                                         </div>
+                                        </div>
+                                        <div className="flex justify-center pgap-2 sm:hidden">
 
+                                            <UpdateDrivers
+                                                id={driver.id}
+                                                drivers={driver}
+                                                onUpdated={(id, updatedFields) =>
+                                                    setData((prev) =>
+                                                        prev.map((d) =>
+                                                            d.id === id ? { ...d, ...updatedFields } : d
+                                                        )
+                                                    )
+                                                }
+                                            />
+
+                                            <DisableDrivers
+                                                id={driver.id}
+                                                drivers={driver}
+                                                onStatusChanged={(id, newStatus) =>
+                                                    setData((prev) =>
+                                                        prev.map((d) =>
+                                                            d.id === id ? { ...d, status: newStatus } : d
+                                                        )
+                                                    )
+                                                }
+                                            />
+
+                                        </div>
                                     </div>
+                                    
                                 ))
                             )}
 

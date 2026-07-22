@@ -47,7 +47,7 @@ function DisableDrivers({ id, drivers, onStatusChanged }) {
         <div>
             <button
                 onClick={() => setShowModal(true)}
-                className={`${isDisabled ? "bg-green-500 hover:bg-green-400" : "bg-red-500 hover:bg-red-400"} duration-300 text-white rounded px-5 py-2 font-bold`}>
+                className={`${isDisabled ? "bg-green-500 hover:bg-green-400" : "bg-red-500 hover:bg-red-400"} duration-300 text-white rounded text-[8px] ml-1 px-2  py-2 sm:text-[14px] sm:ml-0 sm:mt-1 sm:px-5 sm:py-2 font-bold`}>
                 <p>{actionLabel}</p>
             </button>
 
