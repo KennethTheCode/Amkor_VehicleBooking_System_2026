@@ -3,7 +3,37 @@
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
+ini_set('display_errors', '0');
+error_reporting(E_ALL);
+
+set_error_handler(function ($errno, $errstr, $errfile, $errline) {
+    http_response_code(500);
+    echo json_encode([
+        "success" => false,
+        "message" => "Server error: $errstr in " . basename($errfile) . " on line $errline"
+    ]);
+    exit;
+});
+
+set_exception_handler(function ($e) {
+    http_response_code(500);
+    echo json_encode([
+        "success" => false,
+        "message" => "Server exception: " . $e->getMessage()
+    ]);
+    exit;
+});
+
 include "../db.php";
+
+if (!isset($conn) || $conn->connect_error) {
+    http_response_code(500);
+    echo json_encode([
+        "success" => false,
+        "message" => "Database connection failed."
+    ]);
+    exit;
+}
 
 $sql = "
 SELECT
@@ -16,6 +46,7 @@ SELECT
     FinishedTicket.time_out,
     FinishedTicket.time_in,
     FinishedTicket.date_finished,
+    FinishedTicket.rfid_balance,
 
     BookingTable.driver_id,
     DriverTable.username AS driver_username,

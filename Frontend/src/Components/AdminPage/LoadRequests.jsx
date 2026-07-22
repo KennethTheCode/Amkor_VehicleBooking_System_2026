@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import FilterRequests from "./FilterRequests/FilterRequests";
 import ReviewRequests from "./ManageRequests/ReviewRequests";
 import RejectRequests from "./ManageRequests/RejectRequests";
-import ExportCSV from "./ExportCSV";
+import ExportXSLX from "../Export/ExportXSLX";
+import ExportToday from "../Export/ExportToday";
 
 import { API_BASE } from '../../config'
 
@@ -62,7 +63,8 @@ function LoadRequests({ requests = null }) {
                     Ticket Count: {data.length}
                 </p>
                 <div className="flex items-center justify-center gap-3">
-                    <ExportCSV />                    
+                    <ExportToday/>
+                    <ExportXSLX />                    
                     <FilterRequests onFilterChange={setFilter} />                
                 </div>                
             </div>

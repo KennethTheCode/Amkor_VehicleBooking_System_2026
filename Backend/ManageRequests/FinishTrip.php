@@ -66,11 +66,16 @@ if ($ticket_id <= 0) {
 }
 
 // --- Transaction --------------------------------------------------------
+// This endpoint only closes out the trip: mark the booking finished and
+// free up the driver/vehicle. The actual trip-detail rows (pick_up,
+// odometer readings, rfid_balance, etc.) are logged separately, one row
+// per stop, by add_odometer.php.
 $conn->begin_transaction();
 
 try {
 
-    // Get assigned driver and vehicle
+    // Get assigned driver/vehicle (source of truth is BookingTable, not
+    // the client payload, so these can't be spoofed)
     $stmt = $conn->prepare("
         SELECT driver_id, vehicle_id
         FROM BookingTable
@@ -123,7 +128,9 @@ try {
     }
 
     $stmt->bind_param("i", $driver_id);
-    $stmt->execute();
+    if (!$stmt->execute()) {
+        throw new Exception("Update driver availability failed: " . $stmt->error);
+    }
     $stmt->close();
 
     // Vehicle available again
@@ -137,7 +144,9 @@ try {
     }
 
     $stmt->bind_param("i", $vehicle_id);
-    $stmt->execute();
+    if (!$stmt->execute()) {
+        throw new Exception("Update vehicle availability failed: " . $stmt->error);
+    }
     $stmt->close();
 
     $conn->commit();

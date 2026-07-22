@@ -21,6 +21,10 @@ function EditOdometer({ request }) {
         time_in: "",
         time_out: "",
         date_finished: "",
+        rfid_balance: "",
+        user_id: "",
+        driver_id: "",
+        vehicle_id: "",
     });
 
     useEffect(() => {
@@ -35,6 +39,10 @@ function EditOdometer({ request }) {
                 time_in: "",
                 time_out: "",
                 date_finished: new Date().toISOString().split("T")[0],
+                rfid_balance: "",
+                user_id: request.user_id,
+                driver_id: request.driver_id,
+                vehicle_id: request.vehicle_id,
             });
         }
     }, [request]);
@@ -80,7 +88,6 @@ function EditOdometer({ request }) {
 
             if (data.success && closeOnSuccess) {
                 setShowModal(false);
-                window.location.reload();
             }
 
         } catch (error) {
@@ -96,8 +103,7 @@ function EditOdometer({ request }) {
             alert("Please complete all odometer and time fields first.");
             return;
         }
-        
-        window.location.reload()
+        console.log(form.rfid_balance)
         setAddingOdometer(true);
         await postAndHandle(`${API_BASE1}/UpdateOdometer.php`, form, { closeOnSuccess: false });
         setAddingOdometer(false);
@@ -107,10 +113,25 @@ function EditOdometer({ request }) {
     const handleFinishTrip = async (e) => {
         e.preventDefault();
 
+        
+
         setFinishingTrip(true);
         await postAndHandle(
             `${API_BASE1}/FinishTrip.php`,
-            { ticket_id: form.ticket_id },
+            {
+                ticket_id: form.ticket_id,
+                pick_up: form.pick_up,
+                drop_off: form.drop_off,
+                beginning: form.beginning,
+                ending: form.ending,
+                time_in: form.time_in,
+                time_out: form.time_out,
+                date_finished: form.date_finished,
+                rfid_balance: form.rfid_balance,
+                user_id: form.user_id,
+                driver_id: form.driver_id,
+                vehicle_id: form.vehicle_id,
+            },
             { closeOnSuccess: true }
         );
         setFinishingTrip(false);
@@ -238,6 +259,23 @@ function EditOdometer({ request }) {
                                                 type="number"
                                                 name="ending"
                                                 value={form.ending}
+                                                onChange={handleChange}
+                                                required
+                                                className="w-full border-b-2 border-blue-500 px-2 py-2"
+                                            />
+
+                                        </div>
+
+                                        <div>
+
+                                            <p className="font-semibold">
+                                                RFID Balance
+                                            </p>
+
+                                            <input
+                                                type="number"
+                                                name="rfid_balance"
+                                                value={form.rfid_balance}
                                                 onChange={handleChange}
                                                 required
                                                 className="w-full border-b-2 border-blue-500 px-2 py-2"

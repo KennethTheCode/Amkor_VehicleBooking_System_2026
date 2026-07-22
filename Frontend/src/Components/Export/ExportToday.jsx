@@ -2,10 +2,8 @@ import React, { useState } from 'react'
 
 import { API_BASE } from '../../config'
 
-function ExportCSV() {
-  const [showModal, setShowModal] = useState(false)
+function ExportToday() {
   const [loading, setLoading] = useState(false)
-  const [selectedMonth, setSelectedMonth] = useState('') // format: "YYYY-MM"
 
   const escapeCSV = (value) => {
     if (value === null || value === undefined) return ''
@@ -17,11 +15,6 @@ function ExportCSV() {
   }
 
   const handleExport = async () => {
-    if (!selectedMonth) {
-      alert('Please select a month first.')
-      return
-    }
-
     setLoading(true)
     try {
       const res = await fetch(`${API_BASE}/ManageRequests/LoadRequests.php`)
@@ -33,6 +26,16 @@ function ExportCSV() {
         return
       }
 
+      // Local YYYY-MM-DD for "today", not UTC — avoids the date rolling
+      // over early/late depending on the browser's timezone.
+      const today = new Date()
+      const todayStr =
+        today.getFullYear() +
+        '-' +
+        String(today.getMonth() + 1).padStart(2, '0') +
+        '-' +
+        String(today.getDate()).padStart(2, '0')
+
       const filtered = data.filter((t) => {
         const statusMatch = ['finished', 'completed', 'rejected'].includes(
           (t.status || '').toLowerCase()
@@ -40,13 +43,13 @@ function ExportCSV() {
 
         const dateMatch =
           typeof t.date_needed === 'string' &&
-          t.date_needed.slice(0, 7) === selectedMonth
+          t.date_needed.slice(0, 10) === todayStr
 
         return statusMatch && dateMatch
       })
 
       if (filtered.length === 0) {
-        alert('No finished or rejected tickets found for the selected month.')
+        alert('No finished or rejected tickets found for today.')
         setLoading(false)
         return
       }
@@ -94,7 +97,7 @@ function ExportCSV() {
       const url = URL.createObjectURL(blob)
       const link = document.createElement('a')
       link.href = url
-      link.setAttribute('download', `tickets_summary_${selectedMonth}.csv`)
+      link.setAttribute('download', `tickets_summary_${todayStr}.csv`)
       document.body.appendChild(link)
       link.click()
       document.body.removeChild(link)
@@ -108,43 +111,14 @@ function ExportCSV() {
   }
 
   return (
-    <div className='flex items-center gap-2'>
     <button
-        onClick={()=>setShowModal(true)}
-        className='bg-gray-500 px-2 py-1 text-white font-bold rounded hover:bg-gray-600 duration-300 transition-colors cursor-pointer disabled:opacity-50'
+      onClick={handleExport}
+      disabled={loading}
+      className='bg-pink-500 px-2 py-1 text-white font-bold rounded hover:bg-pink-600 duration-300 transition-colors cursor-pointer disabled:opacity-50'
     >
-        Export CSV
+      {loading ? 'Exporting...' : 'Export Excel (Today)'}
     </button>
-      { showModal && (
-        <div className='inset-0 flex items-center justify-center h-screen z-100 bg-black/20 fixed'>            
-            <div className='bg-white rounded p-5 shadow flex flex-col gap-3'>
-                <p className='font-bold'>Select Month to Export</p>
-                <input
-                    type='month'
-                    value={selectedMonth}
-                    onChange={(e) => setSelectedMonth(e.target.value)}
-                    className='border border-gray-300 rounded px-2 py-1 text-sm'
-                />
-
-                <div className='flex justify-between items-center'>
-                    <button
-                        onClick={handleExport}
-                        disabled={loading || !selectedMonth}
-                        className='bg-gray-500 px-2 py-1 text-white font-bold rounded hover:bg-gray-600 duration-300 transition-colors cursor-pointer disabled:opacity-50'
-                    >
-                        {loading ? 'Exporting...' : 'Export CSV'}
-                    </button>
-                    <button
-                    onClick={()=>setShowModal(false)}
-                    className='bg-blue-100 border border-blue-500 font-bold text-blue-500 px-1 rounded hover:cursor-pointer duration-300 transition-colors'>
-                    Close
-                    </button>
-                </div>
-            </div>
-        </div>
-      )}
-    </div>
   )
 }
 
-export default ExportCSV
+export default ExportToday

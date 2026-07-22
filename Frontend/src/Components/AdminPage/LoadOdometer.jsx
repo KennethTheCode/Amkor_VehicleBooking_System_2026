@@ -146,6 +146,16 @@ function LoadOdometer({ ticket_id }) {
                                     </p>
                                 </div>
 
+                                <div className="w-[20vh] flex flex-col justify-center items-center">
+                                    <p className="text-gray-500 font-bold text-[13px]">
+                                        RFID Balance
+                                    </p>
+
+                                    <p className="font-bold">
+                                        {item.rfid_balance ?? "—"}
+                                    </p>
+                                </div>
+
                             </div>
 
                         </div>

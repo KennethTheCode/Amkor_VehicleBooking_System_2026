@@ -65,6 +65,7 @@ $ending        = trim($data["ending"] ?? "");
 $time_out      = trim($data["time_out"] ?? "");
 $time_in       = trim($data["time_in"] ?? "");
 $date_finished = trim($data["date_finished"] ?? date("Y-m-d"));
+$rfid_balance  = trim($data["rfid_balance"] ?? "");
 
 if (
     $ticket_id === 0 ||
@@ -73,7 +74,8 @@ if (
     $beginning === "" ||
     $ending === "" ||
     $time_out === "" ||
-    $time_in === ""
+    $time_in === "" ||
+    $rfid_balance === ""
 ) {
     echo json_encode([
         "success" => false,
@@ -82,23 +84,48 @@ if (
     exit;
 }
 
-// --- Insert only: record the finished trip ------------------------------
+$beginning    = (int)$beginning;
+$ending       = (int)$ending;
+$rfid_balance = (int)$rfid_balance;
+
+// --- Insert a new stop: every "Add Odometer" click logs its own row ----
 try {
 
+    // Look up driver/vehicle/user this booking belongs to. FinishedTicket
+    // requires these (NOT NULL, no default) — but they're already known
+    // as soon as a driver's assigned, well before the trip actually ends.
+    $bookingStmt = $conn->prepare("
+        SELECT driver_id, vehicle_id, user_id
+        FROM BookingTable
+        WHERE ticket_id = ?
+    ");
+
+    if (!$bookingStmt) {
+        throw new Exception("Prepare failed (select booking): " . $conn->error);
+    }
+
+    $bookingStmt->bind_param("i", $ticket_id);
+    $bookingStmt->execute();
+    $bookingResult = $bookingStmt->get_result();
+
+    if ($bookingResult->num_rows === 0) {
+        throw new Exception("Booking not found for ticket_id $ticket_id.");
+    }
+
+    $booking    = $bookingResult->fetch_assoc();
+    $driver_id  = $booking["driver_id"];
+    $vehicle_id = $booking["vehicle_id"];
+    $user_id    = $booking["user_id"];
+    $bookingStmt->close();
+
+    // rfid_balance now comes directly from the request (user enters it
+    // each time they add an odometer stop) instead of a hardcoded
+    // placeholder.
     $stmt = $conn->prepare("
         INSERT INTO FinishedTicket
-        (
-            ticket_id,
-            pick_up,
-            drop_off,
-            beginning,
-            ending,
-            time_out,
-            time_in,
-            date_finished
-        )
+            (ticket_id, pick_up, drop_off, beginning, ending, time_out, time_in, date_finished, rfid_balance, vehicle_id, driver_id, user_id)
         VALUES
-        (?, ?, ?, ?, ?, ?, ?, ?)
+            (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ");
 
     if (!$stmt) {
@@ -106,7 +133,7 @@ try {
     }
 
     $stmt->bind_param(
-        "isssssss",
+        "issiisssiiii",
         $ticket_id,
         $pick_up,
         $drop_off,
@@ -114,7 +141,11 @@ try {
         $ending,
         $time_out,
         $time_in,
-        $date_finished
+        $date_finished,
+        $rfid_balance,
+        $vehicle_id,
+        $driver_id,
+        $user_id
     );
 
     if (!$stmt->execute()) {
@@ -125,7 +156,7 @@ try {
 
     echo json_encode([
         "success" => true,
-        "message" => "Trip record saved successfully."
+        "message" => "Stop recorded successfully."
     ]);
 
 } catch (Exception $e) {
