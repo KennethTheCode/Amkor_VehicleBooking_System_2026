@@ -15,7 +15,7 @@ function LoadRequests({ requests = null }) {
     const BACKEND_URL =
         `${API_BASE}/ManageRequests/LoadRequests.php`;
     const FILTER_URL =
-        `${API_BASE}/Backend/ManageRequests/FilterRequests.php`;
+        `${API_BASE}/ManageRequests/FilterRequests.php`;
 
     // Hide tickets that are already Finished or Ongoing
     const filterOutCompleted = (list) =>
@@ -138,7 +138,7 @@ function LoadRequests({ requests = null }) {
                                         </span>
                                         </div>
 
-                                        <p className="text-[14px] truncate sm:text-[14px] text-blue-800  truncate font-bold text-center">
+                                        <p className="text-[14px] truncate sm:text-[14px] text-blue-800  sm:truncate font-bold text-center">
                                             {request.pick_up}
                                         </p>
                                     </div>
@@ -169,7 +169,7 @@ function LoadRequests({ requests = null }) {
                                                 location_on
                                             </span>
                                         </div>
-                                        <p className="text-red-800 font-bold truncate text-[14px] sm:text-[14px]">
+                                        <p className="text-red-800 font-bold truncate text-[14px] sm:text-[14px] sm:truncate">
                                             {request.drop_off}
                                         </p>
                                         
