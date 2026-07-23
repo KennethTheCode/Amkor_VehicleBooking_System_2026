@@ -20,7 +20,7 @@ function Navbar() {
         if (!isAdmin) return;
 //fix api
         const fetchAlerts = () => {
-            fetch(`http://localhost/Amkor_VehicleBooking_System_2026/Backend/Getvehiclealrts.php`)
+            fetch(`${API_BASE}/Getvehiclealrts.php`)
                 .then((res) => res.json())
                 .then((data) => {
                     if (data.success) setAlerts(data.alerts);

@@ -8,6 +8,6 @@ export default defineConfig({
   plugins: [    
     tailwindcss(),
     react()],
-    // base: '/Amkor_VehicleBooking_System_2026/Frontend/',
+    base: '/Amkor_VehicleBooking_System_2026/Frontend/',
     
 })
