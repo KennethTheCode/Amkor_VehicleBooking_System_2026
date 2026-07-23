@@ -98,7 +98,7 @@ function EditVehicles({ id, vehicles, onUpdated }) {
         <div>
             <button
                 onClick={() => setShowModal(true)}
-                className="bg-blue-500 w-full hover:bg-blue-400 duration-300 text-white rounded px-5 py-2 font-bold">
+                className="bg-blue-500 w-full hover:bg-blue-400 duration-300 text-white rounded px-3 py-1 text-[10px] sm:text-[14px] sm:px-5 sm:py-2 font-bold">
                 <p>Edit</p>
             </button>
 

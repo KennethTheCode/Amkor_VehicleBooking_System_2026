@@ -47,7 +47,7 @@ function DisableVehicles({ id, vehicles, onStatusChanged }) {
         <div>
             <button
                 onClick={() => setShowModal(true)}
-                className={`${isDisabled ? "bg-green-500 hover:bg-green-400" : "bg-red-500 hover:bg-red-400"} w-full duration-300 text-white rounded px-5 py-2 font-bold`}>
+                className={`${isDisabled ? "bg-green-500 hover:bg-green-400" : "bg-red-500 hover:bg-red-400"} w-full duration-300 text-white rounded px-3 py-1 text-[10px] sm:px-5 sm:py-2 sm:text-[14px] font-bold`}>
                 <p>{actionLabel}</p>
             </button>
 
