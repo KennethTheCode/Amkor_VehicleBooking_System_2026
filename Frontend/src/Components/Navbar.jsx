@@ -106,7 +106,7 @@ function Navbar() {
                         </button>
 
                         {showAlerts && (
-                            <div className='absolute right-[-20vh] sm:left-[0vh] top-[6vh] z-100  bg-white border border-gray-300 rounded shadow-md w-80 max-h-[60vh] overflow-y-auto z-50'>
+                            <div className='absolute right-[-15vh] sm:right-[-20vh] sm:left-[0vh] top-[6vh] z-100  bg-white border border-gray-300 rounded shadow-md w-80 max-h-[60vh] overflow-y-auto z-50'>
                                 <div className='px-4 py-2 border-b border-gray-200 font-bold text-sm text-blue-900'>
                                     Vehicle Alerts
                                 </div>

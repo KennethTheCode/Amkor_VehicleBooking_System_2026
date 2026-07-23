@@ -44,7 +44,7 @@ function SearchVehicles( {onSearch} ) {
   }, [keyword]);
   
   return (
-    <div className='top-0 sticky z-50 bg-white w-full p-2'>
+    <div className=' bg-white w-full p-2'>
       <input
       type="text"
       name="keyword"
