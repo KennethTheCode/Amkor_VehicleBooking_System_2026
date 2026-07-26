@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] === "OPTIONS") {
 }
 
 include "../db.php";
-include "../sendEmail.php"; // sendEmail.php lives in Backend/, one level up from ManageRequests/
+include "../sendEmail.php"; 
 
 $data = json_decode(file_get_contents("php://input"), true);
 
@@ -91,8 +91,6 @@ try {
     $conn->commit();
 
     // ---- Email the requesting user -------------------------------------
-    // Best-effort: email failure should never break the approval response,
-    // since the booking update already succeeded and was committed.
     $emailStmt = $conn->prepare("
         SELECT
             UserTable.email AS user_email,

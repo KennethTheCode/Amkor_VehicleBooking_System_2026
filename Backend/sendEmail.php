@@ -25,8 +25,8 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 // ---- CONFIG -----------------------------------------------------------
-define("GMAIL_ADDRESS", "paulekennethd@gmail.com");
-define("GMAIL_APP_PASSWORD", "cqfmjuodzofockcx");
+define("GMAIL_ADDRESS", "atpecoop.leavemanagementsystem@gmail.com");
+define("GMAIL_APP_PASSWORD", "kbdxkxmexamjsctc");
 define("MAIL_FROM_NAME", "Amkor Vehicle Booking System");
 // ------------------------------------------------------------------------
 

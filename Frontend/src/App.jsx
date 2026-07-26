@@ -5,11 +5,13 @@ import AdminPage from './Pages/AdminPage'
 import ManageUsers from './Components/AdminPage/ManageUsers/ManageUsers';
 import ManageVehicles from './Components/AdminPage/ManageVehicles/ManageVehicles';
 import ManageDrivers from './Components/AdminPage/ManageDrivers/ManageDrivers';
+import LoadFinishedTickets from './Components/AdminPage/ManageRequests/LoadFinishedTickets';
 
 function App() {
+  // basename="/Amkor_VehicleBooking_System_2026/Frontend"
   return (
     <div>
-      <Router basename="/Amkor_VehicleBooking_System_2026/Frontend">
+      <Router >
         <Routes>
           <Route path="/" element={<LandingPage/>} />
           <Route path="/user" element={<UserPage/>} />
@@ -17,6 +19,7 @@ function App() {
           <Route path="/manageusers" element={<ManageUsers/>} />
           <Route path="/managevehicles" element={<ManageVehicles/>} />
           <Route path="/managedrivers" element={<ManageDrivers/>} />
+          <Route path="/loadfinishedtickets" element={<LoadFinishedTickets/>} />
         </Routes>
       </Router>
     </div>

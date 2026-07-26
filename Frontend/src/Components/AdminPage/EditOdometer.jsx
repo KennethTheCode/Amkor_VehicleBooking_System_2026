@@ -11,6 +11,7 @@ function EditOdometer({ request }) {
     const [showModal, setShowModal] = useState(false);
     const [addingOdometer, setAddingOdometer] = useState(false);
     const [finishingTrip, setFinishingTrip] = useState(false);
+    const [refreshSignal, setRefreshSignal] = useState(0);
 
     const [form, setForm] = useState({
         ticket_id: "",
@@ -32,8 +33,8 @@ function EditOdometer({ request }) {
         if (request && request.ticket_id !== form.ticket_id) {
             setForm({
                 ticket_id: request.ticket_id,
-                pick_up: request.pick_up,
-                drop_off: request.drop_off,
+                pick_up: "",
+                drop_off: "",
                 beginning: "",
                 ending: "",
                 time_in: "",
@@ -86,8 +87,14 @@ function EditOdometer({ request }) {
 
             alert(data.message);
 
-            if (data.success && closeOnSuccess) {
-                setShowModal(false);
+            if (data.success) {
+                // Tell LoadOdometer to refetch right away instead of
+                // waiting for its next poll cycle.
+                setRefreshSignal((prev) => prev + 1);
+
+                if (closeOnSuccess) {
+                    setShowModal(false);
+                }
             }
 
         } catch (error) {
@@ -176,7 +183,7 @@ function EditOdometer({ request }) {
 
                         </div>
 
-                       <LoadOdometer ticket_id={request.ticket_id} />
+                       <LoadOdometer ticket_id={request.ticket_id} refreshSignal={refreshSignal} />
                         <div className="flex flex-col">
 
                             <div className="grid grid-cols-3 gap-6 p-6">

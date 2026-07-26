@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
 
 import { API_BASE } from '../../config'
+import PrintInvoice from "./PrintInvoice";
 
-function LoadOdometer({ ticket_id }) {
+const POLL_INTERVAL_MS = 10000; // how often to auto-refresh, in ms
+
+function LoadOdometer({ ticket_id, refreshSignal }) {
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [deletingId, setDeletingId] = useState(null);
 
     const loadOdometer = () => {
         console.log(ticket_id)
@@ -29,9 +33,73 @@ function LoadOdometer({ ticket_id }) {
             });
     };
 
+    const handleDelete = async (finished_id) => {
+        if (!finished_id) {
+            console.error("Missing finished_id — cannot delete this row.");
+            return;
+        }
+
+        if (!window.confirm("Delete this finished trip? This cannot be undone.")) {
+            return;
+        }
+
+        setDeletingId(finished_id);
+
+        try {
+            const response = await fetch(
+                `${API_BASE}/ManageRequests/DeleteOdometer.php`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ finished_id }),
+                }
+            );
+
+            const raw = await response.text();
+
+            let result;
+            try {
+                result = JSON.parse(raw);
+            } catch (parseError) {
+                console.error("Server did not return JSON:", raw);
+                alert(`Server error (HTTP ${response.status}) while deleting.`);
+                return;
+            }
+
+            if (!response.ok || !result.success) {
+                console.error("Delete failed:", response.status, result);
+                alert(result.message || "Failed to delete this trip.");
+                return;
+            }
+
+            // Remove it from the list immediately instead of waiting on the
+            // next poll cycle.
+            setData((prev) =>
+                prev.filter((item) => item.finished_id !== finished_id)
+            );
+
+            if (result.message) alert(result.message);
+        } catch (error) {
+            console.error(error);
+            alert("Unable to connect to the server. Is Apache/XAMPP running?");
+        } finally {
+            setDeletingId(null);
+        }
+    };
+
+    // Fetches immediately on mount / when the ticket changes or the parent
+    // asks for a refresh (refreshSignal), then keeps polling every
+    // POLL_INTERVAL_MS so the list stays live without a manual reload.
     useEffect(() => {
+        if (!ticket_id) return;
+
         loadOdometer();
-    }, [ticket_id]);
+
+        const interval = setInterval(loadOdometer, POLL_INTERVAL_MS);
+        return () => clearInterval(interval);
+    }, [ticket_id, refreshSignal]);
 
     // Only keep rows that actually belong to this card's ticket_id —
     // guards against the backend ever returning more than it should,
@@ -68,7 +136,7 @@ function LoadOdometer({ ticket_id }) {
                     filtered.map((item) => (
 
                         <div
-                            key={item.ticket_id}
+                            key={item.finished_id}
                             className="bg-white shadow rounded-lg pb-1 flex flex-col"
                         >
 
@@ -88,6 +156,18 @@ function LoadOdometer({ ticket_id }) {
                                 <p className="text-white font-bold text-[8px] sm:text-[13px]">
                                     Finished: {item.date_finished}
                                 </p>
+
+                                <button
+                                    type="button"
+                                    onClick={() => handleDelete(item.finished_id)}
+                                    disabled={deletingId === item.finished_id}
+                                    className="text-white hover:text-red-300 disabled:opacity-50 duration-300 transition-colors cursor-pointer"
+                                    title="Delete this finished trip"
+                                >
+                                    <span className="material-symbols-outlined text-[14px] sm:text-[16px]">
+                                        {deletingId === item.finished_id ? "hourglass_empty" : "delete"}
+                                    </span>
+                                </button>
                             </div>
 
                             <div className="flex justify-between h-full px-3 py-3 text-[12px] sm:text-[14px]">
