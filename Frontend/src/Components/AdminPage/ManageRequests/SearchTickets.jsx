@@ -47,7 +47,7 @@ function SearchTickets({ value, onChange, onResults }) {
   }, [value]);
 
   return (
-    <div className="p-5 w-[70%] flex justify-center">
+    <div className="sm:p-5 sm:w-[70%] flex justify-center">
       <div className="relative w-full">
         <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">
           search

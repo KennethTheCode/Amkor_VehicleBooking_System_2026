@@ -134,7 +134,7 @@ function GridViewDefault({ searchTerm = "", searchResults = null, onTicketDelete
     }
 
     return (
-        <div className="border-t border-pink-300 columns-4 gap-4 py-4 w-[150vh] h-[110vh] overflow-y-auto">
+        <div className="border-t border-pink-300 flex flex-col columns-1 sm:flex-row sm:columns-4 gap-4 py-4 w-[150vh] h-[110vh] overflow-y-auto">
             {displayedTickets.map((item) => (
                 <div
                     key={item.ticket_id}

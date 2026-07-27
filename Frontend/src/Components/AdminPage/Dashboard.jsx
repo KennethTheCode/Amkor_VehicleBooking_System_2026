@@ -104,35 +104,35 @@ function Dashboard() {
                 <p className='text-gray-500 font-bold text-[10px] sm:text-[15px]'>Pending Requests</p>
             </div>
         </div>
-        <div className='w-full h-[13px] sm:h-[2vh] mt-2 flex gap-1 flex justify-between'>
+        <div className='w-full  mb-5 sm:mb-0 sm:h-[2vh] mt-2 flex gap-1 flex justify-between'>
             <div className='flex'>
                 <div 
                 onClick={() => navigate('/manageusers')}
                 className='border-r-2 border-gray-400 px-1'>
-                    <p className='text-gray-500 font-bold text-[9px] sm:text-[12px] hover:text-gray-400 duration-300 transition-colors cursor-pointer'>Manage Users</p>
+                    <p className='text-gray-500 font-bold text-[8px] sm:text-[12px] hover:text-gray-400 duration-300 transition-colors cursor-pointer'>Manage Users</p>
                 </div>
                 <div className='border-r-2 border-gray-400 px-1'>
                     <p 
                     onClick={() => navigate('/managedrivers')}
-                    className='text-gray-500 font-bold text-[9px] sm:text-[12px] hover:text-gray-400 duration-300 transition-colors cursor-pointer'>Manage Drivers</p>
+                    className='text-gray-500 font-bold text-[8px] sm:text-[12px] hover:text-gray-400 duration-300 transition-colors cursor-pointer'>Manage Drivers</p>
                 </div>
                 <div className=' px-1'>
                     <p 
                     onClick={() => navigate('/managevehicles')}
-                    className='text-gray-500 font-bold text-[9px] sm:text-[12px] hover:text-gray-400 duration-300 transition-colors cursor-pointer'>Manage Vehicles</p>
+                    className='text-gray-500 font-bold text-[8px] sm:text-[12px] hover:text-gray-400 duration-300 transition-colors cursor-pointer'>Manage Vehicles</p>
                 </div>
             </div>
              <div className='flex'>
                 <div className='px-1'>
                     <p 
                     onClick={() => navigate('/admin')}
-                    className='text-gray-500 font-bold text-[9px] border-r-2 border-gray-400 px-1 sm:text-[12px] hover:text-gray-400 duration-300 transition-colors cursor-pointer'>Manage Requests</p>
+                    className='text-gray-500 font-bold text-[8px] border-r-2 border-gray-400 px-1 sm:text-[12px] hover:text-gray-400 duration-300 transition-colors cursor-pointer'>Manage Requests</p>
                 </div>
                 <div className='flex'>
                 <div className='px-1'>
                     <p 
                     onClick={() => navigate('/loadfinishedtickets')}
-                    className='text-gray-500 font-bold text-[9px] sm:text-[12px] hover:text-gray-400 duration-300 transition-colors cursor-pointer'>Manage Finished Tickets</p>
+                    className='text-gray-500 font-bold text-[8px] sm:text-[12px] hover:text-gray-400 duration-300 transition-colors cursor-pointer'>Manage  Tickets</p>
                 </div>
                 
             </div>

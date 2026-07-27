@@ -127,15 +127,15 @@ function ListView({ searchTerm = "", searchResults = null, onTicketDeleted }) {
 
     return (
     <div className="w-full">
-        <div className="flex items-center  border-b border-pink-500 pb-1 text-pink-600 font-semibold text-[14px]">
-            <div className="w-[10vh]">Ticket #</div>
+        <div className="flex items-center  border-b border-pink-500 pb-1 text-pink-600 font-semibold text-[12px] sm:text-[14px]">
+            <div className="w-[15vh] sm:w-[10vh]">Ticket #</div>
             <div className="w-[53vh]">
                 Location
             </div>
-            <div className="w-[35vh]">
+            <div className="sm:w-[35vh] hidden sm:block">
                 Date Requested
             </div>
-            <div className="flex justify-between w-[25vh]">
+            <div className="flex justify-between sm:w-[25vh] hidden sm:block">
                 <p>Requestor</p>
                 <p>Driver</p>
                
@@ -160,27 +160,27 @@ function ListView({ searchTerm = "", searchResults = null, onTicketDeleted }) {
                                 </div>
 
                                 {/* Pick Up */}
-                                <div className=" ml-[4vh] items-center flex justify-between w-[52vh] text-[14px] pr-6">
+                                <div className=" ml-[5vh] sm:ml-[4vh] items-center flex justify-between w-[20vh] sm:w-[52vh] text-[14px] pr-6">
                                     <p className="font-semibold truncate break-word w-50">{item.pick_up}</p>
                                     <p> →</p>                                    
                                     <p className="font-semibold text-end  truncate w-50">{item.drop_off}</p>                                                                        
                                 </div>
                                 
                                 {/* Date Requested */}
-                                <div className="text-gray-400  items-center flex gap-3  ml-2 w-[35vh] text-[12px]">
+                                <div className="text-gray-400  items-center flex gap-3  ml-2  hidden sm:block sm:w-[35vh] text-[12px]">
                                     <p className="font-semibold">{item.date_needed}</p>
                                     <p className="font-semibold">{item.time_needed}</p>                                                                        
                                 </div>
 
                                 {/* Date Requested */}
-                                <div className="text-gray-500  items-center flex gap-3 text-[14px]  w-[20vh]">
+                                <div className="text-gray-500  items-center flex gap-3 text-[14px]  w-[20vh] hidden sm:block">
                                     <div className="bg-gray-500 rounded-full p-1">
 
                                     </div>
                                     <p className="font-semibold text-gray-500 break-truncate">{item.username}</p>                                                                        
                                 </div>
 
-                                <div className="text-gray-500  items-center flex gap-3 text-[14px]  w-[15vh]">
+                                <div className="text-gray-500  items-center flex gap-3 text-[14px]  w-[15vh] hidden sm:block">
                                         <div className="bg-gray-500 rounded-full p-1">
 
                                         </div>
