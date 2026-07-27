@@ -55,7 +55,7 @@ function LoadFinishedTickets() {
                             </div>
                         </div>
                     </div>
-                    <div>
+                    <div className='sm:hidden'>
                         <SearchTickets
                             value={searchTerm}
                             onChange={setSearchTerm}
@@ -64,7 +64,7 @@ function LoadFinishedTickets() {
                     <div className='flex justify-between items-center pb-4'>
                         <p className='font-bold text-[20px] text-pink-500 hidden sm:block'>Manage Finished Tickets</p>
 
-                        <div className='hidden sm:block'>
+                        <div className='hidden sm:block sm:w-[70%]'>
                             <SearchTickets
                             value={searchTerm}
                             onChange={setSearchTerm}

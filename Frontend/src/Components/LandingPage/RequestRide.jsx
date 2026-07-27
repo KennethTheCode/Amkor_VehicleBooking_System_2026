@@ -251,7 +251,7 @@ function RequestRide() {
                             passengers: e.target.value,
                         })
                     }
-                    className="bg-gray-100 p-3 rounded outline-none"
+                    className="border border-gray-300 bg-gray-100 p-3 rounded outline-none"
                 />
 
                 <h1 className="font-bold text-blue-900 mt-5 mb-2">
@@ -267,11 +267,11 @@ function RequestRide() {
                             purpose: e.target.value,
                         })
                     }
-                    className="bg-gray-100 rounded p-3 resize-none outline-none"
+                    className="border border-gray-300 bg-gray-100 rounded p-3 resize-none outline-none"
                 />
                 <div className="flex flex-col ">
                     <h1 className="font-bold text-blue-900 mt-5 mb-2">
-                    Number of Passengers
+                    Date Needed
                     </h1>
                     <div className="flex gap-3 ">
                         <input
@@ -283,7 +283,7 @@ function RequestRide() {
                                     date_needed: e.target.value,
                                 })
                             }
-                            className="bg-gray-100 p-3 rounded w-1/2"
+                            className="border border-gray-300 bg-gray-100 p-3 rounded w-1/2"
                         />
                         <input
                             type="time"
@@ -294,7 +294,7 @@ function RequestRide() {
                                     time_needed: e.target.value,
                                 })
                             }
-                            className="bg-gray-100 p-3 rounded w-1/2"
+                            className="border border-gray-300 bg-gray-100 p-3 rounded w-1/2"
                         />
 
                     </div>

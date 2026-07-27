@@ -19,7 +19,7 @@ function Map() {
   const position = [14.2117, 121.1655];
 
   return (
-    <div className="w-full h-screen rounded-lg overflow-hidden shadow-lg z-10">
+    <div className="w-full h-screen rounded-lg overflow-hidden shadow-lg z-10 hidden sm:block">
       <MapContainer
         center={position}
         zoom={15}

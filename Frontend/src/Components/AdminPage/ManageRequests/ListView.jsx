@@ -41,9 +41,6 @@ function ListView({ searchTerm = "", searchResults = null, onTicketDeleted }) {
         loadTickets();
     }, []);
 
-    // Reload the full list fresh from the server whenever the search bar
-    // transitions from "active" back to "cleared", instead of just
-    // falling back to whatever was already loaded before the search began.
     const prevSearchResults = useRef(searchResults);
     useEffect(() => {
         const wasSearching = prevSearchResults.current !== null;
@@ -121,24 +118,24 @@ function ListView({ searchTerm = "", searchResults = null, onTicketDeleted }) {
         );
     }
 
-    // When a search is active (searchResults !== null), show exactly what
-    // came back, even if empty. Otherwise show everything loaded above.
     const displayedTickets = searchResults !== null ? searchResults : tickets;
 
     return (
     <div className="w-full">
         <div className="flex items-center  border-b border-pink-500 pb-1 text-pink-600 font-semibold text-[12px] sm:text-[14px]">
-            <div className="w-[15vh] sm:w-[10vh]">Ticket #</div>
-            <div className="w-[53vh]">
+            <div className="w-[10vh] sm:w-[14vh]">Ticket #</div>
+            <div className="w-[50vh]">
                 Location
             </div>
-            <div className="sm:w-[35vh] hidden sm:block">
+            <div className="sm:w-[29vh] hidden sm:block">
                 Date Requested
             </div>
-            <div className="flex justify-between sm:w-[25vh] hidden sm:block">
+            <div className="flex flex-col gap-1 sm:w-[19vh] hidden sm:block">
                 <p>Requestor</p>
+            </div>
+
+            <div className="flex flex-col gap-1 sm:flex-1 hidden sm:block">
                 <p>Driver</p>
-               
             </div>
         </div>
 
@@ -152,39 +149,35 @@ function ListView({ searchTerm = "", searchResults = null, onTicketDeleted }) {
                 <div
                     key={item.ticket_id}
                     className="border-b-2 border-gray-200 hover:bg-gray-100 cursor-pointer duration-300 transition-colors">
-                            <div className="flex justify-betwen items-center">
+                            <div className="flex items-center">
                                 
                                 {/* Ticket */}
-                                <div className="w-[6vh] flex justify-center items-center text-[15px] text-gray-500 font-semibold">
+                                <div className="w-[6vh] sm:w-[10vh] flex justify-center items-center text-[15px] text-gray-500 font-semibold">
                                     {item.ticket_id}
                                 </div>
 
                                 {/* Pick Up */}
-                                <div className=" ml-[5vh] sm:ml-[4vh] items-center flex justify-between w-[20vh] sm:w-[52vh] text-[14px] pr-6">
-                                    <p className="font-semibold truncate break-word w-50">{item.pick_up}</p>
-                                    <p> →</p>                                    
-                                    <p className="font-semibold text-end  truncate w-50">{item.drop_off}</p>                                                                        
+                                <div className=" ml-[5vh] sm:ml-[3vh] items-center flex  text-[14px]">
+                                    <p className="font-semibold truncate break-word w-30 sm:w-40 ">{item.pick_up}</p>
+                                    <p className="w-[5vh] sm:w-[13vh]  flex justify-center"> →</p>                                    
+                                    <p className="font-semibold text-end  break-word w-30 sm:w-40 truncate">{item.drop_off}</p>                                                                        
                                 </div>
                                 
                                 {/* Date Requested */}
-                                <div className="text-gray-400  items-center flex gap-3  ml-2  hidden sm:block sm:w-[35vh] text-[12px]">
+                                <div className="text-gray-400  items-center flex flex-row gap-3  ml-5 w-25   hidden sm:block  text-[12px] sm:flex">
                                     <p className="font-semibold">{item.date_needed}</p>
-                                    <p className="font-semibold">{item.time_needed}</p>                                                                        
                                 </div>
+                                
 
                                 {/* Date Requested */}
-                                <div className="text-gray-500  items-center flex gap-3 text-[14px]  w-[20vh] hidden sm:block">
-                                    <div className="bg-gray-500 rounded-full p-1">
-
-                                    </div>
+                                <div className="text-gray-500  items-center flex gap-3 text-[14px] sm:flex justify-end w-[26vh] hidden sm:block">
+                                   
                                     <p className="font-semibold text-gray-500 break-truncate">{item.username}</p>                                                                        
                                 </div>
 
-                                <div className="text-gray-500  items-center flex gap-3 text-[14px]  w-[15vh] hidden sm:block">
-                                        <div className="bg-gray-500 rounded-full p-1">
-
-                                        </div>
-                                    <p className="font-semibold text-gray-500 truncate">{item.driver_username}</p>                                                                        
+                                <div className="text-gray-500  items-center flex gap-3 text-[14px]  sm:flex justify-end w-[20vh] hidden sm:block">
+                    
+                                    <p className="font-semibold text-gray-500 truncate w-20">{item.driver_username}</p>                                                                        
                                 </div>
                                 
                                 <div className="flex justify-end w-[20vh]">
