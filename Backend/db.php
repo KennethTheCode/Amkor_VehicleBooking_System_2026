@@ -1,16 +1,15 @@
 <?php
 
 $conn = new mysqli(
-    "localhost",
+    "127.0.0.1",
     "root",
-    "",
+    "root",
     "AmkorVehicleBookingSystem"
 );
 
+
 if ($conn->connect_error) {
-    http_response_code(500);
-    die(json_encode([
-        "success" => false,
-        "message" => "Connection Failed: " . $conn->connect_error
-    ]));
+    die("Database connection failed: " . $conn->connect_error);
 }
+
+?>

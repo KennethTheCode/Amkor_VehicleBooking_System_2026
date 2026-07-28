@@ -1,0 +1,18 @@
+services:
+  app:
+    build: .
+    ports:
+      - "8080:80"
+
+    environment:
+      DB_HOST: 127.0.0.1
+      DB_USER: root
+      DB_PASS: ""
+      DB_NAME: AmkorVehicleBookingSystem
+
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./schema.sql:/docker-entrypoint-initdb/schema.sql:ro
+
+volumes:
+  db_data:
