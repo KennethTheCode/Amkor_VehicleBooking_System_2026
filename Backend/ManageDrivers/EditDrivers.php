@@ -51,7 +51,7 @@ if (
 }
 
 // --- Look up the existing driver (needed to clean up old picture if replaced) ---
-$lookup = $conn->prepare("SELECT picture FROM DriverTable WHERE id = ?");
+$lookup = $conn->prepare("SELECT picture FROM drivertable WHERE id = ?");
 $lookup->bind_param("i", $driver_id);
 $lookup->execute();
 $result = $lookup->get_result();
@@ -158,7 +158,7 @@ if (isset($_FILES["picture"]) && $_FILES["picture"]["error"] !== UPLOAD_ERR_NO_F
 }
 
 // --- Update driver ---
-$sql = "UPDATE DriverTable
+$sql = "UPDATE drivertable
 SET username = ?, password = ?, email = ?, license_no = ?, expiration_date = ?, picture = ?
 WHERE id = ?";
 

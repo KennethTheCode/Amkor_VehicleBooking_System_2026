@@ -41,7 +41,7 @@ try {
     // flipped to Rejected by mistake.
     $checkStmt = $conn->prepare("
         SELECT status
-        FROM BookingTable
+        FROM bookingtable
         WHERE ticket_id = ?
     ");
 
@@ -65,7 +65,7 @@ try {
     }
 
     $stmt = $conn->prepare("
-        UPDATE BookingTable
+        UPDATE bookingtable
         SET status = 'Rejected'
         WHERE ticket_id = ?
     ");

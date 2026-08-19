@@ -6,7 +6,7 @@ header("Content-Type: application/json; charset=UTF-8");
 include "../db.php";
 
 $sql = "SELECT user_id, username, password, email, account_type, picture, status
-FROM UserTable
+FROM usertable
 ORDER BY user_id DESC";
 $result = $conn->query($sql);
 

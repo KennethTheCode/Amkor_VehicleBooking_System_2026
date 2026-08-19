@@ -119,7 +119,7 @@ $orcr = "uploadsVehicle/orcr/" . $orcrName;
 $image = "uploadsVehicle/vehicle/" . $imageName;
 
 // Insert into database
-$sql = "INSERT INTO VehicleTable
+$sql = "INSERT INTO vehicletable
 (
     vehicle_model,
     color,

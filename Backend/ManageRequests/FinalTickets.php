@@ -9,101 +9,101 @@ $ticket_id = isset($_GET['ticket_id']) ? $_GET['ticket_id'] : null;
 
 $sql = "
 SELECT
-    BookingTable.ticket_id,
-    BookingTable.user_id,
-    BookingTable.driver_id,
+    bookingtable.ticket_id,
+    bookingtable.user_id,
+    bookingtable.driver_id,
 
-    UserTable.username,
-    UserTable.email AS user_email,
+    usertable.username,
+    usertable.email AS user_email,
 
-    DriverTable.username AS driver_username,
-    DriverTable.email AS driver_email,
+    drivertable.username AS driver_username,
+    drivertable.email AS driver_email,
 
-    VehicleTable.id AS vehicle_id,
-    VehicleTable.vehicle_model,
-    VehicleTable.image,
+    vehicletable.id AS vehicle_id,
+    vehicletable.vehicle_model,
+    vehicletable.image,
 
-    GROUP_CONCAT(PassengerTable.passengers SEPARATOR ', ') AS passengers,
+    GROUP_CONCAT(passengertable.passengers SEPARATOR ', ') AS passengers,
 
-    BookingTable.pick_up,
-    BookingTable.drop_off,
-    BookingTable.purpose,
-    BookingTable.date_needed,
-    BookingTable.time_needed,
-    BookingTable.status,
-    BookingTable.created_at,
+    bookingtable.pick_up,
+    bookingtable.drop_off,
+    bookingtable.purpose,
+    bookingtable.date_needed,
+    bookingtable.time_needed,
+    bookingtable.status,
+    bookingtable.created_at,
 
-    FinishedTicket.pick_up AS pick_up_final,
-    FinishedTicket.drop_off AS drop_off_final,
-    FinishedTicket.finished_id,
-    FinishedTicket.beginning,
-    FinishedTicket.ending,
-    (FinishedTicket.ending - FinishedTicket.beginning) AS distance_travelled,
-    FinishedTicket.time_out,
-    FinishedTicket.time_in,
-    FinishedTicket.date_finished,
-    FinishedTicket.rfid_balance
+    finishedticket.pick_up AS pick_up_final,
+    finishedticket.drop_off AS drop_off_final,
+    finishedticket.finished_id,
+    finishedticket.beginning,
+    finishedticket.ending,
+    (finishedticket.ending - finishedticket.beginning) AS distance_travelled,
+    finishedticket.time_out,
+    finishedticket.time_in,
+    finishedticket.date_finished,
+    finishedticket.rfid_balance
 
-FROM BookingTable
+FROM bookingtable
 
-INNER JOIN UserTable
-    ON BookingTable.user_id = UserTable.user_id
+INNER JOIN usertable
+    ON bookingtable.user_id = usertable.user_id
 
-INNER JOIN VehicleTable
-    ON BookingTable.vehicle_id = VehicleTable.id
+INNER JOIN vehicletable
+    ON bookingtable.vehicle_id = vehicletable.id
 
-LEFT JOIN DriverTable
-    ON BookingTable.driver_id = DriverTable.id
+LEFT JOIN drivertable
+    ON bookingtable.driver_id = drivertable.id
 
-LEFT JOIN PassengerTable
-    ON BookingTable.ticket_id = PassengerTable.ticket_id
+LEFT JOIN passengertable
+    ON bookingtable.ticket_id = passengertable.ticket_id
 
-LEFT JOIN FinishedTicket
-    ON BookingTable.ticket_id = FinishedTicket.ticket_id
+LEFT JOIN finishedticket
+    ON bookingtable.ticket_id = finishedticket.ticket_id
 ";
 
 $params = [];
 $types = "";
 
 if ($ticket_id !== null) {
-    $sql .= " WHERE BookingTable.ticket_id = ? ";
+    $sql .= " WHERE bookingtable.ticket_id = ? ";
     $types .= "i";
     $params[] = $ticket_id;
 }
 
 $sql .= "
 GROUP BY
-    BookingTable.ticket_id,
-    BookingTable.user_id,
-    BookingTable.driver_id,
+    bookingtable.ticket_id,
+    bookingtable.user_id,
+    bookingtable.driver_id,
 
-    UserTable.username,
-    UserTable.email,
+    usertable.username,
+    usertable.email,
 
-    DriverTable.username,
-    DriverTable.email,
+    drivertable.username,
+    drivertable.email,
 
-    VehicleTable.id,
-    VehicleTable.vehicle_model,
-    VehicleTable.image,
+    vehicletable.id,
+    vehicletable.vehicle_model,
+    vehicletable.image,
 
-    BookingTable.pick_up,
-    BookingTable.drop_off,
-    BookingTable.purpose,
-    BookingTable.date_needed,
-    BookingTable.time_needed,
-    BookingTable.status,
-    BookingTable.created_at,
+    bookingtable.pick_up,
+    bookingtable.drop_off,
+    bookingtable.purpose,
+    bookingtable.date_needed,
+    bookingtable.time_needed,
+    bookingtable.status,
+    bookingtable.created_at,
 
-    FinishedTicket.finished_id,
-    FinishedTicket.beginning,
-    FinishedTicket.ending,
-    FinishedTicket.time_out,
-    FinishedTicket.time_in,
-    FinishedTicket.date_finished,
-    FinishedTicket.rfid_balance
+    finishedticket.finished_id,
+    finishedticket.beginning,
+    finishedticket.ending,
+    finishedticket.time_out,
+    finishedticket.time_in,
+    finishedticket.date_finished,
+    finishedticket.rfid_balance
 
-ORDER BY BookingTable.created_at ASC
+ORDER BY bookingtable.created_at ASC
 ";
 
 // Using a prepared statement here (instead of $conn->query directly like the

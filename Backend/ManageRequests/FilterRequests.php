@@ -11,77 +11,77 @@ $filter = $_GET["filter"] ?? "";
 $allowedStatuses = ["Pending", "Rejected", "Approved"];
 
 $whereClause = "";
-$orderClause = "ORDER BY BookingTable.created_at ASC"; // default, same as LoadRequests.php
+$orderClause = "ORDER BY bookingtable.created_at ASC"; // default, same as LoadRequests.php
 
 if (in_array($filter, $allowedStatuses, true)) {
     // Status filters: Pending / Rejected / Approved
-    $whereClause = "WHERE BookingTable.status = ?";
+    $whereClause = "WHERE bookingtable.status = ?";
 } elseif ($filter === "Most Recent") {
-    $orderClause = "ORDER BY BookingTable.created_at DESC";
+    $orderClause = "ORDER BY bookingtable.created_at DESC";
 } elseif ($filter === "Oldest") {
-    $orderClause = "ORDER BY BookingTable.created_at ASC";
+    $orderClause = "ORDER BY bookingtable.created_at ASC";
 }
 // "" (Filter By placeholder) or anything unrecognized -> no filter, default order
 
 $sql = "
 SELECT
-    BookingTable.ticket_id,
-    BookingTable.user_id,
-    BookingTable.driver_id,
+    bookingtable.ticket_id,
+    bookingtable.user_id,
+    bookingtable.driver_id,
 
-    UserTable.username,
+    usertable.username,
 
-    DriverTable.username AS driver_username,
+    drivertable.username AS driver_username,
 
-    VehicleTable.id AS vehicle_id,
-    VehicleTable.vehicle_model,
-    VehicleTable.image,
+    vehicletable.id AS vehicle_id,
+    vehicletable.vehicle_model,
+    vehicletable.image,
 
-    GROUP_CONCAT(PassengerTable.passengers SEPARATOR ', ') AS passengers,
+    GROUP_CONCAT(passengertable.passengers SEPARATOR ', ') AS passengers,
 
-    BookingTable.pick_up,
-    BookingTable.drop_off,
-    BookingTable.purpose,
-    BookingTable.date_needed,
-    BookingTable.time_needed,
-    BookingTable.status,
-    BookingTable.created_at
+    bookingtable.pick_up,
+    bookingtable.drop_off,
+    bookingtable.purpose,
+    bookingtable.date_needed,
+    bookingtable.time_needed,
+    bookingtable.status,
+    bookingtable.created_at
 
-FROM BookingTable
+FROM bookingtable
 
-INNER JOIN UserTable
-    ON BookingTable.user_id = UserTable.user_id
+INNER JOIN usertable
+    ON bookingtable.user_id = usertable.user_id
 
-INNER JOIN VehicleTable
-    ON BookingTable.vehicle_id = VehicleTable.id
+INNER JOIN vehicletable
+    ON bookingtable.vehicle_id = vehicletable.id
 
-LEFT JOIN DriverTable
-    ON BookingTable.driver_id = DriverTable.id
+LEFT JOIN drivertable
+    ON bookingtable.driver_id = drivertable.id
 
-LEFT JOIN PassengerTable
-    ON BookingTable.ticket_id = PassengerTable.ticket_id
+LEFT JOIN passengertable
+    ON bookingtable.ticket_id = passengertable.ticket_id
 
 $whereClause
 
 GROUP BY
-    BookingTable.ticket_id,
-    BookingTable.user_id,
-    BookingTable.driver_id,
+    bookingtable.ticket_id,
+    bookingtable.user_id,
+    bookingtable.driver_id,
 
-    UserTable.username,
-    DriverTable.username,
+    usertable.username,
+    drivertable.username,
 
-    VehicleTable.id,
-    VehicleTable.vehicle_model,
-    VehicleTable.image,
+    vehicletable.id,
+    vehicletable.vehicle_model,
+    vehicletable.image,
 
-    BookingTable.pick_up,
-    BookingTable.drop_off,
-    BookingTable.purpose,
-    BookingTable.date_needed,
-    BookingTable.time_needed,
-    BookingTable.status,
-    BookingTable.created_at
+    bookingtable.pick_up,
+    bookingtable.drop_off,
+    bookingtable.purpose,
+    bookingtable.date_needed,
+    bookingtable.time_needed,
+    bookingtable.status,
+    bookingtable.created_at
 
 $orderClause
 ";

@@ -30,7 +30,7 @@ if ($search === '') {
 $like = '%' . $search . '%';
 
 $stmt = $conn->prepare(
-    "SELECT * FROM `FinishedTicket` WHERE ticket_id LIKE ?
+    "SELECT * FROM `finishedticket` WHERE ticket_id LIKE ?
     OR pick_up LIKE ?
     OR drop_off LIKE ?
      ORDER BY ticket_id DESC"

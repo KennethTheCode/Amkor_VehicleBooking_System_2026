@@ -7,68 +7,68 @@ include "../db.php";
 
 $sql = "
 SELECT
-    BookingTable.ticket_id,
-    BookingTable.user_id,
-    BookingTable.driver_id,
+    bookingtable.ticket_id,
+    bookingtable.user_id,
+    bookingtable.driver_id,
 
-    UserTable.username,
-    UserTable.email AS user_email,
+    usertable.username,
+    usertable.email AS user_email,
 
-    DriverTable.username AS driver_username,
-    DriverTable.email AS driver_email,
+    drivertable.username AS driver_username,
+    drivertable.email AS driver_email,
 
-    VehicleTable.id AS vehicle_id,
-    VehicleTable.vehicle_model,
-    VehicleTable.image,
+    vehicletable.id AS vehicle_id,
+    vehicletable.vehicle_model,
+    vehicletable.image,
 
-    GROUP_CONCAT(PassengerTable.passengers SEPARATOR ', ') AS passengers,
+    GROUP_CONCAT(passengertable.passengers SEPARATOR ', ') AS passengers,
 
-    BookingTable.pick_up,
-    BookingTable.drop_off,
-    BookingTable.purpose,
-    BookingTable.date_needed,
-    BookingTable.time_needed,
-    BookingTable.status,
-    BookingTable.created_at
+    bookingtable.pick_up,
+    bookingtable.drop_off,
+    bookingtable.purpose,
+    bookingtable.date_needed,
+    bookingtable.time_needed,
+    bookingtable.status,
+    bookingtable.created_at
 
-FROM BookingTable
+FROM bookingtable
 
-INNER JOIN UserTable
-    ON BookingTable.user_id = UserTable.user_id
+INNER JOIN usertable
+    ON bookingtable.user_id = usertable.user_id
 
-INNER JOIN VehicleTable
-    ON BookingTable.vehicle_id = VehicleTable.id
+INNER JOIN vehicletable
+    ON bookingtable.vehicle_id = vehicletable.id
 
-LEFT JOIN DriverTable
-    ON BookingTable.driver_id = DriverTable.id
+LEFT JOIN drivertable
+    ON bookingtable.driver_id = drivertable.id
 
-LEFT JOIN PassengerTable
-    ON BookingTable.ticket_id = PassengerTable.ticket_id
+LEFT JOIN passengertable
+    ON bookingtable.ticket_id = passengertable.ticket_id
 
 GROUP BY
-    BookingTable.ticket_id,
-    BookingTable.user_id,
-    BookingTable.driver_id,
+    bookingtable.ticket_id,
+    bookingtable.user_id,
+    bookingtable.driver_id,
 
-    UserTable.username,
-    UserTable.email,
+    usertable.username,
+    usertable.email,
 
-    DriverTable.username,
-    DriverTable.email,
+    drivertable.username,
+    drivertable.email,
 
-    VehicleTable.id,
-    VehicleTable.vehicle_model,
-    VehicleTable.image,
+    vehicletable.id,
+    vehicletable.vehicle_model,
+    vehicletable.image,
 
-    BookingTable.pick_up,
-    BookingTable.drop_off,
-    BookingTable.purpose,
-    BookingTable.date_needed,
-    BookingTable.time_needed,
-    BookingTable.status,
-    BookingTable.created_at
+    bookingtable.pick_up,
+    bookingtable.drop_off,
+    bookingtable.purpose,
+    bookingtable.date_needed,
+    bookingtable.time_needed,
+    bookingtable.status,
+    bookingtable.created_at
 
-ORDER BY BookingTable.created_at ASC
+ORDER BY bookingtable.created_at ASC
 ";
 
 $result = $conn->query($sql);

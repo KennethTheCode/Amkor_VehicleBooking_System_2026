@@ -110,7 +110,7 @@ if (isset($_FILES["picture"]) && $_FILES["picture"]["error"] !== UPLOAD_ERR_NO_F
 
 // --- Build the update query (only touches `picture` if a new one was uploaded) ---
 if ($newPicture !== null) {
-    $sql = "UPDATE UserTable
+    $sql = "UPDATE usertable
             SET username = ?, password = ?, email = ?, account_type = ?, picture = ?
             WHERE user_id = ?";
 
@@ -130,7 +130,7 @@ if ($newPicture !== null) {
         $id
     );
 } else {
-    $sql = "UPDATE UserTable
+    $sql = "UPDATE usertable
             SET username = ?, password = ?, email = ?, account_type = ?
             WHERE user_id = ?";
 

@@ -46,18 +46,18 @@ if (!$ticket_id) {
 $conn->begin_transaction();
 
 // ---------------------------------------------------------------------
-// Delete related FinishedTicket rows first (a ticket can have multiple
+// Delete related finishedticket rows first (a ticket can have multiple
 // finished-trip rows, confirmed via phpMyAdmin), then the ticket itself
-// from BookingTable.
+// from bookingtable.
 //
-// TODO: PassengerTable was also listed in your phpMyAdmin sidebar. If it
+// TODO: passengertable was also listed in your phpMyAdmin sidebar. If it
 // stores rows keyed by ticket_id, add the same delete-and-check block for
-// it here (before the BookingTable delete) — otherwise this will either
+// it here (before the bookingtable delete) — otherwise this will either
 // leave orphaned passenger rows, or fail outright if there's a foreign
 // key constraint requiring it to go first.
 // ---------------------------------------------------------------------
 
-$stmt1 = $conn->prepare("DELETE FROM `FinishedTicket` WHERE ticket_id = ?");
+$stmt1 = $conn->prepare("DELETE FROM `finishedticket` WHERE ticket_id = ?");
 if (!$stmt1) {
     $conn->rollback();
     http_response_code(500);
@@ -82,11 +82,11 @@ if (!$stmt1->execute()) {
 $stmt1->close();
 
 // ---------------------------------------------------------------------
-// TODO: confirm BookingTable's primary key column is really "ticket_id" —
-// I'm assuming this matches the foreign key name used in FinishedTicket,
-// but I haven't seen BookingTable's actual structure.
+// TODO: confirm bookingtable's primary key column is really "ticket_id" —
+// I'm assuming this matches the foreign key name used in finishedticket,
+// but I haven't seen bookingtable's actual structure.
 // ---------------------------------------------------------------------
-$stmt2 = $conn->prepare("DELETE FROM `BookingTable` WHERE ticket_id = ?");
+$stmt2 = $conn->prepare("DELETE FROM `bookingtable` WHERE ticket_id = ?");
 if (!$stmt2) {
     $conn->rollback();
     http_response_code(500);

@@ -18,7 +18,7 @@ $keyword = trim($data["keyword"] ?? "");
 
 if ($keyword == "") {
     $sql = "SELECT user_id, username, password, email, account_type, picture, status
-            FROM UserTable
+            FROM usertable
             ORDER BY user_id ASC";
 
     $result = $conn->query($sql);
@@ -28,7 +28,7 @@ if ($keyword == "") {
     $search = "%" . $keyword . "%";
 
     $sql = "SELECT user_id, username, password, email, account_type, picture, status
-            FROM UserTable
+            FROM usertable
             WHERE username LIKE ?
                OR password LIKE ?
                OR email LIKE ?

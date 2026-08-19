@@ -42,7 +42,7 @@ try {
     // approved, or re-starting one that's already Ongoing/Finished.
     $stmt = $conn->prepare("
         SELECT driver_id, vehicle_id, status
-        FROM BookingTable
+        FROM bookingtable
         WHERE ticket_id = ?
     ");
 
@@ -70,7 +70,7 @@ try {
 
     // Update booking status
     $stmt = $conn->prepare("
-        UPDATE BookingTable
+        UPDATE bookingtable
         SET status = 'Ongoing'
         WHERE ticket_id = ?
     ");
@@ -86,7 +86,7 @@ try {
     // Mark driver as unavailable now that the trip has started
     if ($driver_id > 0) {
         $stmt = $conn->prepare("
-            UPDATE DriverTable
+            UPDATE drivertable
             SET availability = 0
             WHERE id = ?
         ");
@@ -103,7 +103,7 @@ try {
     // Mark vehicle as unavailable now that the trip has started
     if ($vehicle_id > 0) {
         $stmt = $conn->prepare("
-            UPDATE VehicleTable
+            UPDATE vehicletable
             SET availability = 0
             WHERE id = ?
         ");

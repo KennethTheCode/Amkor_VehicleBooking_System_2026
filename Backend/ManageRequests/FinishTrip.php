@@ -74,11 +74,11 @@ $conn->begin_transaction();
 
 try {
 
-    // Get assigned driver/vehicle (source of truth is BookingTable, not
+    // Get assigned driver/vehicle (source of truth is bookingtable, not
     // the client payload, so these can't be spoofed)
     $stmt = $conn->prepare("
         SELECT driver_id, vehicle_id
-        FROM BookingTable
+        FROM bookingtable
         WHERE ticket_id = ?
     ");
     if (!$stmt) {
@@ -103,7 +103,7 @@ try {
 
     // Update booking status
     $stmt = $conn->prepare("
-        UPDATE BookingTable
+        UPDATE bookingtable
         SET status = 'Finished'
         WHERE ticket_id = ?
     ");
@@ -119,7 +119,7 @@ try {
 
     // Driver available again
     $stmt = $conn->prepare("
-        UPDATE DriverTable
+        UPDATE drivertable
         SET availability = 1
         WHERE id = ?
     ");
@@ -135,7 +135,7 @@ try {
 
     // Vehicle available again
     $stmt = $conn->prepare("
-        UPDATE VehicleTable
+        UPDATE vehicletable
         SET availability = 1
         WHERE id = ?
     ");

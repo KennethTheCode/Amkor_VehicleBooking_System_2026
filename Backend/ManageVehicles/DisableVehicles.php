@@ -35,7 +35,7 @@ if (!in_array($status, $allowedStatuses)) {
     exit;
 }
 
-$sql = "UPDATE VehicleTable SET status = ? WHERE id = ?";
+$sql = "UPDATE vehicletable SET status = ? WHERE id = ?";
 
 $stmt = $conn->prepare($sql);
 

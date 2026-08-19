@@ -79,7 +79,7 @@ try {
     */
 
     $stmt = $conn->prepare("
-        INSERT INTO BookingTable
+        INSERT INTO bookingtable
         (
             user_id,
             vehicle_id,
@@ -127,7 +127,7 @@ try {
     if (!empty($passenger_names)) {
 
         $stmtPassenger = $conn->prepare("
-            INSERT INTO PassengerTable
+            INSERT INTO passengertable
             (
                 ticket_id,
                 passengers

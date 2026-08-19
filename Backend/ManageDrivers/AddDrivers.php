@@ -142,10 +142,10 @@ if (!move_uploaded_file($_FILES["picture"]["tmp_name"], $targetFile)) {
 
 // Save the relative path
 $picture = "uploadsDriver/" . $imageName;
-$status = "Active"; // matches DriverTable.status column
+$status = "Active"; // matches drivertable.status column
 
 // Insert driver
-$sql = "INSERT INTO DriverTable
+$sql = "INSERT INTO drivertable
 (username, password, email, license_no, expiration_date, picture, availability, status)
 VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 

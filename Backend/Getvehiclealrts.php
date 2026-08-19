@@ -15,7 +15,7 @@ $sql = "
         rfid_balance,
         expiration,
         DATEDIFF(expiration, CURDATE()) AS days_left
-    FROM VehicleTable
+    FROM vehicletable
     WHERE
         rfid_balance < ?
         OR expiration <= DATE_ADD(CURDATE(), INTERVAL ? DAY)

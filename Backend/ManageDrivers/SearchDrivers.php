@@ -18,7 +18,7 @@ $keyword = trim($data["keyword"] ?? "");
 
 if ($keyword == "") {
     $sql = "SELECT id, username, password, email, license_no, expiration_date, picture, availability, status
-            FROM DriverTable
+            FROM drivertable
             ORDER BY id ASC";
 
     $result = $conn->query($sql);
@@ -28,7 +28,7 @@ if ($keyword == "") {
     $search = "%" . $keyword . "%";
 
     $sql = "SELECT id, username, password, email, license_no, expiration_date, picture, availability, status
-            FROM DriverTable
+            FROM drivertable
             WHERE username LIKE ?
                OR password LIKE ?
                OR email LIKE ?

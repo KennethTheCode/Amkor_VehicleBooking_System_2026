@@ -52,7 +52,7 @@ if (
 }
 
 // --- Look up the existing vehicle (needed to keep/replace orcr and image) ---
-$lookup = $conn->prepare("SELECT orcr, image FROM VehicleTable WHERE id = ?");
+$lookup = $conn->prepare("SELECT orcr, image FROM vehicletable WHERE id = ?");
 $lookup->bind_param("i", $vehicle_id);
 $lookup->execute();
 $result = $lookup->get_result();
@@ -153,7 +153,7 @@ if (isset($_FILES["image"]) && $_FILES["image"]["error"] !== UPLOAD_ERR_NO_FILE)
 }
 
 // --- Update vehicle ---
-$sql = "UPDATE VehicleTable
+$sql = "UPDATE vehicletable
 SET vehicle_model = ?, color = ?, platenumber = ?, expiration = ?, seater = ?, rfid_balance = ?, orcr = ?, image = ?
 WHERE id = ?";
 

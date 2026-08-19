@@ -138,10 +138,10 @@ if (!move_uploaded_file($_FILES["picture"]["tmp_name"], $targetFile)) {
 }
 
 $picture = "uploads/" . $imageName;
-$status = "Active"; // matches UserTable.status column
+$status = "Active"; // matches usertable.status column
 
 // --- Insert user ---
-$sql = "INSERT INTO UserTable
+$sql = "INSERT INTO usertable
 (username, password, email ,account_type, picture, status)
 VALUES (?, ?, ?, ?, ?, ?)";
 

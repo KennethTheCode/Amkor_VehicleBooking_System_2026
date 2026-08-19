@@ -35,7 +35,7 @@ if (!in_array($status, $allowedStatuses)) {
     exit;
 }
 
-$sql = "UPDATE DriverTable SET status = ? WHERE id = ?";
+$sql = "UPDATE drivertable SET status = ? WHERE id = ?";
 
 $stmt = $conn->prepare($sql);
 

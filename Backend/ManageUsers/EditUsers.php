@@ -35,7 +35,7 @@ if (!in_array($status, $allowedStatuses)) {
     exit;
 }
 
-$sql = "UPDATE UserTable SET status = ? WHERE user_id = ?";
+$sql = "UPDATE usertable SET status = ? WHERE user_id = ?";
 
 $stmt = $conn->prepare($sql);
 

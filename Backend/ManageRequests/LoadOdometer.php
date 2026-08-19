@@ -37,35 +37,35 @@ if (!isset($conn) || $conn->connect_error) {
 
 $sql = "
 SELECT
-    FinishedTicket.finished_id,
-    FinishedTicket.ticket_id,
-    FinishedTicket.pick_up,
-    FinishedTicket.drop_off,
-    FinishedTicket.beginning,
-    FinishedTicket.ending,
-    FinishedTicket.time_out,
-    FinishedTicket.time_in,
-    FinishedTicket.date_finished,
-    FinishedTicket.rfid_balance,
+    finishedticket.finished_id,
+    finishedticket.ticket_id,
+    finishedticket.pick_up,
+    finishedticket.drop_off,
+    finishedticket.beginning,
+    finishedticket.ending,
+    finishedticket.time_out,
+    finishedticket.time_in,
+    finishedticket.date_finished,
+    finishedticket.rfid_balance,
 
-    BookingTable.driver_id,
-    DriverTable.username AS driver_username,
+    bookingtable.driver_id,
+    drivertable.username AS driver_username,
 
-    BookingTable.vehicle_id,
-    VehicleTable.vehicle_model
+    bookingtable.vehicle_id,
+    vehicletable.vehicle_model
 
-FROM FinishedTicket
+FROM finishedticket
 
-LEFT JOIN BookingTable
-    ON FinishedTicket.ticket_id = BookingTable.ticket_id
+LEFT JOIN bookingtable
+    ON finishedticket.ticket_id = bookingtable.ticket_id
 
-LEFT JOIN DriverTable
-    ON BookingTable.driver_id = DriverTable.id
+LEFT JOIN drivertable
+    ON bookingtable.driver_id = drivertable.id
 
-LEFT JOIN VehicleTable
-    ON BookingTable.vehicle_id = VehicleTable.id
+LEFT JOIN vehicletable
+    ON bookingtable.vehicle_id = vehicletable.id
 
-ORDER BY FinishedTicket.date_finished DESC, FinishedTicket.finished_id DESC
+ORDER BY finishedticket.date_finished DESC, finishedticket.finished_id DESC
 ";
 
 $result = $conn->query($sql);

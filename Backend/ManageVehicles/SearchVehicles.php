@@ -18,7 +18,7 @@ $keyword = trim($data["keyword"] ?? "");
 
 if ($keyword == "") {
     $sql = "SELECT id, vehicle_model, color, platenumber, expiration, seater, orcr, image, availability, rfid_balance, status
-            FROM VehicleTable
+            FROM vehicletable
             ORDER BY id ASC";
 
     $result = $conn->query($sql);
@@ -28,7 +28,7 @@ if ($keyword == "") {
     $search = "%" . $keyword . "%";
 
     $sql = "SELECT vehicle_model, color, platenumber, expiration, seater, orcr, image, availability
-            FROM VehicleTable
+            FROM vehicletable
             WHERE vehicle_model LIKE ?
                OR color LIKE ?
                OR platenumber LIKE ?

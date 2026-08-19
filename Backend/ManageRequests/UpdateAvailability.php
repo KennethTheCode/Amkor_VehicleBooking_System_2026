@@ -43,7 +43,7 @@ try {
     // Approve booking AND assign the driver
     // (previously this only set status, so driver_id never got saved)
     $stmt3 = $conn->prepare("
-        UPDATE BookingTable
+        UPDATE bookingtable
         SET status = 'Approved',
             driver_id = ?
         WHERE ticket_id = ?
@@ -61,7 +61,7 @@ try {
 
         // Update driver availability
         $stmt1 = $conn->prepare("
-            UPDATE DriverTable
+            UPDATE drivertable
             SET availability = 0
             WHERE id = ?
         ");
@@ -75,7 +75,7 @@ try {
 
         // Update vehicle availability
         $stmt2 = $conn->prepare("
-            UPDATE VehicleTable
+            UPDATE vehicletable
             SET availability = 0
             WHERE id = ?
         ");
@@ -93,14 +93,14 @@ try {
     // ---- Email the requesting user -------------------------------------
     $emailStmt = $conn->prepare("
         SELECT
-            UserTable.email AS user_email,
-            DriverTable.username AS driver_username,
-            BookingTable.pick_up,
-            BookingTable.drop_off
-        FROM BookingTable
-        INNER JOIN UserTable ON BookingTable.user_id = UserTable.user_id
-        LEFT JOIN DriverTable ON BookingTable.driver_id = DriverTable.id
-        WHERE BookingTable.ticket_id = ?
+            usertable.email AS user_email,
+            drivertable.username AS driver_username,
+            bookingtable.pick_up,
+            bookingtable.drop_off
+        FROM bookingtable
+        INNER JOIN usertable ON bookingtable.user_id = usertable.user_id
+        LEFT JOIN drivertable ON bookingtable.driver_id = drivertable.id
+        WHERE bookingtable.ticket_id = ?
     ");
 
     if ($emailStmt) {

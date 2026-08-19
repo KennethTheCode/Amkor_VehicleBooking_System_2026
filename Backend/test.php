@@ -7,7 +7,7 @@ $conn = new mysqli(
     "sql202.infinityfree.com",
     "if0_42429955",
     "YOUR_VPANEL_PASSWORD",
-    "if0_42429955_AmkorVehicleBookingSystem"
+    "if0_42429955_amkorvehiclebookingsystem"
 );
 
 if ($conn->connect_error) {

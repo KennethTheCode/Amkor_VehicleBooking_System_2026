@@ -91,12 +91,12 @@ $rfid_balance = (int)$rfid_balance;
 // --- Insert a new stop: every "Add Odometer" click logs its own row ----
 try {
 
-    // Look up driver/vehicle/user this booking belongs to. FinishedTicket
+    // Look up driver/vehicle/user this booking belongs to. finishedticket
     // requires these (NOT NULL, no default) — but they're already known
     // as soon as a driver's assigned, well before the trip actually ends.
     $bookingStmt = $conn->prepare("
         SELECT driver_id, vehicle_id, user_id
-        FROM BookingTable
+        FROM bookingtable
         WHERE ticket_id = ?
     ");
 
@@ -122,7 +122,7 @@ try {
     // each time they add an odometer stop) instead of a hardcoded
     // placeholder.
     $stmt = $conn->prepare("
-        INSERT INTO FinishedTicket
+        INSERT INTO finishedticket
             (ticket_id, pick_up, drop_off, beginning, ending, time_out, time_in, date_finished, rfid_balance, vehicle_id, driver_id, user_id)
         VALUES
             (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)

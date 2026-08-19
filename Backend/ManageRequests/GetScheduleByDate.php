@@ -14,29 +14,29 @@ if (empty($date)) {
 
 $sql = "
 SELECT
-    BookingTable.ticket_id,
-    BookingTable.driver_id,
-    DriverTable.username AS driver_username,
+    bookingtable.ticket_id,
+    bookingtable.driver_id,
+    drivertable.username AS driver_username,
 
-    BookingTable.vehicle_id,
-    VehicleTable.vehicle_model,
+    bookingtable.vehicle_id,
+    vehicletable.vehicle_model,
 
-    BookingTable.date_needed,
-    BookingTable.time_needed
+    bookingtable.date_needed,
+    bookingtable.time_needed
 
-FROM BookingTable
+FROM bookingtable
 
-LEFT JOIN DriverTable
-    ON BookingTable.driver_id = DriverTable.id
+LEFT JOIN drivertable
+    ON bookingtable.driver_id = drivertable.id
 
-LEFT JOIN VehicleTable
-    ON BookingTable.vehicle_id = VehicleTable.id
+LEFT JOIN vehicletable
+    ON bookingtable.vehicle_id = vehicletable.id
 
 WHERE
-    BookingTable.status = 'Approved'
-    AND BookingTable.date_needed = ?
+    bookingtable.status = 'Approved'
+    AND bookingtable.date_needed = ?
 
-ORDER BY BookingTable.time_needed
+ORDER BY bookingtable.time_needed
 ";
 
 $stmt = $conn->prepare($sql);

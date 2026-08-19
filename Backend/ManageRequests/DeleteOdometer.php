@@ -44,10 +44,10 @@ if (!$finished_id) {
 }
 
 // ---------------------------------------------------------------------
-// Confirmed via phpMyAdmin: database AmkorVehicleBookingSystem,
-// table FinishedTicket, primary key finished_id.
+// Confirmed via phpMyAdmin: database amkorvehiclebookingsystem,
+// table finishedticket, primary key finished_id.
 // ---------------------------------------------------------------------
-$table = 'FinishedTicket';
+$table = 'finishedticket';
 
 $stmt = $conn->prepare("DELETE FROM `$table` WHERE finished_id = ? AND date_finished IS NOT NULL LIMIT 1");
 
