@@ -48,7 +48,7 @@ function App() {
   // basename="/Amkor_VehicleBooking_System_2026/Frontend"
   return (
     <div>
-      <Router>
+      <Router basename="/Amkor_VehicleBooking_System_2026/Frontend">
         <Routes>
           <Route path="/" element={<LandingPage/>} />
           <Route
